@@ -1,0 +1,24 @@
+package sss;
+
+		public class ch12{
+			public static void main(String[] args) {
+				// TODO Auto-generated method stu
+			String myDream="DBA";
+			switch (myDream){
+			case "programer":
+				System.out.println("나의 꿈이 아닙니다");
+				break;
+			case "Doctor":
+				System.out.println("나의 꿈이 아닙니다");
+				break;
+			case "DBA":
+				System.out.println("저는 DATABASE 전문가가 되고싶습니다.");
+				break;
+				
+		   default:
+			   System.out.println("저는 꿈이 없습니다");
+			   break;
+			}
+			}
+		}
+				
