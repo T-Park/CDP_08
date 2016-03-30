@@ -1,0 +1,16 @@
+package sss;
+
+		public class ch12{
+			public static void main(String[] args) {
+				// TODO Auto-generated method stu
+				int x;
+				int y;
+				x=10;
+				y=x;
+				int c;
+				System.out.println(x);
+				System.out.println(y);
+				
+			
+	}
+		}

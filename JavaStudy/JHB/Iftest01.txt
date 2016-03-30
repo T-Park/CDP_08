@@ -1,0 +1,28 @@
+package sss;
+
+		public class ch12{
+			public static void main(String[] args) {
+				// TODO Auto-generated method stu
+				
+				      String myjob1="홍길동";
+				      String myjob2="이순신";
+				      String myjob3="이성계";
+				      String myjob4="정도전";
+				      		
+				      if(myjob1=="홍길동"){
+				    	  System.out.println("홍길동은 의적");
+				    	  
+				      }else if(myjob2=="이순신")
+				    	  System.out.println("이순신은장군");
+					  
+		              else if(myjob3=="이성계")
+		    	           System.out.println("이성계는왕");
+		        	  
+	                  else
+	    	                 System.out.println("정도전은책사");
+	                  
+				      		
+				      		
+				      
+			}
+				}
