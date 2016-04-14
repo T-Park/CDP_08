@@ -7,7 +7,7 @@ public class Product_test {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		int a;
+		int a, b;
 		Scanner scan = new Scanner(System.in);
 		Function f = new Function();
 
