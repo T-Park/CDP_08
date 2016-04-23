@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="eightjo.modong" >
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".LoginPage"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity_sign_in"
+            android:label="@string/title_activity_activity_sign_in" >
+        </activity>
+        <activity
+            android:name=".tab_main"
+            android:label="@string/title_activity_tab_main" >
+        </activity>
+        <activity
+            android:name=".tab_cardViewer"
+            android:label="@string/title_activity_tab_card_viewer" >
+        </activity>
+        <activity
+            android:name=".tab_buyList"
+            android:label="@string/title_activity_tab_buy_list" >
+        </activity>
+        <activity
+            android:name=".tab_donationList"
+            android:label="@string/title_activity_tab_donation_list" >
+        </activity>
+        <activity
+            android:name=".tab_setting"
+            android:label="@string/title_activity_tab_setting" >
+        </activity>
+        <activity
+            android:name=".Tab_Main2"
+            android:label="@string/title_activity_tab__main2" >
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main" >
+        </activity>
+    </application>
+
+</manifest>

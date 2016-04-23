@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="250dp"
+        android:layout_height="100dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="날짜"
+            android:id="@+id/textView_date"
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="거래처, 단체이름"
+            android:id="@+id/textView_storeName"
+            android:textSize="30dp" />
+    </LinearLayout>
+
+    <Space
+        android:layout_width="25dp"
+        android:layout_height="20px" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+금액"
+        android:id="@+id/textView_amount"
+        android:textStyle="bold"
+        android:textSize="45dp"
+        android:layout_gravity="center_vertical" />
+
+</LinearLayout>

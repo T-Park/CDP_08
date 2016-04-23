@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">moDong</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_activity_sign_in">activity_sign_in</string>
+    <string name="title_activity_activity__tab_main">activity_Tab_main</string>
+    <string name="title_activity_tab_main">tab_main</string>
+    <string name="title_activity_tab_card_viewer">tab_cardViewer</string>
+    <string name="title_activity_tab_buy_list">tab_buyList</string>
+    <string name="title_activity_tab_donation_list">tab_donationList</string>
+    <string name="title_activity_tab_setting">tab_setting</string>
+    <string name="title_activity_tab__main2">Tab_Main2</string>
+
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="title_section4">Section 4</string>
+    <string name="title_activity_main">MainActivity</string>
+</resources>
