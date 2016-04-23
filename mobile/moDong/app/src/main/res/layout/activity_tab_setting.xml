@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="회원정보수정"
-            android:id="@+id/button_Info"
+            android:id="@+id/button_Info_modify"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.10"
             android:onClick="button_InfoModify" />
@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="잠금 기능"
-            android:id="@+id/button7"
+            android:id="@+id/button_lock"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.10"
             android:onClick="button_Lock" />

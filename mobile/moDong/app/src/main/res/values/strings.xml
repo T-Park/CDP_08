@@ -17,4 +17,6 @@
     <string name="title_section3">Section 3</string>
     <string name="title_section4">Section 4</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_activity_lock">activity_lock</string>
+    <string name="title_activity_activity__info_modify">activity_Info_modify</string>
 </resources>

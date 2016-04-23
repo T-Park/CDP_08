@@ -22,13 +22,13 @@ public class tab_main extends TabActivity {
 
         intent = new Intent().setClass(this, tab_cardViewer.class);
 
-        spec = tabHost.newTabSpec("home").setIndicator("메인이오").setContent(intent);
+        spec = tabHost.newTabSpec("home").setIndicator("메인").setContent(intent);
         tabHost.addTab(spec);
 
 
         intent = new Intent().setClass(this, tab_buyList.class);
 
-        spec = tabHost.newTabSpec("buyList").setIndicator("나의 구매내역").setContent(intent);
+        spec = tabHost.newTabSpec("buyList").setIndicator("나의 사용내역").setContent(intent);
         tabHost.addTab(spec);
 
 

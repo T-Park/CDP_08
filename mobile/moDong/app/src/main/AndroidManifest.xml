@@ -48,6 +48,14 @@
             android:name=".MainActivity"
             android:label="@string/title_activity_main" >
         </activity>
+        <activity
+            android:name=".activity_lock"
+            android:label="@string/title_activity_activity_lock" >
+        </activity>
+        <activity
+            android:name=".activity_Info_modify"
+            android:label="@string/title_activity_activity__info_modify" >
+        </activity>
     </application>
 
 </manifest>

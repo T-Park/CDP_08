@@ -4,8 +4,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="eightjo.modong.activity_sign_in"
-    android:background="#a5fdf778">
+    tools:context="eightjo.modong.activity_Info_modify">
 
     <LinearLayout
         android:orientation="vertical"
@@ -13,13 +12,13 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:weightSum="1">
+        android:weightSum="1" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="회원가입 페이지"
-            android:id="@+id/textView10"
+            android:text="회원정보 수정 페이지"
+            android:id="@+id/textView18"
             android:textSize="30dp" />
 
         <Space
@@ -29,46 +28,42 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/scrollView"
-            android:layout_weight="0.78">
+            android:id="@+id/scrollView2"
+            android:layout_weight="0.78" >
 
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent" >
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:weightSum="1">
+                    android:weightSum="1" >
 
                     <TextView
                         android:layout_width="30dp"
                         android:layout_height="match_parent"
                         android:text="아이디"
-                        android:id="@+id/textView4" />
+                        android:id="@+id/textView19" />
 
                     <Space
                         android:layout_width="20px"
                         android:layout_height="match_parent" />
 
-                    <EditText
+                    <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:id="@+id/editText_userId"
-                        android:layout_weight="0.98"
-                        android:background="#FFFFFF" />
+                        android:layout_height="wrap_content"
+                        android:text="현재 id"
+                        android:id="@+id/textView25"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="25dp" />
 
                     <Space
                         android:layout_width="20px"
                         android:layout_height="match_parent" />
 
-                    <Button
-                        android:layout_width="100dp"
-                        android:layout_height="match_parent"
-                        android:text="ID 중복확인"
-                        android:id="@+id/button4" />
                 </LinearLayout>
 
                 <Space
@@ -85,7 +80,7 @@
                         android:layout_width="30dp"
                         android:layout_height="match_parent"
                         android:text="비밀번호"
-                        android:id="@+id/textView5" />
+                        android:id="@+id/textView20" />
 
                     <Space
                         android:layout_width="20px"
@@ -94,11 +89,10 @@
                     <EditText
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:id="@+id/editText_password"
+                        android:id="@+id/editText4"
                         android:layout_weight="0.98"
                         android:background="#FFFFFF"
                         android:password="true" />
-
                 </LinearLayout>
 
                 <Space
@@ -115,19 +109,19 @@
                         android:layout_width="30dp"
                         android:layout_height="match_parent"
                         android:text="이름"
-                        android:id="@+id/textView6" />
+                        android:id="@+id/textView21" />
 
                     <Space
                         android:layout_width="20px"
                         android:layout_height="match_parent" />
 
-                    <EditText
+                    <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:id="@+id/editText_name"
-                        android:layout_weight="0.98"
-                        android:background="#FFFFFF"
-                        android:password="false" />
+                        android:layout_height="wrap_content"
+                        android:text="현재 이름"
+                        android:id="@+id/textView26"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="25dp" />
 
                 </LinearLayout>
 
@@ -140,25 +134,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:weightSum="1" >
+
+                    <Space
+                        android:layout_width="20px"
+                        android:layout_height="match_parent" />
 
                     <TextView
                         android:layout_width="30dp"
                         android:layout_height="match_parent"
                         android:text="직업"
-                        android:id="@+id/textView7" />
+                        android:id="@+id/textView22" />
 
                     <Space
                         android:layout_width="20px"
-                        android:layout_height="match_parent" />
+                        android:layout_height="20px" />
 
                     <EditText
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:id="@+id/editText_job"
+                        android:id="@+id/editText6"
                         android:layout_weight="0.98"
                         android:background="#FFFFFF"
                         android:password="false" />
-
                 </LinearLayout>
 
                 <Space
@@ -170,25 +167,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:weightSum="1" >
+
+                    <Space
+                        android:layout_width="20px"
+                        android:layout_height="match_parent" />
 
                     <TextView
                         android:layout_width="30dp"
                         android:layout_height="match_parent"
                         android:text="나이"
-                        android:id="@+id/textView8" />
+                        android:id="@+id/textView23" />
 
                     <Space
                         android:layout_width="20px"
-                        android:layout_height="match_parent" />
+                        android:layout_height="20px" />
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:inputType="number"
                         android:ems="10"
-                        android:id="@+id/editText_age"
+                        android:id="@+id/editText7"
                         android:background="#FFFFFF" />
-
                 </LinearLayout>
 
                 <Space
@@ -201,11 +201,15 @@
                     android:layout_height="40dp"
                     android:weightSum="1" >
 
+                    <Space
+                        android:layout_width="20px"
+                        android:layout_height="20px" />
+
                     <TextView
                         android:layout_width="30dp"
                         android:layout_height="match_parent"
                         android:text="전화번호"
-                        android:id="@+id/textView9" />
+                        android:id="@+id/textView24" />
 
                     <Space
                         android:layout_width="20px"
@@ -216,13 +220,11 @@
                         android:layout_height="match_parent"
                         android:inputType="number"
                         android:ems="10"
-                        android:id="@+id/editText_phone"
+                        android:id="@+id/editText8"
                         android:background="#FFFFFF" />
-
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
-
     </LinearLayout>
 
     <LinearLayout
@@ -231,7 +233,7 @@
         android:layout_height="wrap_content"
         android:weightSum="1"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentEnd="true" >
 
         <Space
             android:layout_width="20px"
@@ -241,10 +243,8 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="회원가입 하기!"
-            android:id="@+id/button3"
-            android:onClick="DoSignIn" />
-
+            android:text="확인"
+            android:id="@+id/button11"
+            android:onClick="onClick_save" />
     </LinearLayout>
-
 </RelativeLayout>
