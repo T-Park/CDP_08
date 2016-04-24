@@ -34,6 +34,6 @@ while True:
         if flag == False:
             print("인식에 실패했습니다")
         else :
-            print("바코드: " + barcode)
+            print("바코드: " + number)
     else :
         print("input err")

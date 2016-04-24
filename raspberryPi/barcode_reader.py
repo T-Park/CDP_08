@@ -18,7 +18,9 @@ class BarcodeReader():
         self.reader = zxing.BarCodeReader("/home/pi/zxing/zxing")
         
     def take_picture(self):
+        self.camera.start_preview()
         self.camera.capture(self.image_file) # take picture
+        self.camera.stop_preview()
                                 # and store
 
     def parse_barcode(self):
