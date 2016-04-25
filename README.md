@@ -4,7 +4,7 @@
 
 Develope the coin collecting system for activating coin reusing rate and alleviating minting cost
 
-We use raspberry pi for coin collecter(Donjeon MoeumYi(동전모음이))
+We use raspberry pi for coin collecter(Donjeon Moeumyi(동전모음이))
 
 
 # used open source libraries
