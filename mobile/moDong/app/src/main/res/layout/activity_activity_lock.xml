@@ -37,17 +37,18 @@
                 android:layout_height="50.25dp"
                 android:layout_gravity="center"
                 android:layout_marginRight="16dp"
-                android:id="@+id/editText_password"
-                android:inputType="numberPassword"
-                android:background="#ffffffff" />
+                android:id="@+id/editText_lock_password"
+                android:background="#ffffffff"
+                android:inputType="textPassword" />
 
             <Button
                 android:layout_width="82.5dp"
                 android:layout_height="50.25dp"
-                android:id="@+id/gobutton"
+                android:id="@+id/button_lock_clear"
                 android:text="Go"
                 android:layout_gravity="right"
-                android:textColor="#000000" />
+                android:textColor="#000000"
+                android:onClick="onClickClear" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

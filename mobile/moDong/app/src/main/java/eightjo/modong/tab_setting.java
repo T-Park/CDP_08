@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,10 +17,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
+//forAppInfo : appInfo : 1. user_id 2. user_pw 3. name 4. job 5. age 6. phone 7. lock_flag 8. lock_pw 9. point 10. type 11. login_flag 12. group_flag 13. bacode
 public class tab_setting extends Activity {
 
     SQLiteDatabase db;
+
+    private String temp_user_id;
+    private String temp_user_pw;
+
     Button button_modify, button_lock;
     Button button_save, button_cancel;
     EditText editText_dialog_password, editText_dialog_password_before;
@@ -54,6 +59,27 @@ public class tab_setting extends Activity {
         mContext = this;
 
         loadDB();
+        Cursor c = db.rawQuery("SELECT * FROM appInfo where login_flag =1;", null);
+        c.moveToPosition(c.getCount() - 1);
+        temp_user_id =  c.getString(c.getColumnIndex("user_id"));
+        temp_user_pw =  c.getString(c.getColumnIndex("user_pw"));
+
+    }
+
+    public void loadLatestDB()
+    {
+        loadDB();
+        Cursor c = db.rawQuery("SELECT * FROM appInfo where login_flag =1;", null);
+        c.moveToPosition(c.getCount() - 1);
+        temp_user_id =  c.getString(c.getColumnIndex("user_id"));
+        temp_user_pw =  c.getString(c.getColumnIndex("user_pw"));
+    }
+
+    @Override
+    public  void onResume()
+    {
+        super.onResume();
+        loadLatestDB();
     }
 
     @Override
@@ -76,7 +102,9 @@ public class tab_setting extends Activity {
             case 0 :
 
                 //현재 id 입력필요
+                loadLatestDB();
                 dialog.setTitle("사용자 인증");
+                textView_dialog1.setText("ID :" + temp_user_id);
                 button_save.setOnClickListener(saveOnClickListener);
                 button_cancel.setOnClickListener(cancelOnClickListener);
 
@@ -87,6 +115,7 @@ public class tab_setting extends Activity {
                 textView_dialog2.setText("비밀번호를 입력해 주세요.");
 
                 editText_dialog_password_before = (EditText)dialog.findViewById(R.id.editText_dialog_password);
+                editText_dialog_password_before.setText("");
 
                 button_save.setOnClickListener(saveOnClickListenerForLock2);
                 button_cancel.setOnClickListener(cancelOnClickListener1);
@@ -101,6 +130,7 @@ public class tab_setting extends Activity {
                 button_cancel.setOnClickListener(cancelOnClickListener2);
                 break;
             case 3 :
+                loadLatestDB();
                 dialog.setTitle("사용자 인증");
                 button_save.setOnClickListener(saveOnClickListenerForLock);
                 button_cancel.setOnClickListener(cancelOnClickListener3);
@@ -142,6 +172,19 @@ public class tab_setting extends Activity {
 
     public void button_Group(View v)
     {
+        Cursor c = db.rawQuery("SELECT * FROM appInfo where login_flag =1;", null);
+
+        //startManagingCursor(c);
+        if(c.getCount() > 0)
+        {
+            c.moveToPosition(c.getCount()-1);//int a =  c.getPosition();
+            String result =  c.getString(c.getColumnIndex("name"));
+            Toast.makeText(this,result + "입니다" , Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(this,"데이터가없숑" , Toast.LENGTH_SHORT).show();
+        }
 
 
     }
@@ -149,37 +192,49 @@ public class tab_setting extends Activity {
     public void button_Lock(View v)
     {
 
-
     }
 
     public void button_Logout(View v)
     {
-        db.execSQL("DROP TABLE tempInfo2;");//DROP TABLE tempInfo2
+        db.execSQL("DROP TABLE appInfo;");//DROP TABLE tempInfo2
         Toast.makeText(this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, LoginPage.class);
         startActivity(intent);
         finish();
     }
 
+    //forAppInfo : appInfo : 1. user_id 2. user_pw 3. name 4. job 5. age 6. phone 7. lock_flag 8. lock_pw 9. point 10. type 11. login_flag 12. group_flag 13. bacode
     public void loadDB()
     {
+        if(db != null)
+        {
+            db.close();
+        }
+
         db= openOrCreateDatabase(
-                "userInfo.db",
+                "forAppInfo.db",
                 SQLiteDatabase.CREATE_IF_NECESSARY,
                 null
         );
-        db.execSQL("CREATE TABLE IF NOT EXISTS tempInfo2 " +
+        db.execSQL("CREATE TABLE IF NOT EXISTS appInfo " +
                 "(" +
-                " name TEXT," +
                 " user_id TEXT," +
-                " password TEXT," +
-                " point INTEGER," +
-                " type TEXT," +
-                " login_flag INTEGER," +
+                " user_pw TEXT," +
+                " name TEXT," +
+                " job TEXT," +
+                " age INTEGER," +
+                " phone TEXT," +
                 " lock_flag INTEGER," +
+                " lock_pw TEXT,"+
+                " point INTEGER," +
+                " type TEXT,"+
+                " login_flag INTEGER," +
                 " group_flag INTEGER," +
-                " bacode TEXT);");
+                " bacode TEXT"+
+                ");");
     }
+
+
 
     private Button.OnClickListener cancelOnClickListener
             = new Button.OnClickListener(){
@@ -225,17 +280,25 @@ public class tab_setting extends Activity {
 
     };
 
-    private Button.OnClickListener saveOnClickListener
+    private Button.OnClickListener saveOnClickListener  //MODIFY
             = new Button.OnClickListener(){
         @Override
         public void onClick(View arg0) {
             String value= editText_dialog_password.getText().toString();
 
+
             //password가 일치한다면
+            if(value.equals(temp_user_pw))
+            {
                 Intent intent = new Intent(mContext, activity_Info_modify.class);
                 startActivity(intent);
                 dismissDialog(0);
-
+            }
+            else
+            {
+                Toast.makeText(mContext, value +" : "+ temp_user_pw + " 비밀번호가 틀렸어요!", Toast.LENGTH_SHORT).show();
+            }
+           // editText_dialog_password.setText("");
         }
 
     };
@@ -247,19 +310,33 @@ public class tab_setting extends Activity {
             String value= editText_dialog_password.getText().toString();
 
             //password가 일치한다면
-            showDialog(1);
-            dismissDialog(3);
+            if(value.equals(temp_user_pw))
+            {
+                showDialog(1);
+                dismissDialog(3);
+            }
+            else
+            {
+                Toast.makeText(mContext, value +" : "+ temp_user_pw + " 비밀번호가 틀렸어요!", Toast.LENGTH_SHORT).show();
+            }
         }
 
     };
 
-    private Button.OnClickListener saveOnClickListenerForLock2
+    private Button.OnClickListener saveOnClickListenerForLock2//비밀번호 설정1
             = new Button.OnClickListener(){
         @Override
         public void onClick(View arg0) {
             tempPw = editText_dialog_password_before.getText().toString();
-            showDialog(2);
-            dismissDialog(1);
+            if(tempPw.equals(""))
+            {
+                Toast.makeText(mContext, "공백은 불가능해요!", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                showDialog(2);
+                dismissDialog(1);
+            }
         }
 
     };
@@ -271,8 +348,13 @@ public class tab_setting extends Activity {
             String value= editText_dialog_password.getText().toString();
             if(value.equals(tempPw))
             {
-                Toast.makeText(mContext, "일치합니다."+ value + " == "+ tempPw, Toast.LENGTH_SHORT).show();
                 //db 처리
+                db.execSQL("UPDATE appInfo SET " +
+                        "lock_pw='"+ value + "',"+
+                        "lock_flag="+ 1 + "" +
+                        " WHERE login_flag =1;");
+                Toast.makeText(mContext, "일치합니다. 비밀번호 : "+ value + " == "+ tempPw, Toast.LENGTH_SHORT).show();
+                loadLatestDB();
             }
             else
             {

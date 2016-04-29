@@ -26,21 +26,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="-님 반갑습니다."
-                    android:id="@+id/textView11"
+                    android:id="@+id/textView_view_name"
                     android:textSize="30dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="그룹이 없어요."
-                    android:id="@+id/textView12" />
+                    android:id="@+id/textView_view_group" />
             </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="-P"
-                android:id="@+id/textView13"
+                android:id="@+id/textView_view_point"
                 android:layout_weight="0.5"
                 android:textSize="50dp" />
         </LinearLayout>
