@@ -1,6 +1,5 @@
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Function {
 
@@ -9,6 +8,7 @@ public class Function {
 	ArrayList<Product> list = new ArrayList<>();
 
 	void display() {
+		System.out.println(" ");
 		System.out.println("1.상품등록");
 		System.out.println("2.상품삭제");
 		System.out.println("3.상품목록");
@@ -20,7 +20,7 @@ public class Function {
 
 	void regist() {
 
-		int z;
+		String Y_N;
 
 		do {
 
@@ -40,69 +40,178 @@ public class Function {
 			i.setInventory(scan.nextInt());
 
 			list.add(i);
-			System.out.println("계속 등록하시겠습니까? (y=1, n=2) : ");
-			z = scan.nextInt();
-		} while (z != 2);
+			sort();
+			System.out.println("계속 등록하시겠습니까? (Y/N) : ");
+			Y_N = scan.next();
+
+			if (Y_N.equals("N") || Y_N.equals("n"))
+				break;
+		} while (true);
 
 	}
 
 	void delete() {
-		int a, b, c, z;
-		String d;
+		int menu, ID, c;
+		String name, Y_N, del;
 
 		do {
 
-			System.out.println("1.상품 ID로 찾기");
-			System.out.println("2.상품 이름으로 찾기");
-			a = scan.nextInt();
+			System.out.println("1.상품 ID로 삭제");
+			System.out.println("2.상품 이름으로 삭제");
+			System.out.println("0.돌아가기");
+			menu = scan.nextInt();
 
-			switch (a) {
+			switch (menu) {
 			case 1:
 				System.out.println("상품 ID를 입력하시오.");
-				b = scan.nextInt();
+				ID = scan.nextInt();
 				for (c = 0; c < list.size(); c++) {
 					Product i = new Product();
 					i = list.get(c);
-					if (i.getProductid() == b) {
+					if (i.getProductid() == ID) {
+						System.out.println("정말 삭제하시겠습니까? (Y/N)");
+						del = scan.next();
+
+						if (del.equals("N") || del.equals("n"))
+							break;
 						list.remove(c);
+						System.out.println("삭제되었습니다.");
 					}
-				}
-				System.out.println("삭제되었습니다.");
+				}			
 				break;
 			case 2:
 				System.out.println("상품 이름을 입력하시오.");
-				d = scan.next();
+				name = scan.next();
 				for (c = 0; c < list.size(); c++) {
 					Product i = new Product();
 					i = list.get(c);
-					if (i.getProductname() == d) {
+					if (name.equals(i.getProductname())) {
+						System.out.println("정말 삭제하시겠습니까? (Y/N)");
+						del = scan.next();
+						
+						if (del.equals("N") || del.equals("n"))
+							break;
 						list.remove(c);
+						System.out.println("삭제되었습니다.");
 					}
-				}
-				System.out.println("삭제되었습니다.");
+				}			
+				break;
+			case 0:
 				break;
 			}
-			System.out.println("계속 삭제하시겠습니까? (y=1, n=2) : ");
-			z = scan.nextInt();
-		} while (z != 2);
+
+			if (menu == 0)
+				break;
+
+			System.out.println("계속 삭제하시겠습니까? (Y/N) : ");
+			Y_N = scan.next();
+
+			if (Y_N.equals("N") || Y_N.equals("n"))
+				break;
+
+		} while (true);
 	}
 
 	void catalog() {
 
+		String back;
 
 		for (int a = 0; a < list.size(); a++) {
-			
+
 			Product i = new Product();
 			i = list.get(a);
-			System.out.print("상품ID : " + i.getProductid() + " 상품이름 : " + i.getProductname() + " 가격 : " + i.getPrice()
-					+ "원" + " 종류 : " + i.getProducttype() + " 설명 : " + i.getExplanation() + " 재고 : "
+			System.out.print("상품ID :" + i.getProductid() + "  상품이름 :" + i.getProductname() + "  가격 :" + i.getPrice()
+					+ "원" + "  종류 :" + i.getProducttype() + "  설명 :" + i.getExplanation() + "  재고 :"
 					+ i.getInventory());
 			System.out.println(" ");
 		}
+		System.out.println("돌아가시려면 아무거나 입력하세요.");
+		back = scan.next();
 	}
 
 	void search() {
+		int menu, ID, c;
+		String name, type, Y_N;
 
+		do {
+			System.out.println("1.상품 ID로 찾기");
+			System.out.println("2.상품 이름으로 찾기");
+			System.out.println("3.종류별 찾기");
+			menu = scan.nextInt();
+
+			switch (menu) {
+			case 1:
+				System.out.println("상품 ID를 입력하시오.");
+				ID = scan.nextInt();
+				for (c = 0; c < list.size(); c++) {
+					Product i = new Product();
+					i = list.get(c);
+					if (i.getProductid() == ID) {
+						System.out.print("상품ID :" + i.getProductid() + "  상품이름 :" + i.getProductname() + "  가격 :"
+								+ i.getPrice() + "원" + "  종류 :" + i.getProducttype() + "  설명 :" + i.getExplanation()
+								+ "  재고 :" + i.getInventory());
+						System.out.println(" ");
+					}
+				}
+				break;
+			case 2:
+				System.out.println("상품 이름을 입력하시오.");
+				name = scan.next();
+				for (c = 0; c < list.size(); c++) {
+					Product i = new Product();
+					i = list.get(c);
+					if (name.equals(i.getProductname())) {
+						System.out.print("상품ID :" + i.getProductid() + "  상품이름 :" + i.getProductname() + "  가격 :"
+								+ i.getPrice() + "원" + "  종류 :" + i.getProducttype() + "  설명 :" + i.getExplanation()
+								+ "  재고 :" + i.getInventory());
+						System.out.println(" ");
+					}
+				}
+				break;
+			case 3:
+				System.out.println("종류를 입력하시오.");
+				type = scan.next();
+				for (c = 0; c < list.size(); c++) {
+					Product i = new Product();
+					i = list.get(c);
+					if (type.equals(i.getProducttype())) {
+						System.out.print("상품ID :" + i.getProductid() + "  상품이름 :" + i.getProductname() + "  가격 :"
+								+ i.getPrice() + "원" + "  종류 :" + i.getProducttype() + "  설명 :" + i.getExplanation()
+								+ "  재고 :" + i.getInventory());
+						System.out.println(" ");
+					}
+				}
+			}
+			System.out.println("계속 검색하시겠습니까? (Y/N) : ");
+			Y_N = scan.next();
+
+			if (Y_N.equals("N") || Y_N.equals("n"))
+				break;
+
+		} while (true);
+
+	}
+
+	void sort() {
+
+		Product list_1 = new Product();
+		Product list_2 = new Product();
+		for (int i = 0; i < list.size() - 1; i++) {
+
+			list_1 = list.get(i);
+
+			for (int j = i + 1; j < list.size(); j++) {
+
+				list_2 = list.get(j);
+
+				if (list_1.getProductid() > list_2.getProductid()) {
+					list.set(i, list_2);
+					list.set(j, list_1);
+				}
+
+			}
+
+		}
 	}
 
 }

@@ -65,4 +65,5 @@ public class Product {
 		this.explanation = explanation;
 		this.inventory = inventory;
 	}
+	
 }
