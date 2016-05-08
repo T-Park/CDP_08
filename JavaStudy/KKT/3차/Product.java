@@ -1,18 +1,28 @@
+import java.io.*;
 
-public class Product {
+public class Product implements Serializable {
 
-	private int product_id;
+	private String product_id;
 	private String productname;
 	private int price;
 	private String producttype;
 	private String explanation;
 	private int inventory;
+	private int salesInventory;
 	
-	public int getProductid() {
+	public int getSalesInventory() {
+		return salesInventory;
+	}
+
+	public void setSalesInventory(int salesInventory) {
+		this.salesInventory = salesInventory;
+	}
+
+	public String getProductid() {
 		return product_id;
 	}
 
-	public void setProductid(int productid) {
+	public void setProductid(String productid) {
 		this.product_id = productid;
 	}
 
@@ -56,14 +66,15 @@ public class Product {
 		this.inventory = inventory;
 	}
 	
-	public void setProduct(int productid, String productname, int price, String producttype, String explanation,
-			int inventory) {
+	public void setProduct(String productid, String productname, int price, String producttype, String explanation,
+			int inventory, int salesInventory) {
 		this.product_id = productid;
 		this.productname = productname;
 		this.price = price;
 		this.producttype = producttype;
 		this.explanation = explanation;
 		this.inventory = inventory;
+		this.salesInventory = salesInventory;
 	}
 	
 }

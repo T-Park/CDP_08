@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.io.*;
 public class Product_test {
 
 	public static void main(String[] args) {
@@ -10,6 +10,7 @@ public class Product_test {
 		int a;
 		Scanner scan = new Scanner(System.in);
 		Function f = new Function();
+		f.deserial();
 
 		do {
 			f.display();
