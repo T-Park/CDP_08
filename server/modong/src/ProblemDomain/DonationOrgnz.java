@@ -9,12 +9,20 @@ public class DonationOrgnz {
 	String donation_tel;
 	char donation_type;
 	
-	public void DonationOrgnz(int id)
+	public DonationOrgnz(int did)
 	{
 		donation_point = 0;  //烙矫肺
-		//db 贸府
-		
+		//db 贸府		
 	}	
+	public DonationOrgnz(int did, String name, int point, String tel, char type)
+	{
+		donation_id = did;
+		donation_name = name;
+		donation_point = point;
+		donation_tel = tel;
+		donation_type = type;
+	}
+	
 	public int addPoint(int i)
 	{
 		donation_point = i + donation_point;

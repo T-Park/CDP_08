@@ -165,7 +165,72 @@ public class User {
 		this.groupCode = groupCode;
 	}
 	
+	public String toString()
+	{
+		return  user_id + " : " +
+		 user_startDate + " " +
+		 user_type + "    " +
+		 user_point + "    " +
+		 user_name + " " +
+		 user_job + " " +
+		 user_age + " " +
+		 user_donatePoint + "     " +
+		 user_tel + " " +
+		 user_bacode + " " +
+		 groupCode;
+	}
 	
+	class UseList
+	{
+		String where;
+		Date when;
+		int point;
+		
+		UseList(String where, Date when, int point)
+		{
+			this.where = where;
+			this.when = when;
+			this.point = point;
+		}
+
+		public String getWhere() {
+			return where;
+		}
+
+		public Date getWhen() {
+			return when;
+		}
+
+		public int getPoint() {
+			return point;
+		}
+		
+	}
+	class DonationList
+	{
+		String where;
+		Date when;
+		int point;
+		
+		DonationList(String where, Date when, int point)
+		{
+			this.where = where;
+			this.when = when;
+			this.point = point;
+		}
+
+		public String getWhere() {
+			return where;
+		}
+
+		public Date getWhen() {
+			return when;
+		}
+
+		public int getPoint() {
+			return point;
+		}
+	}
 }
 
 /*

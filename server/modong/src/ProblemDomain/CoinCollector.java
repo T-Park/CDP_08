@@ -1,5 +1,7 @@
 package ProblemDomain;
 
+import java.util.Date;
+
 public class CoinCollector {
 	
 	//db info
@@ -8,15 +10,21 @@ public class CoinCollector {
 	String coin_district;
 	String coin_detailAddr;
 	int coin_point;
-	String coin_startDate;
+	Date coin_startDate;
 	
 	public CoinCollector(int cid)
 	{
 		this.cid = cid;
+		//db PE
 	}
-	public CoinCollector(int cid, String city, String district, String detail, int point, String startDate)
+	public CoinCollector(int cid, String city, String district, String detail, int point, Date startDate)
 	{
 		this.cid = cid;
+		coin_city = city;
+		coin_district = district;
+		coin_detailAddr = detail;
+		coin_point = point;
+		coin_startDate = startDate;
 	}
 	
 	public int addPoint(int i)
@@ -70,10 +78,10 @@ public class CoinCollector {
 	public void setCoin_point(int coin_point) {
 		this.coin_point = coin_point;
 	}
-	public String getCoin_startDate() {
+	public Date getCoin_startDate() {
 		return coin_startDate;
 	}
-	public void setCoin_startDate(String coin_startDate) {
+	public void setCoin_startDate(Date coin_startDate) {
 		this.coin_startDate = coin_startDate;
 	}
 	

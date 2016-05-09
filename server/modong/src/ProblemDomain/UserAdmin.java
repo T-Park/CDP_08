@@ -12,8 +12,11 @@ public class UserAdmin {
 	
 	private final static char default_userType = 'A'; //user 생성시 default type
 	private final static int default_userPoint = 0; //user 생성시 default point
+	private final static int default_groupUserPoint = 0; //Groupuser 생성시 default point
 	public final static int default_groupCode = -1; //user 생성시 default group code
 	public final static int groupCode_forTest = 3;
+	public final static String groupName_forTest = "testGroup1";
+	public final static String groupBacode_forTest = "asd";
 	
 	private UserAdmin()
 	{
@@ -91,7 +94,7 @@ public class UserAdmin {
 	}
 	
 	//그룹유저 생성 
-	public boolean groupUser(String[] ids)//id -> uid로 바꾸기
+	public boolean groupingUser(String[] ids)//id -> uid로 바꾸기
 	{			
 		int[] indexList = new int[ids.length];
 		
@@ -110,7 +113,8 @@ public class UserAdmin {
 		//id 인증 완료
 		System.out.println("유효한 Id입니다.");
 		
-		GroupUser tempGroupUser = new GroupUser(groupCode_forTest, "testGroup1", 0, "asd");
+		GroupUser tempGroupUser = new GroupUser(groupCode_forTest, groupName_forTest, 
+													default_groupUserPoint, groupBacode_forTest);
 		
 		for(int i=0; i < ids.length; i++)
 		{
@@ -139,6 +143,7 @@ public class UserAdmin {
 	
 	//사용자 조회- uid 구현 필요
 	//사용자 조회 - id 찾지 못하면 -1, 찾는다면 현재  array의 index
+	//중복 아이디 검사용
 	public int searchUser_asId(String id)
 	{		
 		for(int i=0; i < mUserList.size(); i++)
@@ -181,24 +186,26 @@ public class UserAdmin {
 
 	public void print_currentUserListInfo()
 	{
-		System.out.println("UserList 출력");
+		System.out.println("UserList 출력*******************************************************************************");
 		
-		System.out.println("user id\t user name**************");
+		System.out.println("user id startDate\t\t type point name job age D-point tel       group code");
 		for(int i=0; i < mUserList.size(); i++)
 		{
-			System.out.printf("%s\t%s\t\n", mUserList.get(i).getUser_id(), mUserList.get(i).getUser_name());		
+			System.out.print(mUserList.get(i) + "\n");		
 		}
+		System.out.println("*******************************************************************************************");
 	}
 	
 	public void print_currentGroupUserListInfo()
 	{
-		System.out.println("GroupUserList 출력");
+		System.out.println("GroupUserList 출력*******************************************************************************");
 		
-		System.out.println("group id\t group name**************");
+		System.out.println("**************group id\t group name**************");
 		for(int i=0; i < mGroupList.size(); i++)
 		{
-			System.out.printf("%s\t%s\t\n", mGroupList.get(i).getGid(), mGroupList.get(i).getGroup_name());		
+			System.out.printf("**************%s\t%s\t\n", mGroupList.get(i).getGid(), mGroupList.get(i).getGroup_name());		
 		}
+		System.out.println("************group id\t group name end************");
 	}
 	
 }
