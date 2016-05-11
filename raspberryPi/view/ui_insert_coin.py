@@ -34,6 +34,11 @@ class Ui_Form(object):
         self.noticeText = QtWidgets.QTextEdit(Form)
         self.noticeText.setGeometry(QtCore.QRect(160, 140, 501, 181))
         self.noticeText.setObjectName("noticeText")
+        self.insertedCoin = QtWidgets.QLCDNumber(Form)
+        self.insertedCoin.setGeometry(QtCore.QRect(260, 30, 311, 81))
+        self.insertedCoin.setSmallDecimalPoint(True)
+        self.insertedCoin.setDigitCount(7)
+        self.insertedCoin.setObjectName("insertedCoin")
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)

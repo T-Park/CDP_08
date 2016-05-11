@@ -5,23 +5,22 @@ import sys
 
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import (QApplication)
-from controller import intro_controller, get_barcode_controller, donate_result_controller, insert_coin_controller, orglist_controller, save_result_controller, signal
+from controller import intro_controller, get_barcode_controller, donate_result_controller, insert_coin_controller, \
+    orglist_controller, save_result_controller, signal
 
 
 class MainWindow(QtWidgets.QMainWindow):
-
     def __init__(self):
         super().__init__()
-        self.resize(800, 480) # set window size
+        self.resize(800, 480)  # set window size
 
-
-        self.central_widget = QtWidgets.QStackedWidget() # use stacked widget
-        self.setCentralWidget(self.central_widget) #
+        self.central_widget = QtWidgets.QStackedWidget()  # use stacked widget
+        self.setCentralWidget(self.central_widget)  #
         self.initSignal()
         self.initUI()
 
     def test(self, num):
-        print( "signal %d" %num )
+        print("signal %d" % num)
         self.central_widget.setCurrentIndex(num)
 
     def initSignal(self):
@@ -53,10 +52,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.show()
 
     def func(self, num):
-        print( "widget changed %d %s"%( num, self.central_widget.currentWidget()))
+        print("widget changed %d %s" % (num, self.central_widget.currentWidget()))
+
 
 if __name__ == '__main__':
-
     app = QApplication(sys.argv)
     ex = MainWindow()
     sys.exit(app.exec_())

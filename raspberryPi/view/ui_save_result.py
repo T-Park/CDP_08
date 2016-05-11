@@ -36,6 +36,11 @@ class Ui_Form(object):
         font.setPointSize(24)
         self.label_3.setFont(font)
         self.label_3.setObjectName("label_3")
+        self.insertedCoin = QtWidgets.QLCDNumber(Form)
+        self.insertedCoin.setGeometry(QtCore.QRect(310, 160, 261, 71))
+        self.insertedCoin.setSmallDecimalPoint(True)
+        self.insertedCoin.setDigitCount(7)
+        self.insertedCoin.setObjectName("insertedCoin")
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
