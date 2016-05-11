@@ -1,7 +1,8 @@
 # main.py
 # coincollecter's main function
 import coin_collecter as cc
-import barcode_reader as br
+
+from model import barcode_reader as br
 
 global coin_collecter # coin_collecter
 global connection # connection to server
