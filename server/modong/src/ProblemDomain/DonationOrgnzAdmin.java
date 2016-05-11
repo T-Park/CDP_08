@@ -26,10 +26,30 @@ public class DonationOrgnzAdmin {
 		return unicqueDonationOrgnzAdmin;
 	}
 	
+	public String didToName(int did)
+	{
+		int index= searchDonationOrgnz_asDid(did);
+		//최신 list로 갱신 필요
+		if(index < 0 )
+			return "잘 못된 did값입니다.";		
+		return mDonationOrgnzList.get(index).getDonation_name();
+	}
+	
+	public void recordDonationPoint(String bacode, int did, int point)
+	{
+		SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy.MM.dd", Locale.KOREA );
+		Date currentTime = new Date ();
+		//id, uid, did, date(when), point db 처리 
+	}
+	
 	//기부단체의 경우 관리자가 직접 입력해서 추가, type값 명시해야함
 	public boolean addDonationOrgnz(int did, String name, int point, String tel, char type)
 	{
 		DonationOrgnz tempDo;
+		
+		if(searchDonationOrgnz_asDid(did) != -1) //unique 한 값
+			return false;
+		
 		tempDo = new DonationOrgnz(did, name, point, tel, type);
 		
 		if(mDonationOrgnzList.add(tempDo))
@@ -43,7 +63,7 @@ public class DonationOrgnzAdmin {
 			return false;		
 	}
 	
-	public boolean deleteDonationOrgnz(int did)
+	public boolean removeDonationOrgnz(int did)
 	{
 		int index = searchDonationOrgnz_asDid(did);
 		if(index >= 0)
@@ -68,10 +88,20 @@ public class DonationOrgnzAdmin {
 		//return -1 or point
 	}
 	
-	public void recordDonationPoint(int uid, int did, int point)
+	
+	
+	public void print_currentDonationOrgnzListInfo()
 	{
-		SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy.MM.dd", Locale.KOREA );
-		Date currentTime = new Date ();
-		//id, uid, did, date(when), point db 처리 
+		System.out.println("DonationOrgnzList 출력*******************************************************************************");
+		
+		System.out.println("donation id  name point tel type");
+		for(int i=0; i < mDonationOrgnzList.size(); i++)
+		{
+			System.out.print(mDonationOrgnzList.get(i) + "\n");		
+		}
+		System.out.println("*******************************************************************************************");
+	
+		
 	}
+	
 }

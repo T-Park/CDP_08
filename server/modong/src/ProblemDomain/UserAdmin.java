@@ -12,6 +12,7 @@ public class UserAdmin {
 	
 	private final static char default_userType = 'A'; //user 积己矫 default type
 	private final static int default_userPoint = 0; //user 积己矫 default point
+	private final static int default_userDonationPoint = 0; //user 积己矫 default donation point
 	private final static int default_groupUserPoint = 0; //Groupuser 积己矫 default point
 	public final static int default_groupCode = -1; //user 积己矫 default group code
 	public final static int groupCode_forTest = 3;
@@ -67,7 +68,7 @@ public class UserAdmin {
 				
 		tempUser = new User(id, pw, currentTime, 
 								default_userType, default_userPoint, name, 
-									job, age, 0,  tel, bacode);		
+									job, age, default_userDonationPoint,  tel, bacode);		
 		if(mUserList.add(tempUser))
 		{
 			//db贸府
@@ -178,10 +179,10 @@ public class UserAdmin {
 		mUserList.get(index).addPoint(point);
 	}
 	
-	public void usePointToUser(String id, int point)
+	public void removePointToUser(String id, int point)
 	{
 		int index =  searchUser_asId(id);
-		mUserList.get(index).usePoint(point);
+		mUserList.get(index).removePoint(point);
 	}
 
 	public void print_currentUserListInfo()
@@ -203,9 +204,9 @@ public class UserAdmin {
 		System.out.println("**************group id\t group name**************");
 		for(int i=0; i < mGroupList.size(); i++)
 		{
-			System.out.printf("**************%s\t%s\t\n", mGroupList.get(i).getGid(), mGroupList.get(i).getGroup_name());		
+			System.out.print(mGroupList.get(i) + "\n");		
 		}
-		System.out.println("************group id\t group name end************");
+		System.out.println("*******************************************************************************************");
 	}
 	
 }

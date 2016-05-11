@@ -1,7 +1,9 @@
 package ProblemDomain;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class User {
 	
@@ -9,7 +11,7 @@ public class User {
 	private DonationOrgnzAdmin mDonationOrgnzAdmin;
 	private StoreAdmin mStoreAdmin;
 	private CoinCollectorAdmin mCoinCollectorAdmin;
-	
+		
 	//user Db내용
 	//int uid;
 	String user_id;
@@ -25,11 +27,11 @@ public class User {
 	String user_bacode;
 	int user_event;	//임시 attr	
 	//++ db에 더해야할 정보
-	int groupCode;
+	int user_groupCode;
 	
 	
 	public User(int uid)
-	{
+	{		
 		//user_point = 0; //temp
 		//groupCode = UserAdmin.default_groupCode;
 		//db처리
@@ -44,27 +46,34 @@ public class User {
 		user_job = job; user_age = age; user_donatePoint = donatePoint;
 		user_tel = tel; user_bacode = bacode;
 		
-		groupCode = UserAdmin.default_groupCode;
+		user_groupCode = UserAdmin.default_groupCode;
 	}
 	
+	private void recordMyUse(String toName, int point)
+	{
+		
 	
-	public int addPoint(int i)//적립하기-가맹점
+		//tempUseDetail = new UseDetail(toName, );
+		//db처리
+		//myUseList.add(e)
+	}
+	
+	public void addPoint(int i)//적립하기-가맹점
 	{
 		user_point = user_point + i;
-		return user_point;
 	}
-	public int usePoint(int point)
+	public boolean removePoint(int point)
 	{
 		if(user_point < point)//point가 부족한데 시도
 		{
 			//경고
 			System.out.println("point가 부족합니다.");
-			return user_point;
+			return false;
 		}
 		
 		//db PE
 		user_point = user_point - point;
-		return user_point; //current point
+		return true; //current point
 	}
 
 	
@@ -79,12 +88,19 @@ public class User {
 		
 		//dOrgnz.addToOrgnz id, point
 		user_point = user_point - point;
+		user_donatePoint = user_donatePoint + point;
 		return user_point; //current point
 	}
 	
-	
-	
-	
+	public boolean leaveGroup()
+	{
+		if(user_groupCode == UserAdmin.default_groupCode)
+			return false;
+		
+		user_groupCode = UserAdmin.default_groupCode;
+		return true;
+	}
+		
 	//getter setter들
 	public String getUser_id() {
 		return user_id;
@@ -159,10 +175,10 @@ public class User {
 		this.user_event = user_event;
 	}
 	public int getGroupCode() {
-		return groupCode;
+		return user_groupCode;
 	}
 	public void setGroupCode(int groupCode) {
-		this.groupCode = groupCode;
+		this.user_groupCode = groupCode;
 	}
 	
 	public String toString()
@@ -177,16 +193,37 @@ public class User {
 		 user_donatePoint + "     " +
 		 user_tel + " " +
 		 user_bacode + " " +
-		 groupCode;
+		 user_groupCode;
 	}
 	
-	class UseList
+
+	
+	
+	
+}
+
+/*
+ * public int addPoint_fromStore(int i)//적립하기-가맹점
+	{
+		user_point = user_point + i;
+		return user_point;
+	}
+	public int addPoint_fromCoinCollector(int i)//적립하기-동전모음이
+	{
+		user_point = user_point + i;
+		return user_point;
+	}
+ * 
+ * 
+ * 
+ * 
+ * 	class UseDetail
 	{
 		String where;
 		Date when;
 		int point;
 		
-		UseList(String where, Date when, int point)
+		UseDetail(String where, Date when, int point)
 		{
 			this.where = where;
 			this.when = when;
@@ -231,19 +268,5 @@ public class User {
 			return point;
 		}
 	}
-}
-
-/*
- * public int addPoint_fromStore(int i)//적립하기-가맹점
-	{
-		user_point = user_point + i;
-		return user_point;
-	}
-	public int addPoint_fromCoinCollector(int i)//적립하기-동전모음이
-	{
-		user_point = user_point + i;
-		return user_point;
-	}
- * 
  */
 

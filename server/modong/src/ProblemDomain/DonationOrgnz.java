@@ -22,7 +22,7 @@ public class DonationOrgnz {
 		donation_tel = tel;
 		donation_type = type;
 	}
-	
+		
 	public int addPoint(int i)
 	{
 		donation_point = i + donation_point;
@@ -43,6 +43,14 @@ public class DonationOrgnz {
 		return donation_point; //current point
 	}
 	
+	public String toString()
+	{
+		return donation_id + " : " + 
+		 donation_name + " " +
+		 donation_point + " " +
+		 donation_tel + " " +
+		 donation_type + "";		
+	}
 	
 	//getter setter
 	public int getDonation_id() {

@@ -23,6 +23,15 @@ public class StoreAdmin {
 		return unicqueStoreAdmin;
 	}
 	
+	public String pidToName(int pid)
+	{
+		int index= searchStore_asPid(pid);
+		//최신 list로 갱신 필요
+		if(index < 0 )
+			return "잘 못된 pid값입니다.";		
+		return mStoreList.get(index).getStore_name();
+	}
+	
 	public void recordBreakdown_asBacode(String bacode, int pid, int point)
 	{
 		char type = '+'; //tradeType
@@ -41,8 +50,70 @@ public class StoreAdmin {
 		SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy.MM.dd", Locale.KOREA );
 		Date currentTime = new Date ();
 		
+		//point가 양수인가 음수인가
 		//bacode to ui
 		//uid, did, date(when), point
+	}
+	
+
+	public boolean addStore(int pid, String name, char type, String city, String district, String detail, String tel)
+	{
+		Store tempStore;
+		
+		if(searchStore_asPid(pid) != -1) //unique 한 값
+			return false;
+		tempStore = new Store(pid, name, type, city, district, detail, tel);
+		
+		if(mStoreList.add(tempStore))
+		{
+			//db 
+			System.out.println("가맹점 입력 완료");
+		}
+		else
+		{
+			System.out.println("가맹점 입력 실패");
+			return false;
+		}	
+		return true;
+	}
+	public boolean removeStore(int pid)
+	{
+		int index = searchStore_asPid(pid);
+		if(index >= 0)
+		{
+			mStoreList.remove(index);
+			return true;
+		}
+		else//그런 id 존재 x
+			return false;
+	}
+	
+	
+	public int searchStore_asPid(int pid)
+	{		
+		for(int i=0; i < mStoreList.size(); i++)
+		{
+			if(pid == mStoreList.get(i).getStore_id())
+			{
+				return i;
+			}
+		}		
+		return -1;
+		//return -1 or point
+	}
+	
+	public void print_currentStoreInfo()
+	{
+		System.out.println("StoreList 출력*******************************************************************************");
+		
+		System.out.println("Store id  name type city district detail tel");
+		for(int i=0; i < mStoreList.size(); i++)
+		{
+			System.out.print(mStoreList.get(i) + "\n");		
+		}
+		System.out.println("*******************************************************************************************");
+	
+		
 	}
 	
 	class Store {

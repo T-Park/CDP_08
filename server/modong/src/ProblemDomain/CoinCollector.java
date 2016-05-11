@@ -32,7 +32,7 @@ public class CoinCollector {
 		coin_point = coin_point + i;
 		return coin_point;
 	}
-	public int usePoint(int cid, int point)//임시 메소드
+	public int removePoint(int cid, int point)//임시 메소드
 	{
 		if(coin_point < point)//point가 부족한데 시도
 		{
@@ -46,6 +46,15 @@ public class CoinCollector {
 		return coin_point; //current point
 	}
 	
+	public String toString()
+	{	
+		return  cid + " : " +
+		 coin_city + " " +
+		 coin_district + " " +
+		 coin_detailAddr + " " +
+		 coin_point + " " +
+		 coin_startDate;
+	}
 	
 	//getter setter
 	public int getCoin_id() {

@@ -37,9 +37,12 @@ public class CoinCollectorAdmin {
 	public boolean addCoinCollector(int cid, String city, String district, String detail)
 	{
 		CoinCollector tempCoinCollector;
-		SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy.MM.dd", Locale.KOREA );
-		Date currentTime = new Date ();
 		
+		if(searchCoinCollector_asCid(cid) != -1) //unique 한 값
+			return false;
+		
+		SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy.MM.dd", Locale.KOREA );
+		Date currentTime = new Date ();		
 		tempCoinCollector = new CoinCollector(cid, city, district, detail, default_CCPoint, currentTime);
 		
 		if(mCoinCollectorList.add(tempCoinCollector))
@@ -55,7 +58,7 @@ public class CoinCollectorAdmin {
 			
 		return true;
 	}
-	public boolean discardCoinCollector(int cid)
+	public boolean removeCoinCollector(int cid)
 	{
 		int index = searchCoinCollector_asCid(cid);
 		if(index >= 0)
@@ -79,6 +82,20 @@ public class CoinCollectorAdmin {
 		}		
 		return -1;
 		//return -1 or point
+	}
+	
+	public void print_currentCoinCollectorListInfo()
+	{
+		System.out.println("CoinCollectorList 출력*******************************************************************************");
+		
+		System.out.println("CC id city district detail point start date");
+		for(int i=0; i < mCoinCollectorList.size(); i++)
+		{
+			System.out.print(mCoinCollectorList.get(i) + "\n");		
+		}
+		System.out.println("*******************************************************************************************");
+	
+		
 	}
 	
 }

@@ -20,6 +20,27 @@ public class GroupUser {
 		group_point = point;
 		group_bacode = bacode;
 	}
+	
+	public int addPoint(int i)//적립하기-가맹점
+	{
+		group_point = group_point + i;
+		return group_point;
+	}
+	public int removePoint(int point)
+	{
+		if(group_point < point)//point가 부족한데 시도
+		{
+			//경고
+			System.out.println("point가 부족합니다.");
+			return group_point;
+		}
+		
+		//db PE
+		group_point = group_point - point;
+		return group_point; //current point
+	}
+	
+	
 	public String getGroup_name() {
 		return group_name;
 	}
@@ -37,6 +58,14 @@ public class GroupUser {
 	}
 	public void setGroup_bacode(String group_bacode) {
 		this.group_bacode = group_bacode;
+	}
+	
+	public String toString()
+	{
+		return gid + " : " +
+		group_name + " " +
+		group_point + " " +
+		group_bacode;
 	}
 	
 }
