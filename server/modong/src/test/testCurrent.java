@@ -6,7 +6,7 @@ import ProblemDomain.*;
 
 public class testCurrent {
 	
-	static UserAdmin ua;
+	static ModongUserAdmin ua;
 	static CoinCollectorAdmin cca;
 	static DonationOrgnzAdmin doa;
 	static StoreAdmin sa;
@@ -189,7 +189,7 @@ public class testCurrent {
 							System.out.println(">> 실패 하였습니다.");
 						break;
 				
-				case 3 : cca.print_currentCoinCollectorListInfo(); break;
+				case 3 : sa.print_currentStoreInfo(); break;
 				default : 
 					System.out.println(">> 잘못된 입력입니다.");
 			}
@@ -208,7 +208,30 @@ public class testCurrent {
 			switch(choice)
 			{
 				case 0 : return ;
-				case 1 : ua.print_currentUserListInfo();  break;
+				case 1 : ua.print_currentUserListInfo();  
+					
+				System.out.println("id 입력(string)");
+				String id = scan.next();
+				
+				System.out.println("pw 입력(string)");
+				String pw = scan.next();
+				
+				System.out.println("name 입력(string)");
+				String name = scan.next();
+								
+				System.out.println("직업 입력(string)");
+				String job = scan.next();
+				
+				System.out.println("나이 입력(int)");
+				int age = scan.nextInt();
+				
+				System.out.println("tel 입력(-를 빼고 입력해주세요.)");
+				String tel = scan.next();
+				
+				ua.joinModong(id, pw, name, job, age, tel);
+				System.out.println(">> 회원가입 되셨습니다.");
+				
+					break;
 				case 2 : ua.print_currentUserListInfo(); 				
 						System.out.println("회원을 삭제합니다. 아이디를 입력해 주세요.");
 						String tmepId = scan.next();
@@ -223,7 +246,7 @@ public class testCurrent {
 	    }
 	}
 	
-	public void memberMainUi(User user)
+	public void memberMainUi(ModongUser user)
 	{
 		System.out.println(">>" + user.getUser_name() + "님 반갑습니다.");
 		 while(true)
@@ -286,10 +309,85 @@ public class testCurrent {
 		   }
 	}
 	
+	public void storeMainUi()
+	{
+		int myPid;
+		
+		System.out.println(">> 비인증 가맹점 모드 입니다.");
+		System.out.println(">> 가맹점 모드 pid를 입력해 주세요.");
+		myPid = scan.nextInt();
+		
+		if(!sa.findStore(myPid))
+		{
+			System.out.println(">> 존재 하지 않는 pid 입니다.");
+			return;
+		}
+		
+		while(true)
+	    {
+			System.out.println(">> 가맹점 모드 입니다.");
+			System.out.println("0. 돌아가기 1. 포인트 적립하기 2. 포인트 사용하기 ");
+	    	int choice = scan.nextInt();
+			switch(choice)
+			{
+				case 0 : return ;
+				case 1 :
+					System.out.println(">> 포인트를 적립합니다.");
+					System.out.println(">> 사용자 바코드를 입력해 주세요.");
+					String userBacode = scan.next();
+					
+					if(!ua.isThereUser_asBacode(userBacode) )
+					{
+						System.out.println(">> 존재 하지 않는  user bacode 입니다.");
+						break;
+					}
+					
+					ModongUser tempUser = ua.findUser_asBacode(userBacode);
+					
+					System.out.println("현재 포인트 : " + tempUser.getUser_point() + "P");
+					System.out.println(">> 적립 하실 포인트를 입력해 주세요.");
+					int tempPoint = scan.nextInt();
+					
+					tempUser.addPoint(tempPoint);
+					sa.recordAddPoint_asBacode(userBacode, myPid, tempPoint);
+					System.out.println(">> 적립 되었습니다.");
+					break;
+					
+				case 2 : 
+					System.out.println(">> 포인트를 사용합니다.");
+					System.out.println(">> 사용자 바코드를 입력해 주세요.");
+					String userBacode2 = scan.next();
+					
+					if(!ua.isThereUser_asBacode(userBacode2))
+					{
+						System.out.println(">> 존재 하지 않는  user bacode 입니다.");
+						break;
+					}
+					
+					ModongUser tempUser2 = ua.findUser_asBacode(userBacode2);
+					
+					System.out.println("현재 포인트 : " + tempUser2.getUser_point() + "P");
+					System.out.println(">> 사용 하실 포인트를 입력해 주세요.");
+					int tempPoint2 = scan.nextInt();					
+					if(tempUser2.removePoint(tempPoint2))
+					{
+						sa.recordAddPoint_asBacode(userBacode2, myPid, tempPoint2);
+						System.out.println(">> 사용 되었습니다.");
+						break;
+					}
+					else
+						System.out.println(">> 사용에 실패하였습니다.");
+					break;
+				default : System.out.println(">> 잘못된 입력입니다. 다시 입력해주세요.");
+			}
+	    	    	
+	    }
+	}
+	
 	public static void main(String[] args)
 	{
 		testCurrent tc = new testCurrent();
-		ua = UserAdmin.getInstance();
+		ua = ModongUserAdmin.getInstance();
 		cca = CoinCollectorAdmin.getInstance();
 		doa = DonationOrgnzAdmin.getInstance();
 		sa = StoreAdmin.getInstance();
@@ -300,7 +398,7 @@ public class testCurrent {
 	    while(true)
 	    {
 	    	System.out.println(">>모여라 동전test에 오신것을 환영합니다.");
-			System.out.println("0. 종료 1. 관리자 모드 2. 모바일 회원 모드  3. 가맹점 회원 모드 (미구현) ");
+			System.out.println("0. 종료 1. 관리자 모드 2. 모바일 회원 모드  3. 가맹점 회원 모드 ");
 	    	int choice = scan.nextInt();
 			switch(choice)
 			{
@@ -309,7 +407,9 @@ public class testCurrent {
 					break;
 				case 1 : tc.adminMainUi(); break;
 				case 2 : tc.userMainUi(); break;
-				case 3 :  break;
+				case 3 : tc.storeMainUi();
+					
+					break;
 				default : System.out.println(">> 잘못된 입력입니다.");
 			}
 	    	    	

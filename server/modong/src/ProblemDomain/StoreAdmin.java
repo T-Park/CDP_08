@@ -23,6 +23,8 @@ public class StoreAdmin {
 		return unicqueStoreAdmin;
 	}
 	
+	
+	
 	public String pidToName(int pid)
 	{
 		int index= searchStore_asPid(pid);
@@ -47,6 +49,7 @@ public class StoreAdmin {
 	}
 	public void recordAddPoint_asBacode(String bacode, int pid, int point)
 	{
+		System.out.println("레코드를 작성 합니다.");
 		SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy.MM.dd", Locale.KOREA );
 		Date currentTime = new Date ();
 		
@@ -88,8 +91,19 @@ public class StoreAdmin {
 			return false;
 	}
 	
+	public boolean findStore(int pid)
+	{
+		for(int i=0; i < mStoreList.size(); i++)
+		{
+			if(pid == mStoreList.get(i).getStore_id())
+			{
+				return true;
+			}
+		}		
+		return false;
+	}
 	
-	public int searchStore_asPid(int pid)
+	private int searchStore_asPid(int pid)
 	{		
 		for(int i=0; i < mStoreList.size(); i++)
 		{
