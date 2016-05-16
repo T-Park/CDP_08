@@ -34,7 +34,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def initSignal(self):
         # signal from other widgets
         self.sig = signal.Signal()
-        self.sig.select_service.connect(self.select_servie) # select service callback
+        self.sig.select_service.connect(self.select_service) # select service callback
         self.sig.error.connect(self.process_error) # error control callback
         self.sig.reset.connect(self.process_reset) # reset flow
 
@@ -66,7 +66,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.show()
 
     # set which service is selected( save, donation )
-    def select_servie(self, type):
+    def select_service(self, type):
         if type == service_type.Service_Type.Donate.value:
             self.client.current_state = self.service_type.Donate
         elif type == service_type.Service_Type.Save.value:
@@ -93,6 +93,8 @@ class MainWindow(QtWidgets.QMainWindow):
     # process inserted point according to service type
     def proccess_inserted_point(self, amount):
         self.client.coin_collector.add_money(amount) # accumulate inserted coin to coin collector
+        self.client.inserted_coin = amount
+
         if self.client.current_state == self.service_type.Save:
             # code for save point to user and communicate with server
             self.change_widget(self.widget_type.save_result)

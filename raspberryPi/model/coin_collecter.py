@@ -2,7 +2,7 @@
 # it contain coin_collecter's infomation
 # 구를 나머지 주소로
 
-import pickle
+import pickle # for serialization
 
 file_name = "coin.txt"
 
@@ -47,7 +47,6 @@ class CoinCollecter:
             self.city = "산격동"
             self.detail_addr = "경북대학교"
             self.accumulated_amount = 0
-
 
     def save(self):
         fout = open(file_name, 'wb')
