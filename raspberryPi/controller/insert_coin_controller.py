@@ -5,8 +5,9 @@ from PyQt5 import QtWidgets
 from view import ui_insert_coin
 
 class Insert_coin_controller(QtWidgets.QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, sig, parent=None):
         super(Insert_coin_controller, self).__init__(parent)
+        self.sig = sig # signal object
         self.initUI()
 
     def initUI(self):

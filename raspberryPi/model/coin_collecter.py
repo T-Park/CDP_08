@@ -13,8 +13,12 @@ class CoinCollecter:
     detail_addr = None
     accumulated_amount = None
 
-    def __init__(self):
-
+    def __init__(self, cid = None, province = None, city = None, detail_addr = None, accumlated_amout = None ):
+        self.cid = cid
+        self.province = province
+        self.city = city
+        self.detail_addr = detail_addr
+        self.accumulated_amount = accumlated_amout
         self.load();
 
     # add amount
@@ -22,6 +26,7 @@ class CoinCollecter:
         self.accumulated_amount += amount
 
     # Load coincollecter info from file
+    # it must substitue to c-s communication
     def load(self):
         try:
             fin = open(file_name, 'rb')

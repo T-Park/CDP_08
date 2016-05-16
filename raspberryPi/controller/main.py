@@ -2,11 +2,17 @@
 # mainwindow controller for ui
 
 import sys
+import os.path
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '..')) # add current dir to python path
 
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import (QApplication)
 from controller import intro_controller, get_barcode_controller, donate_result_controller, insert_coin_controller, \
-    orglist_controller, save_result_controller, signal
+    orglist_controller, save_result_controller, error_message_controller, signal
+from model import coin_collector_client
+
+from util import widget, service_type
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -15,45 +21,98 @@ class MainWindow(QtWidgets.QMainWindow):
         self.resize(800, 480)  # set window size
 
         self.central_widget = QtWidgets.QStackedWidget()  # use stacked widget
-        self.setCentralWidget(self.central_widget)  #
+        self.setCentralWidget(self.central_widget)  # set widget
+
+        self.client = coin_collector_client.Coin_collector_clinet() # clinet model
+        self.widget_type = widget.Widget_type # enum for widget type
+        self.service_type = service_type.Service_Type # enum for service type
+
         self.initSignal()
         self.initUI()
 
-    def test(self, num):
-        print("signal %d" % num)
-        self.central_widget.setCurrentIndex(num)
-
+    # set signals and processing functions
     def initSignal(self):
         # signal from other widgets
-        self.s = signal.Signal()
-        self.s.asignal.connect(self.test)
+        self.sig = signal.Signal()
+        self.sig.select_service.connect(self.select_servie) # select service callback
+        self.sig.error.connect(self.process_error) # error control callback
+        self.sig.reset.connect(self.process_reset) # reset flow
 
         # run whenever widget is changed
         self.central_widget.currentChanged.connect(self.func)
+        #
 
+    # set widgets
     def initUI(self):
         # initiate all ui
-        self.intro_ui = intro_controller.Intro_controller(self.s)
-        self.get_barcode_ui = get_barcode_controller.Get_barcode_controller()
-        self.insert_coin_ui = insert_coin_controller.Insert_coin_controller()
-        self.orglist_ui = orglist_controller.Orglist_controller()
-        self.save_result_ui = save_result_controller.Save_result_controller()
-        self.donate_result_ui = donate_result_controller.Donate_result_controller()
+        self.intro_ui = intro_controller.Intro_controller(self.sig)  # index 0
+        self.get_barcode_ui = get_barcode_controller.Get_barcode_controller(self.sig)  # index 1
+        self.insert_coin_ui = insert_coin_controller.Insert_coin_controller(self.sig)  # index 2
+        self.orglist_ui = orglist_controller.Orglist_controller(self.sig)  # index 3
+        self.save_result_ui = save_result_controller.Save_result_controller(self.sig)  # index 4
+        self.donate_result_ui = donate_result_controller.Donate_result_controller(self.sig)  # index 5
+        self.error_message_ui = error_message_controller.Error_message_controller(self.sig)  # index 6
 
         # insert to stack
-        self.central_widget.addWidget(self.intro_ui)
-        self.central_widget.addWidget(self.get_barcode_ui)
-        self.central_widget.addWidget(self.insert_coin_ui)
-        self.central_widget.addWidget(self.orglist_ui)
-        self.central_widget.addWidget(self.save_result_ui)
-        self.central_widget.addWidget(self.donate_result_ui)
+        self.central_widget.insertWidget(widget.Widget_type.intro.value, self.intro_ui)
+        self.central_widget.insertWidget(widget.Widget_type.get_barcode.value, self.get_barcode_ui)
+        self.central_widget.insertWidget(widget.Widget_type.insert_coin.value, self.insert_coin_ui)
+        self.central_widget.insertWidget(widget.Widget_type.orglist.value, self.orglist_ui)
+        self.central_widget.insertWidget(widget.Widget_type.save_result.value, self.save_result_ui)
+        self.central_widget.insertWidget(widget.Widget_type.donate_result.value, self.donate_result_ui)
+        self.central_widget.insertWidget(widget.Widget_type.error_message.value, self.error_message_ui)
 
         self.central_widget.setCurrentWidget(self.intro_ui)
         self.show()
 
-    def func(self, num):
-        print("widget changed %d %s" % (num, self.central_widget.currentWidget()))
+    # set which service is selected( save, donation )
+    def select_servie(self, type):
+        if type == service_type.Service_Type.Donate.value:
+            self.client.current_state = self.service_type.Donate
+        elif type == service_type.Service_Type.Save.value:
+            self.client.current_state = self.service_type.Save
+        self.change_widget(widget.Widget_type.get_barcode.value) # change widget to get_barcode
 
+    # change widget by index
+    def change_widget(self, num):
+        print("index %d" % num)
+        self.central_widget.setCurrentIndex(num)
+
+    # it might delete later......
+    def func(self, num, opt=0):
+        print("widget changed %d %s" % (num, self.central_widget.currentWidget()))
+        if opt != 0:
+            print("opt %d" % opt)
+
+    # set barcode and get user info
+    def process_barcode(self, barcode):
+        self.client.input_barcode = barcode
+        # code for get access server's user info
+        self.change_widget(self.widget_type.insert_coin.value) # change widget to insert_coin
+
+    # process inserted point according to service type
+    def proccess_inserted_point(self, amount):
+        self.client.coin_collector.add_money(amount) # accumulate inserted coin to coin collector
+        if self.client.current_state == self.service_type.Save:
+            # code for save point to user and communicate with server
+            self.change_widget(self.widget_type.save_result)
+        elif self.client.current_state == self.service_type.Donate:
+            # code for show organization list and save point to selected list
+            self.change_widget(self.widget_type.donate_result)
+
+    def process_reset(self):
+        # initiate client
+        self.client.current_state = self.service_type.Beginning
+        self.client.input_barcode = None
+        self.client.inserted_coin = 0
+        self.client.user = None
+
+        self.change_widget(self.widget_type.intro.value)
+
+    # process error message
+    def process_error(self, error_message):
+        self.error_message_ui.set_error_message(error_message)
+        self.change_widget(self.widget_type.error_message.value)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

@@ -4,7 +4,14 @@
 from PyQt5 import QtCore
 
 class Signal(QtCore.QObject):
-    asignal = QtCore.pyqtSignal(int)
+
+    select_service = QtCore.pyqtSignal(int)
+    barcode_cognized = QtCore.pyqtSignal(str)
+    coin_insert_completed = QtCore.pyqtSignal(int)
+    error = QtCore.pyqtSignal(str)
+    reset = QtCore.pyqtSignal()
 
     def __init__(self):
-        super(Signal, self).__init__()
+        QtCore.QObject.__init__(self)
+
+

@@ -5,8 +5,9 @@ from PyQt5 import QtWidgets
 from view import ui_donate_result
 
 class Donate_result_controller(QtWidgets.QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, sig, parent=None):
         super(Donate_result_controller, self).__init__(parent)
+        self.sig = sig # signal object
         self.initUI()
 
     def initUI(self):
