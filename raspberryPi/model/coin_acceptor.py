@@ -44,11 +44,10 @@ class Coin_acceptor():
     # start accepting coin
     def power_on(self):
         # initial setting
-        self.reset()
         self.set_GPIO()
-
         # power on the relay
         GPIO.output(17, True)
+        self.reset()
 
         # get coin until switch is on
         while self.switch:

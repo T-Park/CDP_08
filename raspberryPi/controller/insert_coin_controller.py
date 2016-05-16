@@ -4,6 +4,7 @@
 from PyQt5 import QtCore, QtWidgets
 from view import ui_insert_coin
 from model import coin_acceptor
+import threading
 
 class Coin_thread(QtCore.QThread):
     def __init__(self, coin_sig, thread_finished):
@@ -11,6 +12,7 @@ class Coin_thread(QtCore.QThread):
         self.coin_acceptor = coin_acceptor.Coin_acceptor()
         self.coin_sig = coin_sig
         self.thread_finished = thread_finished
+        self.thread = threading.Thread(target=self.coin_acceptor.power_on)
 
     def __del__(self):
         self.wait()
@@ -18,12 +20,13 @@ class Coin_thread(QtCore.QThread):
     # stop accepting coin
     def stop(self):
         self.coin_acceptor.power_off()
+        self.thread.join() # wait for termination of thread
         self.terminate()
 
     # running code
     def run(self):
         amount = 0
-        self.coin_acceptor.power_on()
+        self.thread.start() # start tread
 
         while True:
             if amount != self.coin_acceptor.ammount:
