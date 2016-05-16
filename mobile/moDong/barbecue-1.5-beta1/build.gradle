@@ -1,0 +1,2 @@
+configurations.create("default")
+artifacts.add("default", file('barbecue-1.5-beta1.jar'))

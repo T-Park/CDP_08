@@ -6,7 +6,7 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="eightjo.modong.activity_lock"
     android:orientation="vertical"
-    android:background="#f1f1f1">
+    android:background="@drawable/lockscreenbackground">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:text="비밀번호입력"
             android:textSize="24dp"
-            android:textColor="#000000"
+            android:textColor="#ffffff"
             android:layout_gravity="center_horizontal"
             android:id="@+id/textView17" />
 
@@ -38,17 +38,18 @@
                 android:layout_gravity="center"
                 android:layout_marginRight="16dp"
                 android:id="@+id/editText_lock_password"
-                android:background="#ffffffff"
+                android:background="#9bffffff"
                 android:inputType="textPassword" />
 
             <Button
                 android:layout_width="82.5dp"
                 android:layout_height="50.25dp"
                 android:id="@+id/button_lock_clear"
-                android:text="Go"
+                android:text="확인"
                 android:layout_gravity="right"
-                android:textColor="#000000"
-                android:onClick="onClickClear" />
+                android:textColor="#ffffff"
+                android:onClick="onClickClear"
+                android:background="#4487c6" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

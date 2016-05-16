@@ -1,46 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Space
+        android:layout_width="20px"
+        android:layout_height="20px" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="90dp">
+        android:layout_height="50dp"
+        android:background="#ffdf21">
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="0.3">
-
-            <Space
-                android:layout_width="20px"
-                android:layout_height="17.5dp" />
+            android:layout_weight="0.3"
+            android:gravity="center">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="가맹점/단체명"
                 android:id="@+id/textView_storeName"
-                android:textSize="30dp"
-                android:gravity="center_horizontal" />
+                android:textSize="15dp"
+                android:gravity="center_horizontal"
+                android:textColor="#010101" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2016/00/00"
                 android:id="@+id/textView_date"
-                android:textSize="25dp" />
+                android:textSize="10dp" />
 
         </LinearLayout>
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
             android:text="+"
             android:id="@+id/textView_point"
-            android:layout_weight="0.5"
-            android:textSize="50dp"
-            android:gravity="fill_vertical|center_horizontal" />
+            android:textSize="15dp"
+            android:gravity="center_horizontal|fill_vertical"
+            android:layout_gravity="right"
+            android:textColor="#010101" />
     </LinearLayout>
+
 </LinearLayout>

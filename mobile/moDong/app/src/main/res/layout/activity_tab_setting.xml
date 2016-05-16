@@ -4,7 +4,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="eightjo.modong.tab_setting">
+    tools:context="eightjo.modong.tab_setting"
+    android:background="#ffffff">
 
     <LinearLayout
         android:orientation="vertical"
@@ -19,16 +20,28 @@
             android:id="@+id/button_Info_modify"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.10"
-            android:onClick="button_InfoModify" />
+            android:onClick="button_InfoModify"
+            android:background="#4487c6"
+            android:textColor="#ffffff" />
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="20px" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="그룹 바코드 생성"
+            android:text="그룹 바코드"
             android:id="@+id/button6"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.10"
-            android:onClick="button_Group" />
+            android:onClick="button_Group"
+            android:background="#4487c6"
+            android:textColor="#ffffff" />
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="20px" />
 
         <Button
             android:layout_width="match_parent"
@@ -37,7 +50,13 @@
             android:id="@+id/button_lock"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.10"
-            android:onClick="button_Lock" />
+            android:onClick="button_Lock"
+            android:background="#4487c6"
+            android:textColor="#ffffff" />
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="20px" />
 
         <Button
             android:layout_width="match_parent"
@@ -46,6 +65,16 @@
             android:id="@+id/button8"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.10"
-            android:onClick="button_Logout" />
+            android:onClick="button_Logout"
+            android:background="#4487c6"
+            android:textColor="#ffffff" />
     </LinearLayout>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="343dp" />
 </RelativeLayout>

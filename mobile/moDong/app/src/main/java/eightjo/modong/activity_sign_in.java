@@ -4,13 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
+
 
 //임시로 회원가입시 tempInfo 테이블에 정보가 들어감.
 public class activity_sign_in extends Activity {
@@ -22,6 +25,8 @@ public class activity_sign_in extends Activity {
     EditText editText_age;
     EditText editText_phone;
 
+
+
     SQLiteDatabase db;
 
     @Override
@@ -30,14 +35,17 @@ public class activity_sign_in extends Activity {
         setContentView(R.layout.activity_activity_sign_in);
 
         editText_userId = (EditText)findViewById(R.id.editText_userId);
-        editText_userId.setText("");
+        //editText_userId.setText("");
         editText_password = (EditText)findViewById(R.id.editText_password);
-        editText_password.setText("");
+        //editText_password.setText("");
         editText_name = (EditText)findViewById(R.id.editText_name);
-        editText_name.setText("");
+        //editText_name.setText("");
         editText_job = (EditText)findViewById(R.id.editText_job);
         editText_age = (EditText)findViewById(R.id.editText_age);
         editText_phone = (EditText)findViewById(R.id.editText_phone);
+
+
+
 
         loadDB();
     }
@@ -82,7 +90,7 @@ public class activity_sign_in extends Activity {
         String phone = editText_phone.getText().toString();
 
         //forAppInfo : appInfo : 1. user_id 2. user_pw 3. name 4. job 5. age 6. phone 7. lock_flag 8. lock_pw 9. point 10. type 11. login_flag 12. group_flag 13. bacode
-        if(!user_pw.equals("") && !userId.equals("") && !name.equals(""))
+        if(!user_pw.equals("비밀번호") && !userId.equals("아이디") && !name.equals("이름") && !age.equals("나이"))
         {
             db.execSQL("INSERT INTO appInfo (user_id, user_pw, name, job, age, phone, lock_flag, lock_pw , point, type, login_flag, group_flag, bacode) " +
                     "VALUES (" +

@@ -2,7 +2,6 @@ package eightjo.modong;
 
 import android.app.TabActivity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,7 +25,7 @@ public class tab_main extends TabActivity {
         tabHost.addTab(spec);
 
 
-        intent = new Intent().setClass(this, tab_buyList.class);
+        intent = new Intent().setClass(this, tab_useList.class);
 
         spec = tabHost.newTabSpec("buyList").setIndicator("나의 사용내역").setContent(intent);
         tabHost.addTab(spec);

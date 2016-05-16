@@ -29,7 +29,7 @@
             android:label="@string/title_activity_tab_card_viewer" >
         </activity>
         <activity
-            android:name=".tab_buyList"
+            android:name=".tab_useList"
             android:label="@string/title_activity_tab_buy_list" >
         </activity>
         <activity
@@ -55,6 +55,14 @@
         <activity
             android:name=".activity_Info_modify"
             android:label="@string/title_activity_activity__info_modify" >
+        </activity>
+        <activity
+            android:name=".activity_givePoint"
+            android:label="@string/title_activity_activity_give_point" >
+        </activity>
+        <activity
+            android:name=".activity_donate"
+            android:label="@string/title_activity_activity_donate" >
         </activity>
     </application>
 
