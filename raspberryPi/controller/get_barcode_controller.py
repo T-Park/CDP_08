@@ -4,6 +4,7 @@
 from PyQt5 import QtWidgets
 from view import ui_get_barcode
 from model import barcode_reader
+import time
 
 class Get_barcode_controller(QtWidgets.QWidget):
     def __init__(self, sig, parent=None):
@@ -17,6 +18,8 @@ class Get_barcode_controller(QtWidgets.QWidget):
         self.ui_get_barcode.setupUi(self) # give widget
 
     def showEvent(self, QShowEvent):
+        self.show()
+        time.sleep(5)
         # get barcode from barcode reader
         state, data = self.barcode_reader.run()
 

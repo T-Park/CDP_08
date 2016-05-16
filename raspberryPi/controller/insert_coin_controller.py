@@ -31,18 +31,21 @@ class Coin_thread(QtCore.QThread):
                 self.coin_sig.emit(amount)
 
 class Insert_coin_controller(QtWidgets.QWidget):
+    coin_sig = QtCore.pyqtSignal(int)
+    
     def __init__(self, sig, parent=None):
         super(Insert_coin_controller, self).__init__(parent)
-        self.amount # inserted amount
-        self.coin_sig = QtCore.pyqtSignal(int)
+        self.amount = 0# inserted amount
         self.thread_finished = QtCore.pyqtSignal()
         self.sig = sig # signal object
+        self.coin_thread = Coin_thread(self.coin_sig, self.thread_finished)
 
-        self.initSignal()
+
         self.initUI()
+        self.initSignal()
 
         # thread for coin acceptore
-        self.coin_thread = Coin_thread(self.coin_sig, self.thread_finished)
+        
 
     def initUI(self):
         self.ui_insert_coin = ui_insert_coin.Ui_Form() # initiate view ui

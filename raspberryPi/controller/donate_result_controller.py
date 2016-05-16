@@ -5,9 +5,10 @@ from PyQt5 import QtWidgets, QtCore
 from view import ui_donate_result
 
 class Donate_result_controller(QtWidgets.QWidget):
-    def __init__(self, sig, parent=None):
+    def __init__(self, client, sig, parent=None):
         super(Donate_result_controller, self).__init__(parent)
         self.sig = sig # signal object
+        self.client = client
         self.timer = QtCore.QTimer()
 
         self.initUI()
@@ -29,3 +30,9 @@ class Donate_result_controller(QtWidgets.QWidget):
     # i needs processing to digit overflow
     def display_number(self, amount):
         self.ui_donate_result.insertedCoin.display(amount)
+
+    def showEvent(self, QShowEvent):
+        # display saved amount
+        self.display_number(self.client.inserted_coin)
+        # reset after 5 sec
+        self.timer.start(5000)

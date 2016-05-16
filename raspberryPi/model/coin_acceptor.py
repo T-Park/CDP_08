@@ -7,9 +7,9 @@ import RPi.GPIO as GPIO
 
 class Coin_acceptor():
     def __init__(self):
-        self.ammount
-        self.count
-        self.switch
+        self.ammount = 0
+        self.count = 0
+        self.switch = True
 
     # reset coin acceptor
     def reset(self):

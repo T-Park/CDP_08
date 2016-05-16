@@ -35,6 +35,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # signal from other widgets
         self.sig = signal.Signal()
         self.sig.select_service.connect(self.select_service) # select service callback
+        self.sig.barcode_cognized.connect(self.process_barcode)
         self.sig.error.connect(self.process_error) # error control callback
         self.sig.reset.connect(self.process_reset) # reset flow
 
@@ -49,8 +50,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.get_barcode_ui = get_barcode_controller.Get_barcode_controller(self.sig)  # index 1
         self.insert_coin_ui = insert_coin_controller.Insert_coin_controller(self.sig)  # index 2
         self.orglist_ui = orglist_controller.Orglist_controller(self.sig)  # index 3
-        self.save_result_ui = save_result_controller.Save_result_controller(self.sig)  # index 4
-        self.donate_result_ui = donate_result_controller.Donate_result_controller(self.sig)  # index 5
+        self.save_result_ui = save_result_controller.Save_result_controller(self.client, self.sig)  # index 4
+        self.donate_result_ui = donate_result_controller.Donate_result_controller(self.client, self.sig)  # index 5
         self.error_message_ui = error_message_controller.Error_message_controller(self.sig)  # index 6
 
         # insert to stack
@@ -86,6 +87,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     # set barcode and get user info
     def process_barcode(self, barcode):
+        print("barcode: %s"% barcode)
         self.client.input_barcode = barcode
         # code for get access server's user info
         self.change_widget(self.widget_type.insert_coin.value) # change widget to insert_coin
