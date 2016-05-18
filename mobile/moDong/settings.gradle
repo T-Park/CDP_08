@@ -1,1 +1,1 @@
-include ':app'
+include ':app', ':barbecue-1.5-beta1'

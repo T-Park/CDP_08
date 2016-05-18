@@ -19,4 +19,6 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_activity_lock">activity_lock</string>
     <string name="title_activity_activity__info_modify">activity_Info_modify</string>
+    <string name="title_activity_activity_give_point">activity_givePoint</string>
+    <string name="title_activity_activity_donate">activity_donate</string>
 </resources>

@@ -1,12 +1,22 @@
 package eightjo.modong;
 
 import android.app.Activity;
+//<<<<<<< Updated upstream
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+//=//======
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Icon;
+//>>>>>>> Stashed changes
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+//<<<<<<< Updated upstream
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class tab_cardViewer extends Activity {
@@ -14,6 +24,10 @@ public class tab_cardViewer extends Activity {
     SQLiteDatabase db;
     String user_name;
     int group_flag, point;
+    //Button button_donation, button_give;
+
+    ImageView imageView_bacode;
+//>>>>>>> Stashed changes
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +47,8 @@ public class tab_cardViewer extends Activity {
         else
             textView_view_group.setText("그룹 안에 있어요");
         textView_view_point.setText(point + "P");
+
+
     }
 
     @Override
@@ -56,6 +72,7 @@ public class tab_cardViewer extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public  void onResume()
@@ -85,12 +102,12 @@ public class tab_cardViewer extends Activity {
                 " age INTEGER," +
                 " phone TEXT," +
                 " lock_flag INTEGER," +
-                " lock_pw TEXT,"+
+                " lock_pw TEXT," +
                 " point INTEGER," +
-                " type TEXT,"+
+                " type TEXT," +
                 " login_flag INTEGER," +
                 " group_flag INTEGER," +
-                " bacode TEXT"+
+                " bacode TEXT" +
                 ");");
     }
 
@@ -102,6 +119,17 @@ public class tab_cardViewer extends Activity {
         user_name =  c.getString(c.getColumnIndex("name"));
         group_flag =  c.getInt(c.getColumnIndex("group_flag"));
         point = c.getInt(c.getColumnIndex("point"));
+
     }
 
+    public void onClick_goToDonation(View v)
+    {
+        Intent intent = new Intent(this, activity_donate.class);
+        startActivity(intent);
+    }
+
+    public void nClick_goToGivePointo(View v) {
+        Intent intent = new Intent(this, activity_givePoint.class);
+        startActivity(intent);
+    }
 }
