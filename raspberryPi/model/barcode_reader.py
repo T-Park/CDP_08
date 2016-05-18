@@ -4,15 +4,15 @@
 #        python-zxing opensource
 
 import zxing
-# import picamera
+import picamera
 
 class BarcodeReader():
 
     def __init__(self):
-        # self.camera = picamera.PiCamera()
+        self.camera = picamera.PiCamera()
         # test path
-        self.reader = zxing.BarCodeReader("d:\zxing\zxing")
-        # self.reader = zxing.BarCodeReader("/home/pi/zxing/zxing")
+        # self.reader = zxing.BarCodeReader("d:\zxing\zxing")
+        self.reader = zxing.BarCodeReader("/home/pi/zxing/zxing")
         self.image_file = "../model/image.jpg"
         
     def take_picture(self):
@@ -30,7 +30,7 @@ class BarcodeReader():
             return True, barcode.data
 
     def run(self):
-        # self.take_picture()
+        self.take_picture()
         return self.parse_barcode()
         
         

@@ -18,7 +18,7 @@ from util import widget, service_type
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
-        self.resize(800, 480)  # set window size
+        self.resize(640, 450)  # set window size
 
         self.central_widget = QtWidgets.QStackedWidget()  # use stacked widget
         self.setCentralWidget(self.central_widget)  # set widget
@@ -35,7 +35,8 @@ class MainWindow(QtWidgets.QMainWindow):
         # signal from other widgets
         self.sig = signal.Signal()
         self.sig.select_service.connect(self.select_service) # select service callback
-        self.sig.barcode_cognized.connect(self.process_barcode)
+        self.sig.barcode_cognized.connect(self.process_barcode) # barcode recognization completed
+        self.sig.coin_insert_completed.connect(self.proccess_inserted_point) # insert coin completed
         self.sig.error.connect(self.process_error) # error control callback
         self.sig.reset.connect(self.process_reset) # reset flow
 
@@ -99,10 +100,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
         if self.client.current_state == self.service_type.Save:
             # code for save point to user and communicate with server
-            self.change_widget(self.widget_type.save_result)
+            self.change_widget(self.widget_type.save_result.value)
         elif self.client.current_state == self.service_type.Donate:
             # code for show organization list and save point to selected list
-            self.change_widget(self.widget_type.donate_result)
+            self.change_widget(self.widget_type.donate_result.value)
 
     def process_reset(self):
         # initiate client

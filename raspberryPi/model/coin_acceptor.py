@@ -4,6 +4,7 @@
 # it provide interface power_on, power_off
 
 import RPi.GPIO as GPIO
+import time
 
 class Coin_acceptor():
     def __init__(self):
@@ -47,11 +48,12 @@ class Coin_acceptor():
         self.set_GPIO()
         # power on the relay
         GPIO.output(17, True)
+        time.sleep(0.1)
         self.reset()
 
         # get coin until switch is on
         while self.switch:
-            pass
+            time.sleep(0.1)
 
     # stop accepting coin and reset
     def power_off(self):
