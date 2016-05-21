@@ -9,3 +9,4 @@ class Organization():
         self.tel = tel
         self.type = type
 
+

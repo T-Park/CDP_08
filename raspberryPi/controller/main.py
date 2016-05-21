@@ -6,7 +6,7 @@ import os.path
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..')) # add current dir to python path
 
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import (QApplication)
 from controller import intro_controller, get_barcode_controller, donate_result_controller, insert_coin_controller, \
     orglist_controller, save_result_controller, error_message_controller, signal
@@ -30,12 +30,16 @@ class MainWindow(QtWidgets.QMainWindow):
         self.initSignal()
         self.initUI()
 
+        self.setWindowFlags(self.windowFlags() | QtCore.Qt.FramelessWindowHint) # remove frame
+        self.setGeometry(0,0,self.width(),self.height()) # 0,0으로 윈도우 위치 옮기기
+
     # set signals and processing functions
     def initSignal(self):
         # signal from other widgets
         self.sig = signal.Signal()
         self.sig.select_service.connect(self.select_service) # select service callback
-        self.sig.barcode_cognized.connect(self.process_barcode)
+        self.sig.barcode_cognized.connect(self.process_barcode) # process recognized barcode
+        self.sig.org_selected.connect(self.)
         self.sig.error.connect(self.process_error) # error control callback
         self.sig.reset.connect(self.process_reset) # reset flow
 
@@ -99,11 +103,17 @@ class MainWindow(QtWidgets.QMainWindow):
 
         if self.client.current_state == self.service_type.Save:
             # code for save point to user and communicate with server
-            self.change_widget(self.widget_type.save_result)
+            self.change_widget(self.widget_type.save_result.value)
         elif self.client.current_state == self.service_type.Donate:
             # code for show organization list and save point to selected list
-            self.change_widget(self.widget_type.donate_result)
+            self.change_widget(self.widget_type.donate_result.value)
 
+    # process selected organization
+    # param - index: index of organization
+    def process_org_selected(self, index):
+        self.change_widget(self.widget_type.orglist)
+
+    # reset variables and back to the intro widget
     def process_reset(self):
         # initiate client
         self.client.current_state = self.service_type.Beginning
