@@ -9,7 +9,7 @@ class Get_barcode_controller(QtWidgets.QWidget):
     def __init__(self, sig, parent=None):
         super(Get_barcode_controller, self).__init__(parent)
         self.barcode_reader = barcode_reader.BarcodeReader()
-        self.timer = QtCore.QTimer
+        self.timer = QtCore.QTimer()
         self.sig = sig # signal object
         self.initUI()
         self.initTimer()

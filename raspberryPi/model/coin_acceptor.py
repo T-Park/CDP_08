@@ -3,7 +3,8 @@
 # it accepts coin and retain inserted amount
 # it provide interface power_on, power_off
 
-import RPi.GPIO as GPIO
+# import RPi.GPIO as GPIO
+import RPi as GPIO
 
 class Coin_acceptor():
     def __init__(self):

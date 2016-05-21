@@ -10,7 +10,7 @@ from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import (QApplication)
 from controller import intro_controller, get_barcode_controller, donate_result_controller, insert_coin_controller, \
     orglist_controller, save_result_controller, error_message_controller, signal
-from model import coin_collector_client
+from model import coin_collector_client, organization
 
 from util import widget, service_type
 
@@ -23,15 +23,18 @@ class MainWindow(QtWidgets.QMainWindow):
         self.central_widget = QtWidgets.QStackedWidget()  # use stacked widget
         self.setCentralWidget(self.central_widget)  # set widget
 
-        self.client = coin_collector_client.Coin_collector_clinet() # clinet model
+        self.client = coin_collector_client.Coin_collector_clinet() # client model
+        # it will be modifyed
+        self.orglist = list() # organization list
         self.widget_type = widget.Widget_type # enum for widget type
         self.service_type = service_type.Service_Type # enum for service type
 
+        self.setWindowFlags(self.windowFlags() | QtCore.Qt.FramelessWindowHint) # remove frame
+        self.setGeometry(0,0,self.width(),self.height()) # 0,0으로 윈도우 위치 옮기기
         self.initSignal()
         self.initUI()
 
-        self.setWindowFlags(self.windowFlags() | QtCore.Qt.FramelessWindowHint) # remove frame
-        self.setGeometry(0,0,self.width(),self.height()) # 0,0으로 윈도우 위치 옮기기
+
 
     # set signals and processing functions
     def initSignal(self):
@@ -39,7 +42,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.sig = signal.Signal()
         self.sig.select_service.connect(self.select_service) # select service callback
         self.sig.barcode_cognized.connect(self.process_barcode) # process recognized barcode
-        self.sig.org_selected.connect(self.)
+        self.sig.org_selected.connect(self.process_org_selected)
         self.sig.error.connect(self.process_error) # error control callback
         self.sig.reset.connect(self.process_reset) # reset flow
 
@@ -53,7 +56,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.intro_ui = intro_controller.Intro_controller(self.sig)  # index 0
         self.get_barcode_ui = get_barcode_controller.Get_barcode_controller(self.sig)  # index 1
         self.insert_coin_ui = insert_coin_controller.Insert_coin_controller(self.sig)  # index 2
-        self.orglist_ui = orglist_controller.Orglist_controller(self.sig)  # index 3
+        self.orglist_ui = orglist_controller.Orglist_controller(self.orglist, self.sig)  # index 3
         self.save_result_ui = save_result_controller.Save_result_controller(self.client, self.sig)  # index 4
         self.donate_result_ui = donate_result_controller.Donate_result_controller(self.client, self.sig)  # index 5
         self.error_message_ui = error_message_controller.Error_message_controller(self.sig)  # index 6
@@ -70,6 +73,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.central_widget.setCurrentWidget(self.intro_ui)
         self.show()
 
+    # change widget by index
+    def change_widget(self, num):
+        print("index %d" % num)
+        self.central_widget.setCurrentIndex(num)
+
     # set which service is selected( save, donation )
     def select_service(self, type):
         if type == service_type.Service_Type.Donate.value:
@@ -77,11 +85,6 @@ class MainWindow(QtWidgets.QMainWindow):
         elif type == service_type.Service_Type.Save.value:
             self.client.current_state = self.service_type.Save
         self.change_widget(widget.Widget_type.get_barcode.value) # change widget to get_barcode
-
-    # change widget by index
-    def change_widget(self, num):
-        print("index %d" % num)
-        self.central_widget.setCurrentIndex(num)
 
     # it might delete later......
     def func(self, num, opt=0):
@@ -94,7 +97,13 @@ class MainWindow(QtWidgets.QMainWindow):
         print("barcode: %s"% barcode)
         self.client.input_barcode = barcode
         # code for get access server's user info
-        self.change_widget(self.widget_type.insert_coin.value) # change widget to insert_coin
+
+        if self.client.current_state == self.service_type.Save:
+            self.change_widget(self.widget_type.insert_coin.value) # change widget to insert_coin
+        elif self.client.current_state == self.service_type.Donate:
+            self.change_widget(self.widget_type.orglist.value) # change widget to insert_coin
+
+
 
     # process inserted point according to service type
     def proccess_inserted_point(self, amount):
@@ -111,7 +120,8 @@ class MainWindow(QtWidgets.QMainWindow):
     # process selected organization
     # param - index: index of organization
     def process_org_selected(self, index):
-        self.change_widget(self.widget_type.orglist)
+        self.client.target_org_index = index
+        self.change_widget(self.widget_type.insert_coin.value)
 
     # reset variables and back to the intro widget
     def process_reset(self):

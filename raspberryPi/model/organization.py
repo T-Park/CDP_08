@@ -9,4 +9,7 @@ class Organization():
         self.tel = tel
         self.type = type
 
+        self.header = ["name","type","tel","point"] # for table hader
+        self.var = [self.name, self.type, self.tel, self.point] # for table access
+
 
