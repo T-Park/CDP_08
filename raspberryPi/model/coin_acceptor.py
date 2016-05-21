@@ -6,6 +6,7 @@
 import RPi.GPIO as GPIO
 import time
 
+
 class Coin_acceptor():
     def __init__(self):
         self.ammount = 0
@@ -42,13 +43,13 @@ class Coin_acceptor():
     def set_off(self):
         self.switch = False
 
-    # start accepting coin
+    # star t accepting coin
     def power_on(self):
         # initial setting
         self.set_GPIO()
         # power on the relay
         GPIO.output(17, True)
-        time.sleep(0.1)
+        time.sleep(0.3)
         self.reset()
 
         # get coin until switch is on

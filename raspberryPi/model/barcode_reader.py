@@ -9,7 +9,7 @@ import picamera
 class BarcodeReader():
 
     def __init__(self):
-        self.camera = picamera.PiCamera()
+        self.camera = None 
         # test path
         # self.reader = zxing.BarCodeReader("d:\zxing\zxing")
         self.reader = zxing.BarCodeReader("/home/pi/zxing/zxing")
@@ -30,7 +30,9 @@ class BarcodeReader():
             return True, barcode.data
 
     def run(self):
+        self.camera = picamera.PiCamera()
         self.take_picture()
+        self.camera.close()
         return self.parse_barcode()
         
         
