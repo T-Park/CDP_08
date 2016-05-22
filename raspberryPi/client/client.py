@@ -36,10 +36,15 @@ class Client:
     def recv(self):
         try:
             # decode bytes and remove '\n', '\r'
-            rev_msg = (self.socket.recv(4096)).decode(self.decode_type)[:-2]
+            data = self.socket.recv(4096)
+            rev_msg = data.decode(self.decode_type)[:-2]
             return rev_msg
         except IOError as err:
             print("I/O exception: %s", err)
+            print("termiate communication")
+            self.socket.close()
+            return None
+
 
     # close connection
     def close_connection(self):
