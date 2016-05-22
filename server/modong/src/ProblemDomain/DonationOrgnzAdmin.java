@@ -11,6 +11,31 @@ public class DonationOrgnzAdmin {
 	
 	private final static int default_DonationPoint = 0; //no use
 	
+	public class dItem
+	{
+		Date when;
+		String where;
+		int point;
+		public Date getWhen() {
+			return when;
+		}
+		public void setWhen(Date when) {
+			this.when = when;
+		}
+		public String getWhere() {
+			return where;
+		}
+		public void setWhere(String where) {
+			this.where = where;
+		}
+		public int getPoint() {
+			return point;
+		}
+		public void setPoint(int point) {
+			this.point = point;
+		}
+	}
+	
 	public DonationOrgnzAdmin()
 	{
 		mDonationOrgnzList = new ArrayList<DonationOrgnz>();
@@ -26,6 +51,20 @@ public class DonationOrgnzAdmin {
 		return unicqueDonationOrgnzAdmin;
 	}
 	
+	private void updateDonationOrgnzList()
+	{
+		//mDonationOrgnzList를 갱신한다. db
+	}
+	
+	public ArrayList<dItem> getMyDonationList(int uid)
+	{
+		ArrayList<dItem> temp = new ArrayList<dItem>();
+		
+		
+		
+		return temp;
+	}
+	
 	public String didToName(int did)
 	{
 		int index= searchDonationOrgnz_asDid(did);
@@ -35,16 +74,31 @@ public class DonationOrgnzAdmin {
 		return mDonationOrgnzList.get(index).getDonation_name();
 	}
 	
-	public void recordDonationPoint(String bacode, int did, int point)
+	public int dNameToDid(String dname)
+	{
+		int index = searchDonationOrgnz_asDname(dname);
+		if(index < 0)
+			return -1;
+		return mDonationOrgnzList.get(index).getDonation_id();
+	}
+	
+	public void recordDonationPoint(int uid, int did, int point)
 	{
 		SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy.MM.dd", Locale.KOREA );
 		Date currentTime = new Date ();
 		//id, uid, did, date(when), point db 처리 
 	}
 	
+	public DonationOrgnz findDonationOrgnz(int did)
+	{	
+		updateDonationOrgnzList();
+		return mDonationOrgnzList.get(searchDonationOrgnz_asDid(did));
+	}
+	
 	//기부단체의 경우 관리자가 직접 입력해서 추가, type값 명시해야함
 	public boolean addDonationOrgnz(int did, String name, int point, String tel, char type)
 	{
+		updateDonationOrgnzList();
 		DonationOrgnz tempDo;
 		
 		if(searchDonationOrgnz_asDid(did) != -1) //unique 한 값
@@ -65,6 +119,7 @@ public class DonationOrgnzAdmin {
 	
 	public boolean removeDonationOrgnz(int did)
 	{
+		updateDonationOrgnzList();
 		int index = searchDonationOrgnz_asDid(did);
 		if(index >= 0)
 		{
@@ -76,7 +131,8 @@ public class DonationOrgnzAdmin {
 	}
 	
 	public int searchDonationOrgnz_asDid(int did)
-	{		
+	{	
+		updateDonationOrgnzList();
 		for(int i=0; i < mDonationOrgnzList.size(); i++)
 		{
 			if(did == mDonationOrgnzList.get(i).getDonation_id())
@@ -88,6 +144,19 @@ public class DonationOrgnzAdmin {
 		//return -1 or point
 	}
 	
+	public int searchDonationOrgnz_asDname(String dname)
+	{	
+		updateDonationOrgnzList();
+		for(int i=0; i < mDonationOrgnzList.size(); i++)
+		{
+			if(dname.equals(mDonationOrgnzList.get(i).getDonation_name()))
+			{
+				return i;
+			}
+		}		
+		return -1;
+		//return -1 or point
+	}
 	
 	
 	public void print_currentDonationOrgnzListInfo()

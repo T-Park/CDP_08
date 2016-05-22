@@ -4,11 +4,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+
+import ProblemDomain.DonationOrgnzAdmin.dItem;
 //singleton
 public class ModongUserAdmin {
 	private static ModongUserAdmin unicqueUserAdmin; //singleton 사용
-	private ArrayList<ModongUser> mUserList;
-	private ArrayList<GroupUser> mGroupList;
+	public ArrayList<ModongUser> mUserList;
+	public ArrayList<GroupUser> mGroupList;
 	
 	private final static char default_userType = 'A'; //user 생성시 default type
 	private final static int default_userPoint = 0; //user 생성시 default point
@@ -18,6 +20,31 @@ public class ModongUserAdmin {
 	public final static int groupCode_forTest = 3;
 	public final static String groupName_forTest = "testGroup1";
 	public final static String groupBacode_forTest = "asd";
+	
+	public class Item
+	{
+		Date when;
+		String where;
+		int point;
+		public Date getWhen() {
+			return when;
+		}
+		public void setWhen(Date when) {
+			this.when = when;
+		}
+		public String getWhere() {
+			return where;
+		}
+		public void setWhere(String where) {
+			this.where = where;
+		}
+		public int getPoint() {
+			return point;
+		}
+		public void setPoint(int point) {
+			this.point = point;
+		}
+	}
 	
 	private ModongUserAdmin()
 	{
@@ -34,8 +61,50 @@ public class ModongUserAdmin {
 		return unicqueUserAdmin;
 	}
 	
+	public void updateUserList()
+	{
+		//mUserList를 갱신한다. db
+	}
+	
+	public void updateGroupList()
+	{
+		//mGroupList를 갱신한다. db
+	}
+	
+	public ArrayList<Item> getMyUseList(int uid)//group은 사용 리스트 처리 기능 없음.
+	{
+		updateUserList();
+		ArrayList<Item> temp = new ArrayList<Item>();
+		//사용내역 출력 db 처리 필요		
+		return temp;
+	}
+	
+	public int bacodeToUid(String bacode)
+	{
+		int index = searchUser_asBacode(bacode);		
+		//db 처리
+		int uid = 1;	//temp
+		
+		return uid;
+	}
+	
+	public int idToUid(String id)
+	{
+		int index = searchUser_asId(id);		
+		//db 처리
+		int uid = 1;	//temp
+		
+		return uid;
+	}
+	
+	public String gcodeTogname(int gcode)
+	{
+		int index = searchGroupUser_asGroupCode(gcode);	
+		return mGroupList.get(index).getGroup_name();
+	}
+	
 	//회원가입
-	public void joinModong(String id, String pw,  
+	public boolean joinModong(String id, String pw,  
 			  String name, String job, int age, String tel)
 	{
 		ModongUser tempUser;
@@ -52,10 +121,10 @@ public class ModongUserAdmin {
 		{
 			//db처리
 			
-			System.out.println("회원가입이 완료되었습니다.");
+			return true;
 		}
 		else 
-			System.out.println("회원가입에 실패하였습니다.");
+			return false;
 		//return uid or -1
 	}
 	//test용 bacode도 입력받음.
@@ -80,6 +149,32 @@ public class ModongUserAdmin {
 		//return uid or -1
 	}
 	
+	public boolean modifyUser(String id, String pw, String name, 
+								String job, int age, String tel)
+	{
+		
+		int index = searchUser_asId(id);//id는 바뀔 수 없음.
+		mUserList.get(index).setUser_pw(pw);
+		mUserList.get(index).setUser_name(name);
+		mUserList.get(index).setUser_job(job);
+		mUserList.get(index).setUser_age(age);
+		mUserList.get(index).setUser_tel(tel);
+		//mUserList.get(index).setGroupCode(gCode);
+		
+		//db update
+		
+		
+		return true;
+	}
+	
+	public boolean modifyUser_groupCode(String id, int gCode)
+	{
+		int index = searchUser_asId(id);
+		
+		mUserList.get(index).setGroupCode(gCode);
+		return true;
+	}
+	
 	//탈퇴하기
 	public boolean leaveModong(String id)//uid로 바꾸기!
 	{
@@ -87,6 +182,7 @@ public class ModongUserAdmin {
 		if(index >= 0)
 		{
 			mUserList.remove(index);
+			//db처리
 			return true;
 		}
 		else//그런 id 존재 x
@@ -95,7 +191,7 @@ public class ModongUserAdmin {
 	}
 	
 	//그룹유저 생성 
-	public boolean groupingUser(String[] ids)//id -> uid로 바꾸기
+	public boolean groupingUser(String[] ids, String gname)//id -> uid로 바꾸기
 	{			
 		int[] indexList = new int[ids.length];
 		
@@ -113,8 +209,8 @@ public class ModongUserAdmin {
 		
 		//id 인증 완료
 		System.out.println("유효한 Id입니다.");
-		
-		GroupUser tempGroupUser = new GroupUser(groupCode_forTest, groupName_forTest, 
+		//그룹코드 설정*
+		GroupUser tempGroupUser = new GroupUser(groupCode_forTest, gname, 
 													default_groupUserPoint, groupBacode_forTest);
 		
 		for(int i=0; i < ids.length; i++)
@@ -126,20 +222,44 @@ public class ModongUserAdmin {
 		return true;
 	}
 
+	public String getGroupName(int groupCode)
+	{
+		updateUserList();
+		updateGroupList();
+		return mGroupList.get(searchGroupUser_asGroupCode(groupCode)).getGroup_name();
+	}
+	
 	//login
 	public boolean loginUser(String id, String pw)
 	{
+		updateUserList();
 		int index = searchUser_asId(id);
-		if(index < 0)//id를 찾을 수 없다
+		if(index >= 0)
 		{
-			System.out.println("id가 존재하지 않습니다.");
-			return false;
-		}
-		
-		if(mUserList.get(index).getUser_pw().equals(pw))
-			return true;
-		else
-			return false;
+			if(mUserList.get(index).getUser_pw().equals(pw))
+			{
+				//return mUserList.get(index);
+				return true;
+			}
+		}		
+		//id를 찾을 수 없다
+		//System.out.println("id가 존재하지 않습니다.");
+		return false;
+
+	}
+	
+	public ModongUser getModongUser_asId(String id)
+	{
+		updateUserList();
+		int index = searchUser_asId(id);
+		 return mUserList.get(index);
+	}
+	
+	public ModongUser getModongUser_asBacode(String bacode)
+	{
+		updateUserList();
+		int index = searchUser_asBacode(bacode);
+		 return mUserList.get(index);
 	}
 	
 	//사용자 조회- uid 구현 필요
@@ -147,6 +267,7 @@ public class ModongUserAdmin {
 	//중복 아이디 검사용
 	private int searchUser_asId(String id)
 	{		
+		updateUserList();
 		for(int i=0; i < mUserList.size(); i++)
 		{
 			if(id.equals(mUserList.get(i).getUser_id()))
@@ -161,9 +282,24 @@ public class ModongUserAdmin {
 	//사용자 조회 - bacode
 	private int searchUser_asBacode(String bacode)//input : bacode
 	{
+		updateUserList();
 		for(int i=0; i < mUserList.size(); i++)
 		{
 			if(bacode.equals(mUserList.get(i).getUser_bacode()))
+			{
+				return i;
+			}
+		}		
+		return -1;
+		//return -1 or point
+	}
+	
+	private int searchGroupUser_asGroupCode(int groupCode)//input : bacode
+	{
+		updateGroupList();
+		for(int i=0; i < mGroupList.size(); i++)
+		{
+			if(groupCode == mGroupList.get(i).getGid())
 			{
 				return i;
 			}
@@ -187,12 +323,14 @@ public class ModongUserAdmin {
 	}
 	
 	public ModongUser findUser_asId(String id)
-	{		
+	{	
+		updateUserList();
 		return mUserList.get(searchUser_asId(id));
 	}
 	
 	public ModongUser findUser_asBacode(String bacode)
-	{		
+	{	
+		updateUserList();
 		return mUserList.get(searchUser_asBacode(bacode));
 	}
 	
@@ -200,24 +338,28 @@ public class ModongUserAdmin {
 	//uid로 바꿔주세요 ~ 나중에  + 사용하지 않을 메소드들..
 	public void addPointToUser_asId(String id, int point)
 	{
+		updateUserList();
 		int index =  searchUser_asId(id);
 		mUserList.get(index).addPoint(point);
 	}
 	
 	public void removePointToUser_asId(String id, int point)
 	{
+		updateUserList();
 		int index =  searchUser_asId(id);
 		mUserList.get(index).removePoint(point);
 	}
 	
 	public void addPointToUser_asBacode(String bacode, int point)
 	{
+		updateUserList();
 		int index =  searchUser_asBacode(bacode);
 		mUserList.get(index).addPoint(point);
 	}
 	
 	public void removePointToUser_asBacode(String bacode, int point)
 	{
+		updateUserList();
 		int index =  searchUser_asBacode(bacode);
 		mUserList.get(index).removePoint(point);
 	}
@@ -245,7 +387,7 @@ public class ModongUserAdmin {
 		}
 		System.out.println("*******************************************************************************************");
 	}
-	
+		
 }
 
 
