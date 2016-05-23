@@ -30,6 +30,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.setWindowFlags(self.windowFlags() | QtCore.Qt.FramelessWindowHint) # remove frame
         self.setGeometry(0,0,self.width(),self.height()) # 0,0으로 윈도우 위치 옮기기
+        self.initClient()
         self.initSignal()
         self.initUI()
 
@@ -76,6 +77,11 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.central_widget.setCurrentWidget(self.intro_ui)
         self.show()
+
+    # set client
+    def initClient(self):
+        self.client.connection.connect(); # connect to server
+        self.client.connection.login(0); # login
 
     # change widget by index
     def change_widget(self, num):

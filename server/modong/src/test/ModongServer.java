@@ -204,7 +204,7 @@ public class ModongServer extends AbstractServer
 		 ua.modifyUser(id, pw, name, job, age, tel);
 		 sendToMyClient(client, "#true");
 		  
-	  }else if(line.startsWith("#ModongDonation"))//#ModongDonation%id%gname%point
+	  }else if(line.startsWith("#ModongDonation")) //#ModongDonation%id%gname%point
 	  {
 		  System.out.println("모바일에서의 요청 : 기부하기");
 		  String id = token[1];
@@ -308,6 +308,20 @@ public class ModongServer extends AbstractServer
 		   
 	  }
 	  //****************************동전 모음이**************************************//
+	  /*
+	   * 2016.5.23
+	   * modified by kth
+	   */
+	  else if(line.startsWith("#CcLogin"))//#CcLogin%cid
+	  {
+		  System.out.println("동전모음이에서의 요청 : 로그인");
+		  sendToMyClient(client, "#Error%test error");
+	  }
+	  else if(line.startsWith("#CcLogin"))//#CcPointAdd%cid%point
+	  {
+		  System.out.println("동전모음이에서의 요청 : 로그인");
+		  
+	  }
 	  else if(line.startsWith("#CcPointAdd"))//#CcPointAdd%cid%bacode%point
 	  {
 		  System.out.println("동전모음이에서의 요청 : 적립하기");
