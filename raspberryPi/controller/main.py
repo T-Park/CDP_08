@@ -22,7 +22,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.central_widget = QtWidgets.QStackedWidget()  # use stacked widget
         self.setCentralWidget(self.central_widget)  # set widget
 
-        self.client = coin_collector_client.Coin_collector_clinet() # client model
+        self.client = coin_collector_client.Coin_collector_clinet('155.230.71.240',5555) # client model
         # it will be modifyed
         self.orglist = list() # organization list
         self.widget_type = widget_type.Widget_type # enum for widget type

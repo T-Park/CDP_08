@@ -9,6 +9,8 @@ class Client:
         # set port and host
         self.host = 'localhost' if host == None else host
         self.port = 5555 if port == None else port
+        print(host, port)
+        print(self.host, self.port)
 
         # set decode_type
         self.decode_type = 'euc-kr' if decode_type == None else decode_type
