@@ -31,6 +31,7 @@ class Client:
             self.socket.sendall(bytes(msg, 'utf-8'))
         except IOError as err:
             print("I/O exception: %s", err)
+            print("while sending msg: %s", msg)
 
     # recv message
     def recv(self):

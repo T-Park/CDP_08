@@ -8,9 +8,9 @@ import math
 
 
 class Orglist_controller(QtWidgets.QWidget):
-    def __init__(self, orglist, sig, parent=None):
+    def __init__(self, client, sig, parent=None):
         super(Orglist_controller, self).__init__(parent)
-        self.orglist = orglist  # orgnization list
+        self.client = client  # set client
         self.sig = sig  # signal object
 
         self.initUI()

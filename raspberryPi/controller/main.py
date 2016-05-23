@@ -12,8 +12,7 @@ from controller import intro_controller, get_barcode_controller, donate_result_c
     orglist_controller, save_result_controller, error_message_controller, signal
 from model import coin_collector_client, organization
 
-from util import widget, service_type
-
+from util import widget_type, service_type
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -26,7 +25,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.client = coin_collector_client.Coin_collector_clinet() # client model
         # it will be modifyed
         self.orglist = list() # organization list
-        self.widget_type = widget.Widget_type # enum for widget type
+        self.widget_type = widget_type.Widget_type # enum for widget type
         self.service_type = service_type.Service_Type # enum for service type
 
         self.setWindowFlags(self.windowFlags() | QtCore.Qt.FramelessWindowHint) # remove frame
@@ -67,13 +66,13 @@ class MainWindow(QtWidgets.QMainWindow):
         self.error_message_ui = error_message_controller.Error_message_controller(self.sig)  # index 6
 
         # insert to stack
-        self.central_widget.insertWidget(widget.Widget_type.intro.value, self.intro_ui)
-        self.central_widget.insertWidget(widget.Widget_type.get_barcode.value, self.get_barcode_ui)
-        self.central_widget.insertWidget(widget.Widget_type.insert_coin.value, self.insert_coin_ui)
-        self.central_widget.insertWidget(widget.Widget_type.orglist.value, self.orglist_ui)
-        self.central_widget.insertWidget(widget.Widget_type.save_result.value, self.save_result_ui)
-        self.central_widget.insertWidget(widget.Widget_type.donate_result.value, self.donate_result_ui)
-        self.central_widget.insertWidget(widget.Widget_type.error_message.value, self.error_message_ui)
+        self.central_widget.insertWidget(widget_type.Widget_type.intro.value, self.intro_ui)
+        self.central_widget.insertWidget(widget_type.Widget_type.get_barcode.value, self.get_barcode_ui)
+        self.central_widget.insertWidget(widget_type.Widget_type.insert_coin.value, self.insert_coin_ui)
+        self.central_widget.insertWidget(widget_type.Widget_type.orglist.value, self.orglist_ui)
+        self.central_widget.insertWidget(widget_type.Widget_type.save_result.value, self.save_result_ui)
+        self.central_widget.insertWidget(widget_type.Widget_type.donate_result.value, self.donate_result_ui)
+        self.central_widget.insertWidget(widget_type.Widget_type.error_message.value, self.error_message_ui)
 
         self.central_widget.setCurrentWidget(self.intro_ui)
         self.show()
@@ -89,7 +88,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.client.current_state = self.service_type.Donate
         elif type == service_type.Service_Type.Save.value:
             self.client.current_state = self.service_type.Save
-        self.change_widget(widget.Widget_type.get_barcode.value) # change widget to get_barcode
+        self.change_widget(widget_type.Widget_type.get_barcode.value) # change widget to get_barcode
 
     # it might delete later......
     def func(self, num, opt=0):
