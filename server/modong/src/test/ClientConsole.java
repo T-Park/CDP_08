@@ -1,15 +1,26 @@
 package test;
 // This file contains material supporting section 3.7 of the textbook:
 
+import java.awt.image.BufferedImage;
+
 // "Object Oriented Software Engineering" and is issued under the open-source
 
 // license found at www.lloseng.com 
 //
 
 //enter ÀÔ·Â½Ã ¸ØÃã Çö»ó ÀÖÀ½
-import java.io.*;
-import client.*;
-import common.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Base64;
+
+import javax.imageio.ImageIO;
+
+import client.ChatClient;
+import common.ChatIF;
 
 public class ClientConsole implements ChatIF {
 	// Class variables *************************************************
@@ -82,8 +93,25 @@ public class ClientConsole implements ChatIF {
 	 * @param message
 	 *            The string to be displayed.
 	 */
-	public void display(String message) {
-		System.out.println("> " + message);
+	public void display(Object message) {
+		System.out.println("get message");
+		try {
+		String bytes = (String)message;
+		System.out.println("> " + bytes.getBytes());
+		
+		byte[] byteImage = Base64.getDecoder().decode(bytes);
+		InputStream in = new ByteArrayInputStream(byteImage);
+		
+			BufferedImage bufferedImage = ImageIO.read(in);
+			
+			File outputfile = new File("result.png");
+			ImageIO.write(bufferedImage, "png", outputfile);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 	public void clientOCSFCommand(String message) {

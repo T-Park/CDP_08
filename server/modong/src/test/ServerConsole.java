@@ -30,7 +30,7 @@ public class ServerConsole implements ChatIF {
 	}
 
 	@Override
-	public void display(String message) {
+	public void display(Object message) {
 		// TODO Auto-generated method stub
 		System.out.println("SERVER MSG> " + message);
 	}

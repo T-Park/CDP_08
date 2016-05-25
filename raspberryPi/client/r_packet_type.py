@@ -8,7 +8,7 @@ class Packet_type(Enum):
     logout = "Logout"
     update_info = "UpdateInfo"
     get_org_num = "GetOrgNum"
-    get_org_list = "GetOrgList"
+    get_org_list = "GetOrg"
     get_user_info = "GetUserInfo"
     save_point = "SavePoint"
     donate_point = "DonatePoint"
