@@ -366,4 +366,10 @@ public class tab_setting extends Activity {
 
     };
 
+    public void onClick_goNext(View v)
+    {
+        Intent intent =new Intent(this, activity_GroupStep1.class);
+        startActivity(intent);
+    }
+
 }

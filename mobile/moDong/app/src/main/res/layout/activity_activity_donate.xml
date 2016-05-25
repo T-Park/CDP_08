@@ -4,7 +4,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="eightjo.modong.activity_donate">
+    tools:context="eightjo.modong.activity_donate"
+    android:background="#ffffff">
 
     <LinearLayout
         android:orientation="vertical"
@@ -12,24 +13,38 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="포인트 기부하기"
             android:id="@+id/textView27"
-            android:textSize="45dp" />
+            android:textSize="45dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="#4487c6" />
 
         <Space
             android:layout_width="20px"
-            android:layout_height="20px" />
+            android:layout_height="20dp" />
 
-        <ListView
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:id="@+id/listView2" />
+            android:layout_height="wrap_content"
+            android:text="나의 현재 포인트 : 0P"
+            android:id="@+id/textView_donation_currentPoint"
+            android:layout_gravity="right" />
 
         <Space
             android:layout_width="20px"
             android:layout_height="20px" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="리스트에서 기부단체를 선택해 주세요"
+            android:id="@+id/textView_choice"
+            android:layout_gravity="center_horizontal"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,8 +57,9 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:ems="10"
-                android:id="@+id/editText5"
-                android:background="#ffffff" />
+                android:id="@+id/editText_donate_howMuch"
+                android:background="#4487c6"
+                android:textColor="#ffffff" />
 
             <Space
                 android:layout_width="20px"
@@ -64,15 +80,27 @@
             android:id="@+id/textView29"
             android:textSize="30dp"
             android:layout_gravity="right" />
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="20px" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/listView_donation"
+            android:background="#fff"
+            android:headerDividersEnabled="false" />
+
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="right"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:gravity="right" >
+        android:layout_alignParentEnd="true">
 
         <Button
             android:layout_width="wrap_content"

@@ -1,0 +1,54 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="eightjo.modong.activity_GroupIntro">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="그룹 만들기"
+            android:id="@+id/textView2"
+            android:textSize="45dp" />
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="50dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="그룹 바코드란..?"
+            android:id="@+id/textView4"
+            android:textSize="30dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="그룹바코드는 여러 사용자가 한 바코드를 공유 함으로써 함께 포인트를 적립하고 사용할 수 있는 기능입니다. 가족, 친구, 애인과 함께 즐겨보세요!"
+            android:id="@+id/textView3"
+            android:layout_weight="0.50"
+            android:textIsSelectable="false"
+            android:textSize="20dp"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="NEXT"
+        android:id="@+id/button5"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="onClick_goNext" />
+
+</RelativeLayout>

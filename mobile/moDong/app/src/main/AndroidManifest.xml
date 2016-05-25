@@ -64,6 +64,18 @@
             android:name=".activity_donate"
             android:label="@string/title_activity_activity_donate" >
         </activity>
+        <activity
+            android:name=".activity_GroupIntro"
+            android:label="@string/title_activity_activity__group_intro" >
+        </activity>
+        <activity
+            android:name=".activity_GroupStep1"
+            android:label="@string/title_activity_activity__group_step1" >
+        </activity>
+        <activity
+            android:name=".activity_GroupStep2"
+            android:label="@string/title_activity_activity__group_step2" >
+        </activity>
     </application>
 
 </manifest>
