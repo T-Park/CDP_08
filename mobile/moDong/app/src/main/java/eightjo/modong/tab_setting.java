@@ -58,14 +58,16 @@ public class tab_setting extends Activity {
         });
         mContext = this;
 
+        /*
         loadDB();
         Cursor c = db.rawQuery("SELECT * FROM appInfo where login_flag =1;", null);
         c.moveToPosition(c.getCount() - 1);
         temp_user_id =  c.getString(c.getColumnIndex("user_id"));
         temp_user_pw =  c.getString(c.getColumnIndex("user_pw"));
-
+        */
     }
 
+    /*
     public void loadLatestDB()
     {
         loadDB();
@@ -74,12 +76,12 @@ public class tab_setting extends Activity {
         temp_user_id =  c.getString(c.getColumnIndex("user_id"));
         temp_user_pw =  c.getString(c.getColumnIndex("user_pw"));
     }
-
+*/
     @Override
     public  void onResume()
     {
         super.onResume();
-        loadLatestDB();
+        //loadLatestDB();
     }
 
     @Override
@@ -102,7 +104,7 @@ public class tab_setting extends Activity {
             case 0 :
 
                 //현재 id 입력필요
-                loadLatestDB();
+                //loadLatestDB();
                 dialog.setTitle("사용자 인증");
                 textView_dialog1.setText("ID :" + temp_user_id);
                 button_save.setOnClickListener(saveOnClickListener);
@@ -130,7 +132,7 @@ public class tab_setting extends Activity {
                 button_cancel.setOnClickListener(cancelOnClickListener2);
                 break;
             case 3 :
-                loadLatestDB();
+                //loadLatestDB();
                 dialog.setTitle("사용자 인증");
                 button_save.setOnClickListener(saveOnClickListenerForLock);
                 button_cancel.setOnClickListener(cancelOnClickListener3);
@@ -196,8 +198,8 @@ public class tab_setting extends Activity {
 
     public void button_Logout(View v)
     {
-        db.execSQL("DROP TABLE appInfo;");//DROP TABLE tempInfo2
-        Toast.makeText(this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
+        //db.execSQL("DROP TABLE appInfo;");//DROP TABLE tempInfo2
+        //Toast.makeText(this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, LoginPage.class);
         startActivity(intent);
         finish();
@@ -349,12 +351,13 @@ public class tab_setting extends Activity {
             if(value.equals(tempPw))
             {
                 //db 처리
+                /*
                 db.execSQL("UPDATE appInfo SET " +
                         "lock_pw='"+ value + "',"+
                         "lock_flag="+ 1 + "" +
                         " WHERE login_flag =1;");
                 Toast.makeText(mContext, "일치합니다. 비밀번호 : "+ value + " == "+ tempPw, Toast.LENGTH_SHORT).show();
-                loadLatestDB();
+ */               //loadLatestDB();
             }
             else
             {

@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class activity_GroupStep2 extends Activity {
 
     String groupName;
+    EditText editText_m1, editText_m2, editText_m3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +25,10 @@ public class activity_GroupStep2 extends Activity {
         groupName = intent.getStringExtra("groupName");
         TextView textView_groupNameView = (TextView)findViewById(R.id.textView_groupNameView);
         textView_groupNameView.setText(groupName);
+
+        editText_m1 = (EditText)findViewById(R.id.editText_member1);
+        editText_m2 = (EditText)findViewById(R.id.editText_member2);
+        editText_m3 = (EditText)findViewById(R.id.editText_member3);
     }
 
     @Override
@@ -49,9 +55,21 @@ public class activity_GroupStep2 extends Activity {
 
     public void onClick_goNext(View v)
     {
+        String m1_id = editText_m1.getText().toString();
+        String m2_id = editText_m2.getText().toString();
+        String m3_id = editText_m3.getText().toString();
+
+        if(m1_id.equals("요원1") &&
+                m2_id.equals("요원2") &&
+                    m3_id.equals("요원3"))
+        {
+            Toast.makeText(this, "한명이상 함께할 id를 입력해주세요~", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
        //서버로 메세지!
 
-        Toast.makeText(this, "그룹바코드 구현해야해!", Toast.LENGTH_SHORT);
+        Toast.makeText(this, "그룹바코드 구현해야해!", Toast.LENGTH_SHORT).show();
         finish();
     }
 

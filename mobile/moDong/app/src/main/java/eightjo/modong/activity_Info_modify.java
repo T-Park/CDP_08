@@ -107,4 +107,16 @@ public class activity_Info_modify extends Activity {
                 " bacode TEXT" +
                 ");");
     }
+
+    public void sendToServer()
+    {
+          String modify_id =  textView_modify_id.getText().toString();
+          String modify_pw =  editText_modify_pw.getText().toString();
+          String modify_name = textView_modify_name.toString();
+          String modify_job = editText_modify_job.toString();
+          String modify_age = editText_modify_age.toString();
+          String modify_phone =editText_modify_phone.toString();
+
+    }
+
 }

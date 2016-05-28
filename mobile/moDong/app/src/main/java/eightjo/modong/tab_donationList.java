@@ -1,6 +1,8 @@
 package eightjo.modong;
 
 import android.app.Activity;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,10 +14,14 @@ import java.util.ArrayList;
 
 public class tab_donationList extends Activity {
 
+    SQLiteDatabase db;
+    String user_id;
+
     TextView textView_sum_dPoint;
     ListView listView_dlist;
     ArrayList<Item> arrayList;
     useListAdapter useListAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +30,7 @@ public class tab_donationList extends Activity {
 
         textView_sum_dPoint = (TextView)findViewById(R.id.textView_sum_dPoint);
         listView_dlist = (ListView)findViewById(R.id.listView_dlist);
+        loadUser_id();
 
         arrayList = new ArrayList<Item>();
         arrayList.add(new Item("2016/05/14","개발자1","+1000"));
@@ -59,4 +66,42 @@ public class tab_donationList extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void loadDB() {
+        if (db != null) {
+            db.close();
+        }
+
+        db = openOrCreateDatabase(
+                "forAppInfo.db",
+                SQLiteDatabase.CREATE_IF_NECESSARY,
+                null
+        );
+        db.execSQL("CREATE TABLE IF NOT EXISTS appInfo " +
+                "(" +
+                " user_id TEXT," +
+                " user_pw TEXT," +
+                " name TEXT," +
+                " job TEXT," +
+                " age INTEGER," +
+                " phone TEXT," +
+                " lock_flag INTEGER," +
+                " lock_pw TEXT," +
+                " point INTEGER," +
+                " type TEXT," +
+                " login_flag INTEGER," +
+                " group_flag INTEGER," +
+                " bacode TEXT" +
+                ");");
+    }
+
+    public void loadUser_id()
+    {
+        loadDB();
+        Cursor c = db.rawQuery("SELECT * FROM appInfo where login_flag =1;", null);
+        c.moveToPosition(c.getCount() - 1);
+        user_id =  c.getString(c.getColumnIndex("user_id"));
+
+    }
+
 }

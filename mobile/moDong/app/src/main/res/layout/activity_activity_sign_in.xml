@@ -66,7 +66,8 @@
                         android:layout_height="match_parent"
                         android:text="ID 중복확인"
                         android:id="@+id/button4"
-                        android:background="#ffffff" />
+                        android:background="#ffffff"
+                        android:onClick="onClick_confirmId" />
                 </LinearLayout>
 
                 <Space

@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class activity_GroupStep1 extends Activity {
 
@@ -47,6 +48,13 @@ public class activity_GroupStep1 extends Activity {
     public void onClick_goNext(View v)
     {
         String groupName = editText_groupName.getText().toString();
+
+        if(groupName.equals(""))
+        {
+            Toast.makeText(this, "그룹이름을 적어주세요!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
 
         //groupName 선 검사
 

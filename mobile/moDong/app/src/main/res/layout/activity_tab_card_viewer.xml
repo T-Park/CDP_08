@@ -51,8 +51,8 @@
                 android:layout_height="match_parent"
                 android:text="동기화"
                 android:id="@+id/button7"
-                android:layout_gravity="right"
-                android:background="#ffdf21" />
+                android:background="#ffdf21"
+                android:onClick="onClick_syn" />
         </LinearLayout>
 
         <Space
