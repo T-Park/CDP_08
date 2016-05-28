@@ -20,7 +20,9 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile project(':barbecue-1.5-beta1')
+    compile files('/Volumes/Transcend/모동/moDong/lib/core-3.2.0.jar')
+    compile files('D:/download2/moDong (1)/moDong/lib/core-3.2.0.jar')
 }

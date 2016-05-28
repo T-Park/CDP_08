@@ -21,4 +21,7 @@
     <string name="title_activity_activity__info_modify">activity_Info_modify</string>
     <string name="title_activity_activity_give_point">activity_givePoint</string>
     <string name="title_activity_activity_donate">activity_donate</string>
+    <string name="title_activity_activity__group_intro">activity_GroupIntro</string>
+    <string name="title_activity_activity__group_step1">activity_GroupStep1</string>
+    <string name="title_activity_activity__group_step2">activity_GroupStep2</string>
 </resources>

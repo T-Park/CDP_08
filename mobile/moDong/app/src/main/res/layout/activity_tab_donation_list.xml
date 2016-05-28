@@ -7,8 +7,26 @@
     tools:context="eightjo.modong.tab_donationList"
     android:background="#ffffff">
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/android:list" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="나의 기부 포인트 : 0 Point"
+            android:id="@+id/textView_sum_dPoint"
+            android:textSize="20dp"
+            android:textColor="#4487c6" />
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="20px" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/listView_dlist" />
+    </LinearLayout>
 </RelativeLayout>

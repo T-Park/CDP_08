@@ -2,11 +2,14 @@ package eightjo.modong;
 
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.ContentResolver;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -34,6 +37,15 @@ public class tab_useList extends Activity {
         arrayList.add(item2);
         useListAdapter = new useListAdapter(this, R.layout.item, arrayList);
         myBuyList.setAdapter(useListAdapter);
+
+        myBuyList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+            }
+        });
+
     }
 
     @Override

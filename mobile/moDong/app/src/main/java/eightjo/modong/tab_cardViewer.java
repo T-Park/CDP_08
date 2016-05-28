@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 //=//======
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Icon;
 //>>>>>>> Stashed changes
@@ -16,8 +18,14 @@ import android.view.MenuItem;
 //<<<<<<< Updated upstream
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.common.BitMatrix;
 
 public class tab_cardViewer extends Activity {
 
@@ -26,6 +34,7 @@ public class tab_cardViewer extends Activity {
     int group_flag, point;
     //Button button_donation, button_give;
 
+    Switch switch_bacode;
     ImageView imageView_bacode;
 //>>>>>>> Stashed changes
 
@@ -48,7 +57,32 @@ public class tab_cardViewer extends Activity {
             textView_view_group.setText("그룹 안에 있어요");
         textView_view_point.setText(point + "P");
 
+        imageView_bacode = (ImageView) findViewById(R.id.imageView_bacode);
+        String bacode = "2030405090123456";
+        setBacode(bacode);
 
+        switch_bacode = (Switch)findViewById(R.id.switch_bacode);
+        switch_bacode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                {
+                    setBacode("123123");
+                }
+                else
+                {
+                    setBacode("123123123123");
+                }
+            }
+        });
+    }
+
+    public void setBacode(String bacode)
+    {
+        Bitmap bacode2 = createBarcode(bacode);
+
+        imageView_bacode.setImageBitmap(bacode2);
+        imageView_bacode.invalidate();
     }
 
     @Override
@@ -132,4 +166,27 @@ public class tab_cardViewer extends Activity {
         Intent intent = new Intent(this, activity_givePoint.class);
         startActivity(intent);
     }
+
+    public Bitmap createBarcode(String code){
+
+
+        Bitmap bitmap =null;
+        MultiFormatWriter gen = new MultiFormatWriter();
+        try {
+            final int WIDTH = 840;
+            final int HEIGHT = 300;
+            BitMatrix bytemap = gen.encode(code, BarcodeFormat.CODE_128, WIDTH, HEIGHT);
+            bitmap = Bitmap.createBitmap(WIDTH, HEIGHT, Bitmap.Config.ARGB_8888);
+            for (int i = 0 ; i < WIDTH ; ++i)
+                for (int j = 0 ; j < HEIGHT ; ++j) {
+                    bitmap.setPixel(i, j, bytemap.get(i,j) ? Color.BLACK : Color.WHITE);
+                }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return bitmap;
+    }
+
 }

@@ -5,13 +5,37 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class tab_donationList extends Activity {
+
+    TextView textView_sum_dPoint;
+    ListView listView_dlist;
+    ArrayList<Item> arrayList;
+    useListAdapter useListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_donation_list);
+
+        textView_sum_dPoint = (TextView)findViewById(R.id.textView_sum_dPoint);
+        listView_dlist = (ListView)findViewById(R.id.listView_dlist);
+
+        arrayList = new ArrayList<Item>();
+        arrayList.add(new Item("2016/05/14","개발자1","+1000"));
+        arrayList.add(new Item("2013/05/14","개발자2","+400"));
+        arrayList.add(new Item("2016/04/14","개발자2","+2500"));
+        arrayList.add(new Item("2016/05/12","개발자1","+1500"));
+
+        useListAdapter = new useListAdapter(this, R.layout.item, arrayList);
+        listView_dlist.setAdapter(useListAdapter);
+
+        textView_sum_dPoint.setText("나의 기부 포인트 : 5400 Point");
+
     }
 
     @Override

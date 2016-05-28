@@ -35,7 +35,7 @@
             android:id="@+id/button6"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.10"
-            android:onClick="button_Group"
+            android:onClick="onClick_goNext"
             android:background="#4487c6"
             android:textColor="#ffffff" />
 

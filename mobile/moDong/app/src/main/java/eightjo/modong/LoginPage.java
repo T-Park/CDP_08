@@ -9,16 +9,22 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class LoginPage extends Activity {
 
     SQLiteDatabase db;
+    EditText editText_id;
+    EditText editText_pw;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_page);
+
+        editText_id = (EditText)findViewById(R.id.editText_login_id);
+        editText_pw = (EditText)findViewById(R.id.editText_login_pw);
 
         //임시!
         loadDB();

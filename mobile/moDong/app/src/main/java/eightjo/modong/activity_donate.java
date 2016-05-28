@@ -6,13 +6,45 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class activity_donate extends Activity {
+
+    ListView myDonationList;
+    donationListAdater donationListAdater;
+    ArrayList<dItem> arrayList;
+    TextView textView_choice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activity_donate);
+
+        myDonationList = (ListView)findViewById(R.id.listView_donation);
+        textView_choice = (TextView)findViewById(R.id.textView_choice);
+        arrayList = new ArrayList<dItem>();
+        arrayList.add(new dItem("개발자1"));
+        arrayList.add(new dItem("개발자2"));
+        arrayList.add(new dItem("개발자3"));
+        arrayList.add(new dItem("개발자4"));
+        arrayList.add(new dItem("개발자5"));
+
+        donationListAdater = new donationListAdater(this, R.layout.ditem, arrayList);
+        myDonationList.setAdapter(donationListAdater);
+
+        myDonationList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                textView_choice.setText("'" + arrayList.get(position).getDname() + "'에" );
+            }
+        });
+
     }
 
     @Override

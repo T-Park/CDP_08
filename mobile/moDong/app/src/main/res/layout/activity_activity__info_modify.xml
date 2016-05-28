@@ -5,7 +5,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="eightjo.modong.activity_Info_modify"
-    android:background="#f5f5ef">
+    android:background="#4487c6">
 
     <LinearLayout
         android:orientation="vertical"
@@ -20,7 +20,10 @@
             android:layout_height="wrap_content"
             android:text="회원정보 수정 페이지"
             android:id="@+id/textView18"
-            android:textSize="30dp" />
+            android:textSize="30dp"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal" />
 
         <Space
             android:layout_width="match_parent"
@@ -47,7 +50,8 @@
                         android:layout_width="30dp"
                         android:layout_height="match_parent"
                         android:text="아이디"
-                        android:id="@+id/textView19" />
+                        android:id="@+id/textView19"
+                        android:textColor="#ffffff" />
 
                     <Space
                         android:layout_width="20px"
@@ -59,7 +63,8 @@
                         android:text="현재 id"
                         android:id="@+id/textView_modify_id"
                         android:layout_gravity="center_vertical"
-                        android:textSize="25dp" />
+                        android:textSize="25dp"
+                        android:textColor="#ffffff" />
 
                     <Space
                         android:layout_width="20px"
@@ -81,7 +86,8 @@
                         android:layout_width="30dp"
                         android:layout_height="match_parent"
                         android:text="비밀번호"
-                        android:id="@+id/textView20" />
+                        android:id="@+id/textView20"
+                        android:textColor="#ffffff" />
 
                     <Space
                         android:layout_width="20px"
@@ -110,7 +116,8 @@
                         android:layout_width="30dp"
                         android:layout_height="match_parent"
                         android:text="이름"
-                        android:id="@+id/textView21" />
+                        android:id="@+id/textView21"
+                        android:textColor="#ffffff" />
 
                     <Space
                         android:layout_width="20px"
@@ -122,7 +129,8 @@
                         android:text="현재 이름"
                         android:id="@+id/textView_modify_name"
                         android:layout_gravity="center_vertical"
-                        android:textSize="25dp" />
+                        android:textSize="25dp"
+                        android:textColor="#ffffff" />
 
                 </LinearLayout>
 
@@ -144,7 +152,8 @@
                         android:layout_width="30dp"
                         android:layout_height="match_parent"
                         android:text="직업"
-                        android:id="@+id/textView22" />
+                        android:id="@+id/textView22"
+                        android:textColor="#ffffff" />
 
                     <Space
                         android:layout_width="20px"
@@ -177,7 +186,8 @@
                         android:layout_width="30dp"
                         android:layout_height="match_parent"
                         android:text="나이"
-                        android:id="@+id/textView23" />
+                        android:id="@+id/textView23"
+                        android:textColor="#ffffff" />
 
                     <Space
                         android:layout_width="20px"
@@ -210,7 +220,8 @@
                         android:layout_width="30dp"
                         android:layout_height="match_parent"
                         android:text="전화번호"
-                        android:id="@+id/textView24" />
+                        android:id="@+id/textView24"
+                        android:textColor="#ffffff" />
 
                     <Space
                         android:layout_width="20px"

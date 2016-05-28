@@ -63,12 +63,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="바코드 스위치 "
-            android:id="@+id/switch1"
+            android:id="@+id/switch_bacode"
             android:layout_gravity="right" />
 
         <ImageView
-            android:layout_width="300dp"
-            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:layout_height="500px"
             android:id="@+id/imageView_bacode"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/code93" />
@@ -77,53 +77,65 @@
             android:layout_width="20px"
             android:layout_height="15dp" />
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="100dp">
+            android:layout_height="wrap_content"
+            android:id="@+id/scrollView3" >
 
-            <ImageView
-                android:layout_width="150dp"
-                android:layout_height="match_parent"
-                android:id="@+id/imageView"
-                android:src="@drawable/theman" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="&quot;대부분 늙어서야 사회에\n 보답하려고 하는데 반드시\n 해야 하는 일을 굳이 기다릴\n 필요가 있나 ? &quot;\n-마크 주커버그-\n"
-                android:id="@+id/textView"
-                android:layout_marginLeft="10dp"
-                android:gravity="center" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="기부하기"
-                android:id="@+id/button_donationPoint"
-                android:onClick="onClick_goToDonation"
-                android:background="#4487c6"
-                android:textColor="#ffffff" />
+                android:layout_height="match_parent">
 
-            <Space
-                android:layout_width="20px"
-                android:layout_height="20px" />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="포인트 선물하기"
-                android:id="@+id/button_givePoint"
-                android:onClick="nClick_goToGivePointo"
-                android:background="#4487c6"
-                android:textColor="#ffffff" />
-        </LinearLayout>
+                    <ImageView
+                        android:layout_width="150dp"
+                        android:layout_height="match_parent"
+                        android:id="@+id/imageView"
+                        android:src="@drawable/theman" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="&quot;대부분 늙어서야 사회에\n 보답하려고 하는데 반드시\n 해야 하는 일을 굳이 기다릴\n 필요가 있나 ? &quot;\n-마크 주커버그-\n"
+                        android:id="@+id/textView"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="기부하기"
+                        android:id="@+id/button_donationPoint"
+                        android:onClick="onClick_goToDonation"
+                        android:background="#4487c6"
+                        android:textColor="#ffffff" />
+
+                    <Space
+                        android:layout_width="20px"
+                        android:layout_height="20px" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="포인트 선물하기"
+                        android:id="@+id/button_givePoint"
+                        android:onClick="nClick_goToGivePointo"
+                        android:background="#4487c6"
+                        android:textColor="#ffffff" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
 
     </LinearLayout>
 </RelativeLayout>
