@@ -95,22 +95,23 @@ public class ClientConsole implements ChatIF {
 	 */
 	public void display(Object message) {
 		System.out.println("get message");
-		try {
-		String bytes = (String)message;
-		System.out.println("> " + bytes.getBytes());
-		
-		byte[] byteImage = Base64.getDecoder().decode(bytes);
-		InputStream in = new ByteArrayInputStream(byteImage);
-		
-			BufferedImage bufferedImage = ImageIO.read(in);
-			
-			File outputfile = new File("result.png");
-			ImageIO.write(bufferedImage, "png", outputfile);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		System.out.println(">>" + message.toString());
+//		try {
+//		String bytes = (String)message;
+//		System.out.println("> " + bytes.getBytes());
+//		
+//		byte[] byteImage = Base64.getDecoder().decode(bytes);
+//		InputStream in = new ByteArrayInputStream(byteImage);
+//		
+//			BufferedImage bufferedImage = ImageIO.read(in);
+//			
+//			File outputfile = new File("result.png");
+//			ImageIO.write(bufferedImage, "png", outputfile);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
 		
 	}
 
