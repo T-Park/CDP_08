@@ -51,6 +51,7 @@ public class HandleMessageFromMobile {
 
 	public void processMessage(ConnectionToClient client, String... tokens) {
 		// tokens[0] is header
+		
 		switch (tokens[0]) {
 		case messageType.LOGIN: // 회원가입
 			processLoin(client, tokens);
@@ -83,6 +84,7 @@ public class HandleMessageFromMobile {
 			processGroupOut(client, tokens);
 			break;
 		case messageType.SYN: // 동기화요청
+			//server.sendToMyClient(client, "login 실패");
 			processSYN(client, tokens);
 			break;
 		case messageType.MYBARCODE: // 내 바코드 요청
@@ -98,6 +100,7 @@ public class HandleMessageFromMobile {
 	public void processLoin(ConnectionToClient client, String... tokens) {
 		System.out.println("모바일에서의 요청 : login");
 		String id = tokens[1], pw = tokens[2];
+
 		if (ua.loginUser(id, pw)) {
 			ModongUser md = ua.getModongUser_asId(id);
 			String groupFlag, groupName;
@@ -121,7 +124,7 @@ public class HandleMessageFromMobile {
 	public void processJoin(ConnectionToClient client, String... tokens) {
 		System.out.println("모바일에서의 요청 : 회원가입");
 		if (ua.joinModong(tokens[1], tokens[2], tokens[3], tokens[4], Integer.parseInt(tokens[5]), tokens[6])) {
-			server.sendToMyClient(client, "#true");
+			server.sendToMyClient(client, "#signIn");
 		} else {
 			server.sendToMyClient(client, "회원가입 실패");
 		}
@@ -130,8 +133,8 @@ public class HandleMessageFromMobile {
 	// #ModongExistId%id
 	public void processExsistedID(ConnectionToClient client, String... tokens) {
 		System.out.println("모바일에서의 요청 : 중복 id확인");
-		if (ua.isThereUser_asId(tokens[1])) {
-			server.sendToMyClient(client, "#true");
+		if (!ua.isThereUser_asId(tokens[1])) {
+			server.sendToMyClient(client, "#id");
 		} else
 			server.sendToMyClient(client, "false");
 	}
@@ -226,19 +229,32 @@ public class HandleMessageFromMobile {
 
 	// #ModongSyn%id rt
 	public void processSYN(ConnectionToClient client, String... tokens) {
-		System.out.println("모바일에서의 요청 : 동기화 요청");
+			
 		ua.updateGroupList();
 		ua.updateUserList();
-
-		ModongUser user = ua.findUser_asId(tokens[1]);
+			
+		String id = tokens[1];
+		
+		if(!ua.isThereUser_asId(id))
+		{
+			server.sendToMyClient(client, "fail");
+		}
+			
+		ModongUser user = ua.findUser_asId(id);
 		int point = user.getUser_point();
 		int groupCode = user.getGroupCode();
+		System.out.println(user);
+		System.out.println(point);
+		System.out.println(groupCode);
+				
 		if (groupCode == ua.default_groupCode) {
-			String groupName = ua.gcodeTogname(groupCode);
-			server.sendToMyClient(client, "#" + point + "%" + "true" + "%" + groupName);
+			String groupName = "abc";
+			String a = new String("#" + point + "%" + "true" + "%" + groupName);
+			server.sendToMyClient(client, a);
 		} else {
 			server.sendToMyClient(client, "#" + point + "%" + "false" + "%" + "null");
 		}
+		System.out.println("모바일에서의 요청 : 동기화 요청");
 	}
 
 	// #ModongMyBacode%id

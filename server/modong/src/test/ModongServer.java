@@ -118,7 +118,6 @@ public class ModongServer extends AbstractServer {
 		} else
 
 		{
-
 			System.out.println("Message received: " + msg + " from " + client);
 			this.sendToAllClients(msg);
 		}
@@ -441,7 +440,7 @@ public class ModongServer extends AbstractServer {
 
 	public void sendToMyClient(ConnectionToClient client, Object msg) {
 		try {
-			client.sendToClient(msg);
+			((ConnectionToClient)client).sendToClient(msg);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

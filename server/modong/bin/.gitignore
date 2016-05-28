@@ -1,2 +1,6 @@
-/test/
+/ProblemDomain/
+/client/
+/common/
 /server/
+/test/
+/util/
