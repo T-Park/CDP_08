@@ -93,14 +93,14 @@ public class StoreAdmin {
 	
 	public boolean findStore(int pid)
 	{
-		for(int i=0; i < mStoreList.size(); i++)
-		{
-			if(pid == mStoreList.get(i).getStore_id())
-			{
-				return true;
-			}
-		}		
-		return false;
+//		for(int i=0; i < mStoreList.size(); i++)
+//		{
+//			if(pid == mStoreList.get(i).getStore_id())
+//			{
+//				return true;
+//			}
+//		}		
+//		return false;
 	}
 	
 	private int searchStore_asPid(int pid)

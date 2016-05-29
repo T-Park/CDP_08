@@ -14,7 +14,7 @@ import ProblemDomain.ModongUserAdmin;
 import ProblemDomain.StoreAdmin;
 import test.ModongServer;
 
-public class HandleMessageFromMobile {
+public class HandlerForModong {
 	private ModongServer server;
 	private ModongUserAdmin ua;
 	private CoinCollectorAdmin cca;
@@ -26,7 +26,10 @@ public class HandleMessageFromMobile {
 		public static final String LOGIN = "#ModongLogin";
 		public static final String JOIN = "#ModongJoin";
 		public static final String EXSISTID = "#ModongExistId";
-		public static final String MODIFIY = "ModongModify";
+		public static final String MODIFIY = "#ModongModify";
+		
+		public static final String GETUSERINFO = "#ModongGetUserInfo";
+		
 		public static final String DONATION = "ModongDonation";
 		public static final String GIVEPOINT = "ModongGivePoint";
 		public static final String USELIST = "ModongUseList";
@@ -39,7 +42,7 @@ public class HandleMessageFromMobile {
 		public static final String GROUPBARCODE = "#ModongGroupBarcode";
 	}
 
-	public HandleMessageFromMobile(ModongServer server) {
+	public HandlerForModong(ModongServer server) {
 		// TODO Auto-generated constructor stub
 		this.server = server;
 
@@ -93,6 +96,10 @@ public class HandleMessageFromMobile {
 		case messageType.GROUPBARCODE: // 그룹바코드 요청
 			processGroupIn(client, tokens);
 			break;
+			
+		case messageType.GETUSERINFO :
+			processGetUserInfo(client, tokens);
+			
 		}
 	}
 
@@ -103,18 +110,19 @@ public class HandleMessageFromMobile {
 
 		if (ua.loginUser(id, pw)) {
 			ModongUser md = ua.getModongUser_asId(id);
-			String groupFlag, groupName;
+			int groupCode = md.getGroupCode();
+			String groupBarcode, groupName;
 			if (md.getGroupCode() == -1) {
-				groupFlag = "0";
+				groupBarcode = "0";
 				groupName = "null";
 			} else {
-				groupFlag = "1";
-				groupName = ua.getGroupName(md.getGroupCode());
+				groupName = ua.getGroupName(groupCode);
+				groupBarcode = ua.getGroupBarcode(groupCode);
 			}
 
 			server.sendToMyClient(client,
-					"#" + md.getUser_id() + "%" + md.getUser_pw() + "%" + md.getUser_name() + "%" + md.getUser_job()
-							+ "%" + md.getUser_age() + "%" + md.getUser_tel() + "%" + groupFlag + "%" + groupName);
+					"#" + md.getUser_id() + "%" + md.getUser_pw() + "%" + md.getUser_name()+ "%" + md.getUser_bacode()
+						+ "%" + groupCode + "%" + groupName + "%" + groupBarcode);
 		} else {
 			server.sendToMyClient(client, "login 실패");
 		}
@@ -138,6 +146,24 @@ public class HandleMessageFromMobile {
 		} else
 			server.sendToMyClient(client, "false");
 	}
+	
+	// #ModongGetUserInfo%id%pw
+	public void processGetUserInfo(ConnectionToClient client, String... tokens) {
+		System.out.println("모바일에서의 요청 : 회원가져오기");
+		String id = tokens[1];
+		String pw = tokens[2];
+		
+		if(ua.loginUser(id, pw))
+		{
+			ModongUser user = ua.findUser_asId(id);
+			server.sendToMyClient(client, "#info%" + id + "%" + pw + "%" + user.getUser_name()
+			+ "%" + user.getUser_job() + "%" + user.getUser_age()+ "%" + user.getUser_tel());
+		}
+		else
+		{			
+			server.sendToMyClient(client, "false_password");
+		}		
+	}
 
 	// #ModongModify%id%pw%name%job%age%tel
 	public void processModify(ConnectionToClient client, String... tokens) {
@@ -149,8 +175,11 @@ public class HandleMessageFromMobile {
 		String name = tokens[3];
 		String tel = tokens[6];
 
-		ua.modifyUser(id, pw, name, job, age, tel);
-		server.sendToMyClient(client, "#true");
+		if(ua.modifyUser(id, pw, name, job, age, tel))
+		{
+			server.sendToMyClient(client, "#modify");
+		}
+		server.sendToMyClient(client, "fail");
 	}
 
 	// #ModongDonation%id%gname%point
@@ -213,7 +242,7 @@ public class HandleMessageFromMobile {
 			ids[i] = tokens[i + 2];
 		}
 		if (ua.groupingUser(ids, tokens[i]))
-			server.sendToMyClient(client, "#true");
+			server.sendToMyClient(client, "#group");
 		else
 			server.sendToMyClient(client, "실패했습니다.");
 	}

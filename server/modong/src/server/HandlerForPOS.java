@@ -11,10 +11,10 @@ import ProblemDomain.DonationOrgnzAdmin;
 import ProblemDomain.ModongUser;
 import ProblemDomain.ModongUserAdmin;
 import ProblemDomain.StoreAdmin;
-import server.HandleMessageFromModong.messageType;
+import server.HandlerForCC.messageType;
 import test.ModongServer;
 
-public class HandleMessageFromPOS {
+public class HandlerForPOS {
 	private ModongServer server;
 	private ModongUserAdmin ua;
 	private CoinCollectorAdmin cca;
@@ -29,7 +29,7 @@ public class HandleMessageFromPOS {
 
 	}
 
-	public HandleMessageFromPOS(ModongServer server) {
+	public HandlerForPOS(ModongServer server) {
 		this.server = server;
 		ua = ModongUserAdmin.getInstance();
 		cca = CoinCollectorAdmin.getInstance();

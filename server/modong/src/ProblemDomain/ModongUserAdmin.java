@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import ProblemDomain.DonationOrgnzAdmin.dItem;
+import util.BarcodeNumberGenerator;
 //singleton
 public class ModongUserAdmin {
 	private static ModongUserAdmin unicqueUserAdmin; //singleton 사용
@@ -112,7 +113,7 @@ public class ModongUserAdmin {
 		SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy.MM.dd", Locale.KOREA );
 		Date currentTime = new Date ();
 		
-		bacodeString = "tempCode"; //temporary
+		bacodeString = BarcodeNumberGenerator.generateBarcodeNum(false); //temporary
 		
 		tempUser = new ModongUser(id, pw, currentTime, 
 								default_userType, default_userPoint, name, 
@@ -159,7 +160,7 @@ public class ModongUserAdmin {
 		mUserList.get(index).setUser_job(job);
 		mUserList.get(index).setUser_age(age);
 		mUserList.get(index).setUser_tel(tel);
-		//mUserList.get(index).setGroupCode(gCode);
+		
 		
 		//db update
 		
@@ -211,7 +212,7 @@ public class ModongUserAdmin {
 		System.out.println("유효한 Id입니다.");
 		//그룹코드 설정*
 		GroupUser tempGroupUser = new GroupUser(groupCode_forTest, gname, 
-													default_groupUserPoint, groupBacode_forTest);
+													default_groupUserPoint, BarcodeNumberGenerator.generateBarcodeNum(true));
 		
 		for(int i=0; i < ids.length; i++)
 		{
@@ -227,6 +228,13 @@ public class ModongUserAdmin {
 		updateUserList();
 		updateGroupList();
 		return mGroupList.get(searchGroupUser_asGroupCode(groupCode)).getGroup_name();
+	}
+	
+	public String getGroupBarcode(int groupCode)
+	{
+		updateUserList();
+		updateGroupList();
+		return mGroupList.get(searchGroupUser_asGroupCode(groupCode)).getGroup_bacode();
 	}
 	
 	//login

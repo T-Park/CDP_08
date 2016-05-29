@@ -12,15 +12,18 @@ import ProblemDomain.CoinCollectorAdmin;
 import ProblemDomain.DonationOrgnzAdmin;
 import ProblemDomain.ModongUserAdmin;
 import ProblemDomain.StoreAdmin;
-import server.HandleMessageFromMobile.messageType;
+import db.SQLforCC;
+import server.HandlerForModong.messageType;
 import test.ModongServer;
 
-public class HandleMessageFromModong {
+public class HandlerForCC {
 	private ModongServer server;
 	private ModongUserAdmin ua;
 	private CoinCollectorAdmin cca;
 	private DonationOrgnzAdmin doa;
 	private StoreAdmin sa;
+	
+	private SQLforCC sqlForCC; // db function
 
 	// class for message
 	public final class messageType {
@@ -35,7 +38,7 @@ public class HandleMessageFromModong {
 
 	}
 
-	public HandleMessageFromModong(ModongServer server) {
+	public HandlerForCC(ModongServer server) {
 		// TODO Auto-generated constructor stub
 		this.server = server;
 

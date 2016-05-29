@@ -18,11 +18,12 @@ import ProblemDomain.DonationOrgnzAdmin;
 import ProblemDomain.ModongUser;
 import ProblemDomain.ModongUserAdmin;
 import ProblemDomain.StoreAdmin;
+import db.DBManager;
 import server.AbstractServer;
 import server.ConnectionToClient;
-import server.HandleMessageFromMobile;
-import server.HandleMessageFromModong;
-import server.HandleMessageFromPOS;
+import server.HandlerForModong;
+import server.HandlerForCC;
+import server.HandlerForPOS;
 import util.BarcodeCreator;
 
 public class ModongServer extends AbstractServer {
@@ -30,9 +31,11 @@ public class ModongServer extends AbstractServer {
 	// CoinCollectorAdmin cca;
 	// DonationOrgnzAdmin doa;
 	// StoreAdmin sa;
-	private HandleMessageFromMobile mobileHandler;
-	private HandleMessageFromModong modongHandler;
-	private HandleMessageFromPOS posHandler;
+	private HandlerForModong mobileHandler;
+	private HandlerForCC modongHandler;
+	private HandlerForPOS posHandler;
+	
+	private DBManager dbManager; // dbManager
 	// Class variables *************************************************
 
 	/**
@@ -54,9 +57,11 @@ public class ModongServer extends AbstractServer {
 		// cca = CoinCollectorAdmin.getInstance();
 		// doa = DonationOrgnzAdmin.getInstance();
 		// sa = StoreAdmin.getInstance();
-		mobileHandler = new HandleMessageFromMobile(this);
-		modongHandler = new HandleMessageFromModong(this);
-		posHandler = new HandleMessageFromPOS(this);
+		mobileHandler = new HandlerForModong(this);
+		modongHandler = new HandlerForCC(this);
+		posHandler = new HandlerForPOS(this);
+		
+		dbManager = DBManager.getIntance(); // get dbManager
 
 	}
 
@@ -467,6 +472,10 @@ public class ModongServer extends AbstractServer {
 
 		ServerConsole sc = new ServerConsole(sv);
 		sc.accept();
+	}
+
+	public DBManager getDbManager() {
+		return dbManager;
 	}
 }
 // End of EchoServer class
