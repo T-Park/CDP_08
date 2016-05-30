@@ -30,9 +30,9 @@ public class HandlerForModong {
 		
 		public static final String GETUSERINFO = "#ModongGetUserInfo";
 		
-		public static final String DONATION = "ModongDonation";
-		public static final String GIVEPOINT = "ModongGivePoint";
-		public static final String USELIST = "ModongUseList";
+		public static final String DONATION = "#ModongDonation";
+		public static final String GIVEPOINT = "#ModongGivePoint";
+		public static final String USELIST = "#ModongUseList";
 
 		public static final String DONATIONLIST = "#ModongDonationList";
 		public static final String GROUPIN = "#ModongGroupIn";
@@ -210,7 +210,7 @@ public class HandlerForModong {
 
 		if (fromUser.removePoint(point)) {
 			toUser.addPoint(point);
-			server.sendToMyClient(client, "#true");
+			server.sendToMyClient(client, "#give");
 		} else
 			server.sendToMyClient(client, "포인트가 부족합니다.");
 
@@ -277,8 +277,8 @@ public class HandlerForModong {
 		System.out.println(groupCode);
 				
 		if (groupCode == ua.default_groupCode) {
-			String groupName = "abc";
-			String a = new String("#" + point + "%" + "true" + "%" + groupName);
+			String groupName = "null";
+			String a = new String("#" + point + "%" + groupCode + "%" + groupName);
 			server.sendToMyClient(client, a);
 		} else {
 			server.sendToMyClient(client, "#" + point + "%" + "false" + "%" + "null");

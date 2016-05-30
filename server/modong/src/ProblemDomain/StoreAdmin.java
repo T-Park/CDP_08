@@ -100,7 +100,7 @@ public class StoreAdmin {
 //				return true;
 //			}
 //		}		
-//		return false;
+		return false;
 	}
 	
 	private int searchStore_asPid(int pid)

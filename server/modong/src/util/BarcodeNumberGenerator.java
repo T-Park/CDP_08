@@ -40,8 +40,8 @@ public class BarcodeNumberGenerator {
 		return number;
 	}
 	
-/*	static public void main(String args[])
+	static public void main(String args[])
 	{
 		generateBarcodeNum(false);
-	}*/
+	}
 }

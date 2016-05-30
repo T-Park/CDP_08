@@ -71,7 +71,7 @@ public class ModongServer extends AbstractServer {
 	(Object msg, ConnectionToClient client) {
 		String line = (String) msg;
 		String[] tokens = line.split("%");
-
+		System.out.println("hmc ±îÁö¿È");
 		if (tokens[0].startsWith("#Pos")) {
 			posHandler.processMessage(client, tokens);
 		} else if (tokens[0].startsWith("#Modong")) {

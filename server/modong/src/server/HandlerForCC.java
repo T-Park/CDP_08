@@ -46,6 +46,8 @@ public class HandlerForCC {
 		cca = CoinCollectorAdmin.getInstance();
 		doa = DonationOrgnzAdmin.getInstance();
 		sa = StoreAdmin.getInstance();
+		
+//		sqlForCC = 
 	}
 
 	public void processMessage(ConnectionToClient client, String... tokens) {
@@ -55,6 +57,7 @@ public class HandlerForCC {
 			processLogin(client, tokens);
 			break;
 		case messageType.LOGOUT: // 로그아웃
+			processLogout(client, tokens);
 			break;
 		case messageType.UPDATEINFO: // 모음이 정보 갱신
 			processUpdateInfo(client, tokens);
@@ -80,7 +83,12 @@ public class HandlerForCC {
 	// #CcLogin%cid
 	public void processLogin(ConnectionToClient client, String... tokens) {
 		System.out.println("동전모음이에서의 요청 : 로그인");
+		if ( )
 		server.sendToMyClient(client, "#Error%test error");
+/*		
+ * 		
+ * 
+		*/
 	}
 	
 	// #CcLogout

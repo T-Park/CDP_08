@@ -1,5 +1,5 @@
-/util/
-/server/
 /ProblemDomain/
-/test/
 /db/
+/server/
+/test/
+/util/
