@@ -193,7 +193,7 @@ public class HandlerForModong {
 		int uid = ua.idToUid(id);
 		if (user.removePoint(point)) {
 			doa.recordDonationPoint(uid, did, point);
-			doa.findDonationOrgnz(did).addPoint(point);
+			//doa.findDonationOrgnz(did).addPoint(point);
 			server.sendToMyClient(client, "#true");
 		} else
 			server.sendToMyClient(client, "포인트가 부족합니다.");

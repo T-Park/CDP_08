@@ -11,30 +11,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.Date;
 
-public class SQLforPOS {
-//	private Statement stmt; // statement
-//	
-//	private Statement getStatement(Connection conn)
-//	{
-//		stmt = null;
-//		try {
-//			stmt = conn.createStatement();
-//			
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			System.err.println("create Stmt Error");
-//			e.printStackTrace();
-//		} finally {
-//			return stmt; // return stmt
-//		}
-//	}
-	
+public class SQLforPOS extends CommonSQL {
+
 	// check is ther exist pid
-	public boolean login(Connection conn, int pid)
-	{
+	public boolean login(Connection conn, int pid) {
 		int res = -1;
-//		getStatement(conn);
+		// getStatement(conn);
 		PreparedStatement pstmt = null;
 		String query = "select count(*) from store where pid=?"; // count·Î ¼À
 		try {
@@ -52,23 +37,19 @@ public class SQLforPOS {
 			e.printStackTrace();
 		} finally {
 			// problem, if error, it return false
-			if ( res > 0 )
+			if (res > 0)
 				return true;
 			else
 				return false;
 		}
 	}
-	
-	// check is there exist user
-	public boolean checkUserbyBarcode(Connection conn, String barcode)
-	{
+	public int getNewlogId(Connection conn) {
 		int res = -1;
-//		getStatement(conn);
+
 		PreparedStatement pstmt = null;
-		String query = "select count(*) from usr where barcode=?"; // count·Î ¼À
+		String query = "select count(*) from saveuselist"; // count·Î ¼À
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, barcode);
 			ResultSet rs = pstmt.executeQuery();
 			rs.next();
 			res = rs.getInt("count(*)");
@@ -81,26 +62,37 @@ public class SQLforPOS {
 			e.printStackTrace();
 		} finally {
 			// problem, if error, it return false
-			if ( res > 0 )
-				return true;
-			else
-				return false;
-		}		
+			return res; // return num of saveuselist
+		}
 	}
-	
-	// add point
-	public boolean addPointbyBarcode(Connection conn, int amount, String barcode)
-	{
+
+
+
+	// log save result
+	public boolean logResult(Connection conn, int pid, String barcode, int amount, char type) {
+		int id = getNewlogId(conn) + 1;
+		System.out.println("id: " + id);
+		int uid = getUidbyBarcode(conn, barcode);
+		System.out.println("uid: " + uid);
+
 		int res = -1;
-//		getStatement(conn);
+
 		PreparedStatement pstmt = null;
-		String query = "update usr set point = point + ? where barcode=?"; // count·Î ¼À
+		// (usrid, pid, paydate, amount, type)
+		String query = "insert into saveuselist " + "values (?, ?, ?, ?, ?, ?)"; // count·Î
+																					// ¼À
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, amount);
-			pstmt.setString(2, barcode);
+			pstmt.setInt(1, id);
+			pstmt.setInt(2, uid);
+			pstmt.setInt(3, pid);
+			pstmt.setTimestamp(4, new Timestamp(new Date().getTime())); // set
+																		// current
+																		// date
+			pstmt.setInt(5, amount);
+			pstmt.setString(6, new Character(type).toString());
+
 			res = pstmt.executeUpdate();
-			
 			System.out.println("res: " + res);
 
 			pstmt.close();
@@ -110,40 +102,11 @@ public class SQLforPOS {
 			e.printStackTrace();
 		} finally {
 			// problem, if error, it return false
-			if ( res > 0 )
-				return true; // success to save
+			if (res > 0)
+				return true; // success to log
 			else
-				return false; // fail to save
-		}		
-	}
-	
-	// withdraw point
-	public boolean withdrawPointbyBarcode(Connection conn, int amount, String barcode)
-	{
-		int res = -1;
-//		getStatement(conn);
-		PreparedStatement pstmt = null;
-		
-		String query = "update usr set point = point - ? where barcode=?";
-		
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, amount);
-			pstmt.setString(2, barcode);
-			res = pstmt.executeUpdate();
-			
-			System.out.println("res: " + res);
-			pstmt.close();
-			conn.commit();
-		} catch(SQLException e)
-		{
-			e.printStackTrace();
-		} finally {
-			if ( res > 0 )
-				return true; // success to withdraw
-			else 
-				return false; // fail to withdraw
+				return false; // fail to log
 		}
-		
 	}
+
 }

@@ -11,15 +11,19 @@ class Modong_client(r_client.Client):
         self.packet = r_packet.Packet()
 
     # login to server and get Modong info
+    # #CcLogin%cid
     def login(self, cid):
         self.send(self.packet.assemble_packet(r_packet_type.Packet_type.login, cid)) # send message to server
         recv_msg = self.packet.deassemble_packet(self.recv()) # recv message from server
         if recv_msg[0] == "Error":
             print(recv_msg[1])
+            return None
         else:
             print("login success")
+            return recv_msg[1] # return aquired acculmulated amount
 
     # logout to server
+    # #CcLogout
     def logout(self):
         self.send(self.packet.assemble_packet(r_packet_type.Packet_type.logout)) # send message to server
         recv_msg = self.packet.deassemble_packet(self.recv()) # recv message from server
@@ -29,6 +33,7 @@ class Modong_client(r_client.Client):
             print("logout success")
 
     # update server info
+    # #CcUpdateInfo
     def update_modong_info(self, coin_collector):
         self.send(self.packet.assemble_packet(r_packet_type.Packet_type.update_info, coin_collector.accumulated_amount)) # send message to server
         recv_msg = self.packet.deassemble_packet(self.recv()) # recv message from server
@@ -39,6 +44,7 @@ class Modong_client(r_client.Client):
 
 
     # get number of organization
+    # CcGetOrgNum
     def get_orglist_num(self):
         self.send(self.packet.assemble_packet(r_packet_type.Packet_type.get_org_num)) # send message to server
         recv_msg = self.packet.deassemble_packet(self.recv()) # recv message from server
@@ -88,8 +94,8 @@ class Modong_client(r_client.Client):
             print("save success")
 
     # donate point
-    def donate_point(self, did, point):
-        self.send(self.packet.assemble_packet(r_packet_type.Packet_type.donate_point, did, point))
+    def donate_point(self, did, user_barcode, point):
+        self.send(self.packet.assemble_packet(r_packet_type.Packet_type.donate_point, did, user_barcode, point))
         recv_msg = self.packet.deassemble_packet(self.recv()) # recv message from server
         if recv_msg[0] == "Error":
             print(recv_msg[1])

@@ -22,7 +22,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.central_widget = QtWidgets.QStackedWidget()  # use stacked widget
         self.setCentralWidget(self.central_widget)  # set widget
 
-        self.client = coin_collector_client.Coin_collector_clinet('155.230.71.240',5555) # client model
+        self.client = coin_collector_client.Coin_collector_clinet('localhost',5555) # client model
         # it will be modifyed
         self.orglist = list() # organization list
         self.widget_type = widget_type.Widget_type # enum for widget type
@@ -79,9 +79,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.show()
 
     # set client
-    def initClient(self):
+    def initClient(self, cid = 1):
         self.client.connection.connect(); # connect to server
-        self.client.connection.login(0); # login
+        amount = self.client.connection.login(cid); # login
 
     # change widget by index
     def change_widget(self, num):
