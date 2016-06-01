@@ -15,6 +15,7 @@ import ProblemDomain.ModongUser;
 import ProblemDomain.ModongUserAdmin;
 import ProblemDomain.StoreAdmin;
 import db.SQLforCC;
+import db.CommonSQL.QueryParameter;
 import server.HandlerForModong.messageType;
 import test.ModongServer;
 
@@ -255,7 +256,7 @@ public class HandlerForCC {
 		int amount = Integer.parseInt(tokens[2]);
 
 		// check validity of barcode
-		if (!sqlForCC.checkUserbyBarcode(client.getConn(), barcode)) {
+		if (!sqlForCC.checkUserbyParam(client.getConn(), barcode, QueryParameter.BARCODE)) {
 			System.out.println(">> 존재 하지 않는  user bacode 입니다.");
 			server.sendToMyClient(client, "#Error%Invalid barcode");
 		}
@@ -264,7 +265,7 @@ public class HandlerForCC {
 			System.out.println("인증되지 않은 동전모음이입니다.");
 			server.sendToMyClient(client, "#Error%Not logined Cc login first");
 		} else {
-			if (sqlForCC.addPointbyBarcode(client.getConn(), amount, barcode)) {
+			if (sqlForCC.addPointbyParam(client.getConn(), amount, barcode, QueryParameter.BARCODE)) {
 				System.out.println(">> 적립하였습니다.");
 				server.sendToMyClient(client, "#Success");
 				// log save result
@@ -291,16 +292,16 @@ public class HandlerForCC {
 		int amount = Integer.parseInt(tokens[3]);
 		
 		// check validity of barcode
-		if (!sqlForCC.checkUserbyBarcode(client.getConn(), barcode)) {
+		if (!sqlForCC.checkUserbyParam(client.getConn(), barcode, QueryParameter.BARCODE)) {
 			System.out.println(">> 존재 하지 않는  user bacode 입니다.");
 			server.sendToMyClient(client, "#Error%Invalid barcode");
 		} else {
-			if (sqlForCC.DonatePointbyBarcode(client.getConn(), amount, barcode)
-					&& sqlForCC.addPointToOrg(client.getConn(), did, amount)) {
+			if (sqlForCC.donatePointbyParam(client.getConn(), amount, barcode, QueryParameter.BARCODE) // update user
+					&& sqlForCC.addPointToOrg(client.getConn(), did, amount)) { // update organization
 				System.out.println(">> 기부하였습니다.");
 				server.sendToMyClient(client, "#Success");
 				// log donate result
-				if (!sqlForCC.logDonateResult(client.getConn(), did, barcode, amount))
+				if (!sqlForCC.logDonateResult(client.getConn(), did, barcode, amount, QueryParameter.BARCODE))
 					System.out.println("log 실패");
 				else
 					System.out.println("log 성공");

@@ -17,14 +17,14 @@ public class ModongUser {
 	String user_id;
 	String user_pw;
 	Date user_startDate;
-	char user_type;
+	String user_type;
 	int user_point;
 	String user_name;
 	String user_job;
 	int user_age;
 	int user_donatePoint;
 	String user_tel;
-	String user_bacode;
+	String user_barcode;
 	int user_event; // 임시 attr
 	// ++ db에 더해야할 정보
 	int user_groupCode;
@@ -38,7 +38,7 @@ public class ModongUser {
 		// db처리
 	}
 
-	public ModongUser(String id, String pw, Date startDate, char type, int point, String name, String job, int age,
+	public ModongUser(String id, String pw, Date startDate, String type, int point, String name, String job, int age,
 			int donatePoint, String tel, String bacode) {
 		user_id = id;
 		user_pw = pw;
@@ -50,7 +50,7 @@ public class ModongUser {
 		user_age = age;
 		user_donatePoint = donatePoint;
 		user_tel = tel;
-		user_bacode = bacode;
+		user_barcode = bacode;
 
 		user_groupCode = ModongUserAdmin.default_groupCode;
 	}
@@ -94,6 +94,24 @@ public class ModongUser {
 		user_groupCode = ModongUserAdmin.default_groupCode;
 		return true;
 	}
+	
+	// type set
+	public void setDefaultType(int age)
+	{
+		// 성별관련 추가 필요
+		if (age < 0)
+			System.out.println("age Error");
+		else if (age < 20)
+			setUser_type("10m");
+		else if (age < 30 )
+			setUser_type("20m");
+		else if (age < 40 )
+			setUser_type("30m");
+		else if (age < 50 )
+			setUser_type("40m");
+		else
+			setUser_type("50m");
+	}
 
 	// getter setter들
 	public String getUser_id() {
@@ -120,11 +138,11 @@ public class ModongUser {
 		this.user_startDate = user_startDate;
 	}
 
-	public char getUser_type() {
+	public String getUser_type() {
 		return user_type;
 	}
 
-	public void setUser_type(char user_type) {
+	public void setUser_type(String user_type) {
 		this.user_type = user_type;
 	}
 
@@ -177,11 +195,11 @@ public class ModongUser {
 	}
 
 	public String getUser_bacode() {
-		return user_bacode;
+		return user_barcode;
 	}
 
-	public void setUser_bacode(String user_bacode) {
-		this.user_bacode = user_bacode;
+	public void setUser_barcode(String user_bacode) {
+		this.user_barcode = user_bacode;
 	}
 
 	public int getUser_event() {
@@ -202,7 +220,7 @@ public class ModongUser {
 
 	public String toString() {
 		return user_id + " : " + user_startDate + " " + user_type + "    " + user_point + "    " + user_name + " "
-				+ user_job + " " + user_age + " " + user_donatePoint + "     " + user_tel + " " + user_bacode + " "
+				+ user_job + " " + user_age + " " + user_donatePoint + "     " + user_tel + " " + user_barcode + " "
 				+ user_groupCode;
 	}
 
@@ -212,6 +230,18 @@ public class ModongUser {
 
 	public void setUid(int uid) {
 		this.uid = uid;
+	}
+
+	public String getUser_barcode() {
+		return user_barcode;
+	}
+
+	public int getUser_groupCode() {
+		return user_groupCode;
+	}
+
+	public void setUser_groupCode(int user_groupCode) {
+		this.user_groupCode = user_groupCode;
 	}
 
 }

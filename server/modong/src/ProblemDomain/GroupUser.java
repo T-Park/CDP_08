@@ -9,8 +9,10 @@ public class GroupUser {
 
 	String group_name;
 	int group_point;
-	String group_bacode;
+	String group_barcode;
 
+	public GroupUser() {}
+	
 	public GroupUser(int gid) {
 		// db처리
 	}
@@ -19,7 +21,7 @@ public class GroupUser {
 		this.gid = gid;
 		group_name = name;
 		group_point = point;
-		group_bacode = bacode;
+		group_barcode = bacode;
 	}
 
 	public int addPoint(int i)// 적립하기-가맹점
@@ -57,16 +59,16 @@ public class GroupUser {
 		this.group_point = group_point;
 	}
 
-	public String getGroup_bacode() {
-		return group_bacode;
+	public String getGroup_barcode() {
+		return group_barcode;
 	}
 
-	public void setGroup_bacode(String group_bacode) {
-		this.group_bacode = group_bacode;
+	public void setGroup_barcode(String group_bacode) {
+		this.group_barcode = group_bacode;
 	}
 
 	public String toString() {
-		return gid + " : " + group_name + " " + group_point + " " + group_bacode;
+		return gid + " : " + group_name + " " + group_point + " " + group_barcode;
 	}
 
 }

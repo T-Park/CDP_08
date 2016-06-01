@@ -42,6 +42,6 @@ public class BarcodeNumberGenerator {
 	
 	static public void main(String args[])
 	{
-		generateBarcodeNum(false);
+		generateBarcodeNum(true);
 	}
 }

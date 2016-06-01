@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import javax.jws.soap.SOAPBinding.ParameterStyle;
 import javax.print.attribute.standard.PrinterIsAcceptingJobs;
 
 import com.sun.glass.ui.GestureSupport;
@@ -114,6 +115,8 @@ public class SQLforCC extends CommonSQL {
 			return res; // return orgnum
 		}
 	}
+	
+
 
 	// get organization by index
 	public DonationOrgnz getOrg(Connection conn, int index) {
@@ -180,7 +183,7 @@ public class SQLforCC extends CommonSQL {
 	public boolean logSaveResult(Connection conn, int cid, String barcode, int amount) {
 		int id = getNewSavelogId(conn) + 1;
 		System.out.println("id: " + id);
-		int uid = getUidbyBarcode(conn, barcode);
+		int uid = getUidbyParam(conn, barcode, QueryParameter.BARCODE);
 		System.out.println("uid: " + uid);
 
 		int res = -1;

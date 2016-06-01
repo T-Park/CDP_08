@@ -14,7 +14,7 @@ public class ModongUserAdmin {
 	public ArrayList<ModongUser> mUserList;
 	public ArrayList<GroupUser> mGroupList;
 
-	private final static char default_userType = 'A'; // user 积己矫 default type
+	private final static String default_userType = "A"; // user 积己矫 default type
 	private final static int default_userPoint = 0; // user 积己矫 default point
 	private final static int default_userDonationPoint = 0; // user 积己矫 default
 															// donation point
@@ -216,7 +216,7 @@ public class ModongUserAdmin {
 	public String getGroupBarcode(int groupCode) {
 		updateUserList();
 		updateGroupList();
-		return mGroupList.get(searchGroupUser_asGroupCode(groupCode)).getGroup_bacode();
+		return mGroupList.get(searchGroupUser_asGroupCode(groupCode)).getGroup_barcode();
 	}
 
 	// login

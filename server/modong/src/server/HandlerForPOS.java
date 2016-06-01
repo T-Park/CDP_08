@@ -12,6 +12,7 @@ import ProblemDomain.ModongUser;
 import ProblemDomain.ModongUserAdmin;
 import ProblemDomain.StoreAdmin;
 import db.SQLforPOS;
+import db.CommonSQL.QueryParameter;
 import server.HandlerForCC.messageType;
 import test.ModongServer;
 
@@ -115,17 +116,22 @@ public class HandlerForPOS {
 		// ua.getModongUser_asBacode(bacode).getUser_point());
 		// }
 		// check parameter validity
-		if (!sqlForPos.checkUserbyBarcode(client.getConn(), barcode)) {
-			System.out.println(">> 존재 하지 않는  user bacode 입니다.");
+		if (!sqlForPos.checkUserbyParam(client.getConn(), barcode, QueryParameter.BARCODE)
+				&& !sqlForPos.checkGroupBarcodebyParam(client.getConn(), barcode, QueryParameter.BARCODE)) {
+			System.out.println(">> 존재 하지 않는  barcode 입니다.");
 			server.sendToMyClient(client, "barcode error");
 		} else {
-			if (!sqlForPos.addPointbyBarcode(client.getConn(), amount, barcode)) {
+			if (!sqlForPos.addPointbyParam(client.getConn(), amount, barcode, QueryParameter.BARCODE)) {
 				System.out.println(">> 적립에 실패했습니다.");
 				server.sendToMyClient(client, "failed to save");
 			} else {
 				System.out.println(">> 적립하였습니다.");
 				server.sendToMyClient(client, "success to save");
-				if (!sqlForPos.logResult(client.getConn(), pid, barcode, amount, 's'))
+				if ( barcode.charAt(0) == '1' )
+				{
+					System.out.println("그룹바코드는 log x");
+				}
+				else if (!sqlForPos.logResult(client.getConn(), pid, barcode, amount, 's'))
 					System.out.println("log 실패");
 				else
 					System.out.println("log 성공");
@@ -164,17 +170,22 @@ public class HandlerForPOS {
 		// }
 
 		// check is valid user
-		if (!sqlForPos.checkUserbyBarcode(client.getConn(), barcode)) {
-			System.out.println(">> 존재 하지 않는  user bacode 입니다.");
+		if (!sqlForPos.checkUserbyParam(client.getConn(), barcode, QueryParameter.BARCODE)
+				&& !sqlForPos.checkGroupBarcodebyParam(client.getConn(), barcode, QueryParameter.BARCODE)) {
+			System.out.println(">> 존재 하지 않는 barcode 입니다.");
 			server.sendToMyClient(client, "barcode error");
 		} else {
-			if (!sqlForPos.withdrawPointbyBarcode(client.getConn(), amount, barcode)) {
+			if (!sqlForPos.withdrawPointbyParam(client.getConn(), amount, barcode, QueryParameter.BARCODE)) {
 				System.out.println(">> 잔액이 부족합니다.");
 				server.sendToMyClient(client, "failed to use");
 			} else {
 				System.out.println(">> 사용하였습니다.");
 				server.sendToMyClient(client, "success to use");
-				if (!sqlForPos.logResult(client.getConn(), pid, barcode, amount, 'u'))
+				if ( barcode.charAt(0) == '1')
+				{
+					System.out.println("그룹바코드는 log 하지 않음");
+				}
+				else if (!sqlForPos.logResult(client.getConn(), pid, barcode, amount, 'u'))
 					System.out.println("log 실패");
 				else
 					System.out.println("log 성공");

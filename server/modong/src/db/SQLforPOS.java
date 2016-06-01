@@ -14,6 +14,8 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import javax.jws.soap.SOAPBinding.ParameterStyle;
+
 public class SQLforPOS extends CommonSQL {
 
 	// check is ther exist pid
@@ -43,6 +45,7 @@ public class SQLforPOS extends CommonSQL {
 				return false;
 		}
 	}
+
 	public int getNewlogId(Connection conn) {
 		int res = -1;
 
@@ -66,13 +69,11 @@ public class SQLforPOS extends CommonSQL {
 		}
 	}
 
-
-
 	// log save result
 	public boolean logResult(Connection conn, int pid, String barcode, int amount, char type) {
 		int id = getNewlogId(conn) + 1;
 		System.out.println("id: " + id);
-		int uid = getUidbyBarcode(conn, barcode);
+		int uid = getUidbyParam(conn, barcode, QueryParameter.BARCODE);
 		System.out.println("uid: " + uid);
 
 		int res = -1;
@@ -106,6 +107,39 @@ public class SQLforPOS extends CommonSQL {
 				return true; // success to log
 			else
 				return false; // fail to log
+		}
+	}
+
+	// check group barcode by parm
+	public boolean checkGroupBarcodebyParam(Connection conn, String param, QueryParameter paramType) {
+		PreparedStatement pstmt;
+		int res = -1;
+		String query = "";
+		switch (paramType) {
+		case BARCODE:
+			query = "select count(g.gid) from usr u, groupusr g where u.gid = g.gid and g.barcode = ?";
+			break;
+		default:
+			System.out.println("파라미터 에러 >> checkGroupBarcodebyParam");
+			break;
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, param);
+			ResultSet rs = pstmt.executeQuery();
+			if ( rs.isBeforeFirst() )
+			{
+				rs.next();
+				res = rs.getInt("count(g.gid)");
+			}
+		} catch (SQLException e )
+		{
+			e.printStackTrace();
+		} finally {
+			if ( res > 0 )
+				return true;
+			return false;
 		}
 	}
 
