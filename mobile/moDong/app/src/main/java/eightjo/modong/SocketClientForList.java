@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.widget.Toast;
+import android.util.Log;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -15,12 +15,13 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 /**
- * Created by apple on 16. 5. 28..
+ * Created by apple on 16. 5. 30..
  */
-public class SocketClient extends Thread {
+public class SocketClientForList extends Thread {
 
     private static final int ERROR = -1;
-    private static final int DATA = 2;
+    private static final int DATANUM = 0;
+    //0번 : 횟수 1, 2, 3.. 데이터들..
     private static final String ERROR_KEY = "_error";
     private static final String DATA_KEY = "_data";
 
@@ -32,7 +33,7 @@ public class SocketClient extends Thread {
     String getString;
     Handler uiHandler;
 
-    public SocketClient(Context context, String msg, Handler handler){
+    public SocketClientForList(Context context, String msg, Handler handler){
         threadAlive = true;
         this.ip = "20.20.3.188";
         this.port = 5555;
@@ -67,13 +68,46 @@ public class SocketClient extends Thread {
             if((len = bufStream.read((readBytes)))!= -1)
             {
                 getString = new String(readBytes, 0, len);
+
+                getString = getString.substring(0, getString.length()-2);//\n이 함께오는 현상!
+                //Log.i("첫번째", nStr);
+                int n = 0;
+                try
+                {
+                    n = Integer.parseInt(getString.substring(1));
+                }
+                catch (Exception e)
+                {
+
+                }
+
+                if(socket.isConnected())
+                    if((len = bufStream.read((readBytes)))!= -1) {
+                        String temp = new String(readBytes, 0, len);
+                        getString = getString + temp;
+                        Log.i("for : ", "받음" + " : " + getString + "\n");
+                    }
+
+
+/*
+                Log.i("첫번째", n + "번 돌거라");
+                for(int i=1; i<=n ;i++ )//서버가 보내준 횟수만큼 돌아서 여러번 받는다.
+                {
+                    if(socket.isConnected())
+                    if((len = bufStream.read((readBytes)))!= -1) {
+                        String temp = new String(readBytes, 0, len);
+                        getString = getString + "%" + temp;
+                        Log.i("for : ", i + " : " + getString + "\n");
+                    }
+                }
+                */
+
                 Message msg = Message.obtain();
-                msg.what = DATA;
+                msg.what = DATANUM;
                 Bundle bundle = new Bundle();
-                bundle.putString(DATA_KEY, getString);
+                bundle.putString(DATA_KEY, getString.substring(0, getString.length()-2));
                 msg.setData(bundle);
                 uiHandler.sendMessage(msg);
-
             }
 
         } catch (Exception e) {

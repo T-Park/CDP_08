@@ -7,9 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,25 +17,32 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-//forAppInfo : appInfo : 1. user_id 2. user_pw 3. name 4. job 5. age 6. phone 7. lock_flag 8. lock_pw 9. point 10. type 11. login_flag 12. group_flag 13. bacode
 public class tab_setting extends Activity {
 
     SQLiteDatabase db;
 
-    private String temp_user_id;
-    private String temp_user_pw;
+    private String user_id;
+    private String user_pw;
+    boolean group_flag;
+    boolean lock_flag;
 
     Button button_modify, button_lock;
-    Button button_save, button_cancel;
+    Button button_save, button_cancel;//192.168.99.1
     EditText editText_dialog_password, editText_dialog_password_before;
     TextView textView_dialog1, textView_dialog2;
     Context mContext;
-    String tempPw;
+    String temp_pw;
+
+    private static final int ERROR = -1;
+    private static final int DATA = 2;
+    private static final String ERROR_KEY = "_error";
+    private static final String DATA_KEY = "_data";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_setting);
+        loadLatestDB();
 
         button_modify = (Button)findViewById(R.id.button_Info_modify);
         button_modify.setOnClickListener(new View.OnClickListener() {
@@ -58,30 +65,48 @@ public class tab_setting extends Activity {
         });
         mContext = this;
 
-        /*
-        loadDB();
-        Cursor c = db.rawQuery("SELECT * FROM appInfo where login_flag =1;", null);
-        c.moveToPosition(c.getCount() - 1);
-        temp_user_id =  c.getString(c.getColumnIndex("user_id"));
-        temp_user_pw =  c.getString(c.getColumnIndex("user_pw"));
-        */
+
+
     }
 
-    /*
+
     public void loadLatestDB()
     {
         loadDB();
-        Cursor c = db.rawQuery("SELECT * FROM appInfo where login_flag =1;", null);
+        Cursor c = db.rawQuery("SELECT * FROM mdUser2 ;", null);
         c.moveToPosition(c.getCount() - 1);
-        temp_user_id =  c.getString(c.getColumnIndex("user_id"));
-        temp_user_pw =  c.getString(c.getColumnIndex("user_pw"));
+        user_id =  c.getString(c.getColumnIndex("id"));
+        user_pw =  c.getString(c.getColumnIndex("pw"));
+        String group_code = c.getString(c.getColumnIndex("group_code"));
+        if(group_code == null || group_code.equals("null") || group_code.equals("-1"))//고치자
+            group_flag = false;
+        else
+            group_flag = true;
+        int lockN = c.getInt(c.getColumnIndex("lock_flag"));
+        if(lockN == 1)
+        {
+            lock_flag = true;
+        }
+        else
+            lock_flag = false;
+
     }
-*/
+
     @Override
     public  void onResume()
     {
         super.onResume();
-        //loadLatestDB();
+        //textView_dialog1.setText("");
+        //textView_dialog2.setText("");
+        loadLatestDB();
+    }
+
+    public void unLock()
+    {
+        if(db != null)
+        db.execSQL("UPDATE mdUser2 SET " +
+                "lock_flag=0" +
+                "");
     }
 
     @Override
@@ -104,9 +129,10 @@ public class tab_setting extends Activity {
             case 0 :
 
                 //현재 id 입력필요
-                //loadLatestDB();
+                loadLatestDB();
                 dialog.setTitle("사용자 인증");
-                textView_dialog1.setText("ID :" + temp_user_id);
+                textView_dialog1.setText("ID :" + user_id);
+
                 button_save.setOnClickListener(saveOnClickListener);
                 button_cancel.setOnClickListener(cancelOnClickListener);
 
@@ -134,15 +160,25 @@ public class tab_setting extends Activity {
             case 3 :
                 //loadLatestDB();
                 dialog.setTitle("사용자 인증");
+                textView_dialog1.setText("ID :" + user_id);
                 button_save.setOnClickListener(saveOnClickListenerForLock);
                 button_cancel.setOnClickListener(cancelOnClickListener3);
+                break;
+            /*
+            case 4:
+                dialog.setContentView(R.layout.dialog_for_password);
+                textView_dialog1 = (TextView)dialog.findViewById(R.id.textView_dialog_1);
+                button_save = (Button)dialog.findViewById(R.id.button_dialog_save);
+                button_cancel = (Button)dialog.findViewById(R.id.button_dialog_cancel);
+
+
+                button_cancel.setOnClickListener(cancelOnClickListener4);*/
         }
 
 
 
         return dialog;
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -166,46 +202,17 @@ public class tab_setting extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void button_InfoModify(View v)
-    {
-
-
-    }
-
-    public void button_Group(View v)
-    {
-        Cursor c = db.rawQuery("SELECT * FROM appInfo where login_flag =1;", null);
-
-        //startManagingCursor(c);
-        if(c.getCount() > 0)
-        {
-            c.moveToPosition(c.getCount()-1);//int a =  c.getPosition();
-            String result =  c.getString(c.getColumnIndex("name"));
-            Toast.makeText(this,result + "입니다" , Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
-            Toast.makeText(this,"데이터가없숑" , Toast.LENGTH_SHORT).show();
-        }
-
-
-    }
-
-    public void button_Lock(View v)
-    {
-
-    }
 
     public void button_Logout(View v)
     {
-        //db.execSQL("DROP TABLE appInfo;");//DROP TABLE tempInfo2
-        //Toast.makeText(this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
+        loadDB();
+        db.execSQL("DROP TABLE mdUser2;");//DROP TABLE tempInfo2
+        Toast.makeText(this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, LoginPage.class);
         startActivity(intent);
         finish();
     }
 
-    //forAppInfo : appInfo : 1. user_id 2. user_pw 3. name 4. job 5. age 6. phone 7. lock_flag 8. lock_pw 9. point 10. type 11. login_flag 12. group_flag 13. bacode
     public void loadDB()
     {
         if(db != null)
@@ -214,25 +221,21 @@ public class tab_setting extends Activity {
         }
 
         db= openOrCreateDatabase(
-                "forAppInfo.db",
+                "userInfo.db",
                 SQLiteDatabase.CREATE_IF_NECESSARY,
                 null
         );
-        db.execSQL("CREATE TABLE IF NOT EXISTS appInfo " +
+        db.execSQL("CREATE TABLE IF NOT EXISTS mdUser2 " +
                 "(" +
-                " user_id TEXT," +
-                " user_pw TEXT," +
+                " id TEXT," +
+                " pw TEXT," +
                 " name TEXT," +
-                " job TEXT," +
-                " age INTEGER," +
-                " phone TEXT," +
+                " barcode TEXT," +
+                " group_code INTEGER," +
+                " group_name TEXT," +
+                " group_barcode TEXT," +
                 " lock_flag INTEGER," +
-                " lock_pw TEXT,"+
-                " point INTEGER," +
-                " type TEXT,"+
-                " login_flag INTEGER," +
-                " group_flag INTEGER," +
-                " bacode TEXT"+
+                " lock_pw TEXT" +
                 ");");
     }
 
@@ -282,6 +285,18 @@ public class tab_setting extends Activity {
 
     };
 
+    /*
+    private Button.OnClickListener cancelOnClickListener4
+            = new Button.OnClickListener(){
+
+        @Override
+        public void onClick(View arg0) {
+            // TODO Auto-generated method stub
+            dismissDialog(4);
+        }
+
+    };
+*/
     private Button.OnClickListener saveOnClickListener  //MODIFY
             = new Button.OnClickListener(){
         @Override
@@ -290,15 +305,22 @@ public class tab_setting extends Activity {
 
 
             //password가 일치한다면
-            if(value.equals(temp_user_pw))
+            if(value.equals(user_pw))
             {
-                Intent intent = new Intent(mContext, activity_Info_modify.class);
-                startActivity(intent);
+                try
+                {
+                    SocketClient client = new SocketClient( mContext, "#ModongGetUserInfo%" + user_id + "%" + user_pw, uiHandler);
+                    client.start();//
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(mContext, "서버 연결 실패" , Toast.LENGTH_LONG);
+                }
                 dismissDialog(0);
             }
             else
             {
-                Toast.makeText(mContext, value +" : "+ temp_user_pw + " 비밀번호가 틀렸어요!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, value +" : "+ user_pw + " 비밀번호가 틀렸어요!", Toast.LENGTH_SHORT).show();
             }
            // editText_dialog_password.setText("");
         }
@@ -312,14 +334,23 @@ public class tab_setting extends Activity {
             String value= editText_dialog_password.getText().toString();
 
             //password가 일치한다면
-            if(value.equals(temp_user_pw))
+            if(value.equals(user_pw))
             {
-                showDialog(1);
-                dismissDialog(3);
+                if(lock_flag)
+                {
+                    unLock();
+                    Toast.makeText(mContext, "잠금해제 되었습니다.", Toast.LENGTH_SHORT).show();
+                    dismissDialog(3);
+                }
+                else{
+                    showDialog(1);
+                    dismissDialog(3);
+                }
+
             }
             else
             {
-                Toast.makeText(mContext, value +" : "+ temp_user_pw + " 비밀번호가 틀렸어요!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, value +" : "+ user_pw + " 비밀번호가 틀렸어요!", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -329,8 +360,8 @@ public class tab_setting extends Activity {
             = new Button.OnClickListener(){
         @Override
         public void onClick(View arg0) {
-            tempPw = editText_dialog_password_before.getText().toString();
-            if(tempPw.equals(""))
+            temp_pw = editText_dialog_password_before.getText().toString();
+            if(temp_pw.equals(""))
             {
                 Toast.makeText(mContext, "공백은 불가능해요!", Toast.LENGTH_SHORT).show();
             }
@@ -348,20 +379,19 @@ public class tab_setting extends Activity {
         @Override
         public void onClick(View arg0) {
             String value= editText_dialog_password.getText().toString();
-            if(value.equals(tempPw))
+            if(value.equals(temp_pw))
             {
                 //db 처리
-                /*
-                db.execSQL("UPDATE appInfo SET " +
+                db.execSQL("UPDATE mdUser2 SET " +
                         "lock_pw='"+ value + "',"+
-                        "lock_flag="+ 1 + "" +
-                        " WHERE login_flag =1;");
-                Toast.makeText(mContext, "일치합니다. 비밀번호 : "+ value + " == "+ tempPw, Toast.LENGTH_SHORT).show();
- */               //loadLatestDB();
+                        "lock_flag=1" +
+                        "");
+                Toast.makeText(mContext, "일치합니다. 비밀번호 : "+ value + " == "+ temp_pw, Toast.LENGTH_SHORT).show();
+                //loadLatestDB();
             }
             else
             {
-                Toast.makeText(mContext, "이전의 비밀번호와 일치하지 않습니다."+ value + " != "+ tempPw, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "이전의 비밀번호와 일치하지 않습니다."+ value + " != "+ temp_pw, Toast.LENGTH_SHORT).show();
             }
 
             dismissDialog(2);
@@ -371,8 +401,49 @@ public class tab_setting extends Activity {
 
     public void onClick_goNext(View v)
     {
+        if(group_flag)
+        {
+            Toast.makeText(this, "이미 그룹안에 있어요!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Intent intent =new Intent(this, activity_GroupStep1.class);
+        intent.putExtra("myId", user_id);
         startActivity(intent);
     }
+
+
+
+    Handler uiHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if(msg.what == ERROR){
+                Toast.makeText(mContext, "Error : \n"+msg.getData().getString(ERROR_KEY), Toast.LENGTH_SHORT).show();
+            }else if(msg.what == DATA){
+                String result =  msg.getData().getString(DATA_KEY).toString();
+                // textView_view_name.setText(result);
+                if(result.startsWith("#"))
+                {
+                    String[] tokens = result.split("%");
+                    //#info%id%pw%name%job%age%tel
+                    Intent intent = new Intent(mContext, activity_Info_modify.class);
+                    intent.putExtra("id", tokens[1]);
+                    intent.putExtra("pw", tokens[2]);
+                    intent.putExtra("name", tokens[3]);
+                    intent.putExtra("job", tokens[4]);
+                    intent.putExtra("age", tokens[5]);
+                    intent.putExtra("tel", tokens[6]);
+
+                    startActivity(intent);
+                }
+                else
+                {
+                    Toast.makeText(mContext, "fail : " + result, Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        }
+    };
 
 }

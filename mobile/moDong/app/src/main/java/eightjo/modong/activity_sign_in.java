@@ -92,7 +92,7 @@ public class activity_sign_in extends Activity {
         String userId = editText_userId.getText().toString();
         try
         {
-            SocketClient client = new SocketClient("20.20.3.188", 5555, this, "#ModongExistId%" + userId, uiHandler);
+            SocketClient client = new SocketClient( this, "#ModongExistId%" + userId, uiHandler);
             client.start();
         }
         catch (Exception e)
@@ -100,12 +100,6 @@ public class activity_sign_in extends Activity {
             Toast.makeText(this, "서버 연결 실패" , Toast.LENGTH_LONG);
         }
     }
-
-    public void DoSignIn2(View v)
-    {
-
-    }
-
 
     public void DoSignIn(View v)
     {
@@ -124,28 +118,10 @@ public class activity_sign_in extends Activity {
         }
 
         //forAppInfo : appInfo : 1. user_id 2. user_pw 3. name 4. job 5. age 6. phone 7. lock_flag 8. lock_pw 9. point 10. type 11. login_flag 12. group_flag 13. bacode
+
         if(!user_pw.equals("비밀번호") && !userId.equals("아이디") && !name.equals("이름") && !age.equals("나이"))
         {
-
-            db.execSQL("INSERT INTO appInfo (user_id, user_pw, name, job, age, phone, lock_flag, lock_pw , point, type, login_flag, group_flag, bacode) " +
-                    "VALUES (" +
-                    "'" + userId + "'," +
-                    "'" + user_pw + "'," +
-                    "'" + name + "', " +
-                    "'" + job + "', " +
-                    age + "," +
-                    "'" + phone + "', " +
-                    "0," +
-                    "null," +
-                    "0," +
-                    "'" + "Z" + "'," +
-                    "1," +
-                    "0," +
-                    "null" +
-                    ");");
-
-
-            SocketClient client = new SocketClient("20.20.3.188", 5555, this, "#ModongJoin%"
+            SocketClient client = new SocketClient( this, "#ModongJoin%"
                    + userId + "%"
                    + user_pw + "%"
                    + name + "%"
@@ -170,43 +146,40 @@ public class activity_sign_in extends Activity {
 
 
     //forAppInfo : appInfo : 1. user_id 2. user_pw 3. name 4. job 5. age 6. phone 7. lock_flag 8. lock_pw 9. point 10. type 11. login_flag 12. group_flag 13. bacode
+    //userInfo : mdUser : 1. id 2. pw 3. name 4. barcode 5. group_code 6. group_name 7. group_barcode 8. lock_flag 9. lock_pw
     public void loadDB()
     {
         db= openOrCreateDatabase(
-                "forAppInfo.db",
+                "userInfo.db",
                 SQLiteDatabase.CREATE_IF_NECESSARY,
                 null
         );
-        db.execSQL("CREATE TABLE IF NOT EXISTS appInfo " +
+        db.execSQL("CREATE TABLE IF NOT EXISTS mdUser2 " +
                 "(" +
-                " user_id TEXT," +
-                " user_pw TEXT," +
+                " id TEXT," +
+                " pw TEXT," +
                 " name TEXT," +
-                " job TEXT," +
-                " age INTEGER," +
-                " phone TEXT," +
-                " lock_flag INTEGER," +
-                " lock_pw TEXT,"+
-                " point INTEGER," +
-                " type TEXT,"+
-                " login_flag INTEGER," +
-                " group_flag INTEGER," +
-                " bacode TEXT"+
+                " barcode TEXT,"+
+                " group_code INTEGER default -1," +
+                " group_name TEXT,"+
+                " group_barcode TEXT,"+
+                " lock_flag INTEGER default 0," +
+                " lock_pw TEXT"+
                 ");");
     }
 
-    Handler uiHandler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if(msg.what == ERROR){
-                Toast.makeText(context, "Error : \n" + msg.getData().getString(ERROR_KEY), Toast.LENGTH_SHORT).show();
-            }else if(msg.what == DATA){
-                String result = msg.getData().getString(DATA_KEY).toString();
+       Handler uiHandler = new Handler(){
+                        @Override
+                        public void handleMessage(Message msg) {
+                            super.handleMessage(msg);
+                            if(msg.what == ERROR){
+                                Toast.makeText(context, "Error : \n" + msg.getData().getString(ERROR_KEY), Toast.LENGTH_SHORT).show();
+                            }else if(msg.what == DATA){
+                                String result = msg.getData().getString(DATA_KEY).toString();
 
-               //아이디 중복확인
-                if(result.startsWith("#id"))
-                {
+                                //아이디 중복확인
+                                if(result.startsWith("#id"))
+                                {
                     Toast.makeText(context, "사용가능한 아이디 입니다.", Toast.LENGTH_SHORT).show();
                     id_flag = true;
                 }

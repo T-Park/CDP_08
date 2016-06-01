@@ -12,48 +12,54 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="100dp">
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/horizontalScrollView" >
 
             <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="--님"
+                        android:id="@+id/textView_view_name"
+                        android:textSize="30dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="그룹이 없어요."
+                        android:id="@+id/textView_view_group" />
+                </LinearLayout>
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="--님"
-                    android:id="@+id/textView_view_name"
-                    android:textSize="30dp" />
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:text="-P "
+                    android:id="@+id/textView_view_point"
+                    android:textSize="30dp"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textColor="#010101" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="그룹이 없어요."
-                    android:id="@+id/textView_view_group" />
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:text="동기화"
+                    android:id="@+id/button7"
+                    android:background="#ffdf21"
+                    android:onClick="onClick_syn" />
             </LinearLayout>
-
-            <TextView
-                android:layout_width="150dp"
-                android:layout_height="match_parent"
-                android:text="-P "
-                android:id="@+id/textView_view_point"
-                android:textSize="30dp"
-                android:textAlignment="center"
-                android:gravity="center"
-                android:textColor="#010101" />
-
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:text="동기화"
-                android:id="@+id/button7"
-                android:background="#ffdf21"
-                android:onClick="onClick_syn" />
-        </LinearLayout>
+        </HorizontalScrollView>
 
         <Space
             android:layout_width="20px"
@@ -138,4 +144,5 @@
         </ScrollView>
 
     </LinearLayout>
+
 </RelativeLayout>

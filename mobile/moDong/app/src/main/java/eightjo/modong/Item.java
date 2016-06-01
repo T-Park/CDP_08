@@ -8,7 +8,7 @@ public class Item {
     private String when;
     private String point;
 
-    public Item(String where, String when, String point)
+    public Item(String when, String where, String point)
     {
         this.setWhere(where);
         this.setWhen(when);
