@@ -8,10 +8,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class activity_GroupStep1 extends Activity {
 
     EditText editText_groupName;
+    String myId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +21,8 @@ public class activity_GroupStep1 extends Activity {
         setContentView(R.layout.activity_activity__group_step1);
 
         editText_groupName = (EditText)findViewById(R.id.editText_groupName);
+        Intent intent = getIntent();
+        myId = intent.getStringExtra("myId");
 
     }
 
@@ -48,11 +52,17 @@ public class activity_GroupStep1 extends Activity {
     {
         String groupName = editText_groupName.getText().toString();
 
-        //groupName 선 검사
+        if(groupName.equals(""))
+        {
+            Toast.makeText(this, "그룹이름을 적어주세요!", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-       //이름이 겹치지 않는다면
+
+        //groupName 선 검사
         Intent intent =new Intent(this, activity_GroupStep2.class);
         intent.putExtra("groupName", groupName);
+        intent.putExtra("myId", myId);
         startActivity(intent);
         finish();
     }

@@ -5,7 +5,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="eightjo.modong.activity_GroupStep2"
-    android:background="#4487c6">
+    android:background="#ffffff">
 
     <LinearLayout
         android:orientation="vertical"
@@ -17,12 +17,13 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="함께할 \n사용자의 id를 입력해 주세요."
+            android:text="함께할 사용자의 id를\n 입력해 주세요."
             android:id="@+id/textView8"
             android:textSize="30dp"
             android:gravity="center"
             android:layout_centerVertical="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:textColor="#4487c6" />
 
         <Space
             android:layout_width="20px"
@@ -38,9 +39,11 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:id="@+id/editText7"
-            android:background="#ffffff"
-            android:text="요원1" />
+            android:id="@+id/editText_member1"
+            android:background="#4487c6"
+            android:text="요원1"
+            android:textSize="20dp"
+            android:textColor="#ffffff" />
 
         <Space
             android:layout_width="20px"
@@ -49,9 +52,11 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:id="@+id/editText8"
-            android:background="#ffffff"
-            android:text="요원2" />
+            android:id="@+id/editText_member2"
+            android:background="#4487c6"
+            android:text="요원2"
+            android:textSize="20dp"
+            android:textColor="#ffffff" />
 
         <Space
             android:layout_width="20px"
@@ -60,20 +65,24 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:id="@+id/editText9"
-            android:background="#ffffff"
-            android:text="요원3" />
+            android:id="@+id/editText_member3"
+            android:background="#4487c6"
+            android:text="요원3"
+            android:textSize="20dp"
+            android:textColor="#ffffff" />
 
         <Space
             android:layout_width="20px"
             android:layout_height="20dp" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
             android:text="+ 나의 ID"
-            android:id="@+id/textView9"
-            android:textSize="30dp" />
+            android:id="@+id/textView_myId"
+            android:textSize="20dp"
+            android:background="#ffffff"
+            android:gravity="center_vertical" />
 
     </LinearLayout>
 
@@ -87,7 +96,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Button"
+        android:text="그룹 생성하기!"
         android:id="@+id/button16"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"

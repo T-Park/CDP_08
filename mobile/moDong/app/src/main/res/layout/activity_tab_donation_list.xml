@@ -5,7 +5,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="eightjo.modong.tab_donationList"
-    android:background="#ffffff">
+    android:background="@drawable/back">
 
     <LinearLayout
         android:orientation="vertical"
@@ -18,7 +18,8 @@
             android:text="나의 기부 포인트 : 0 Point"
             android:id="@+id/textView_sum_dPoint"
             android:textSize="20dp"
-            android:textColor="#4487c6" />
+            android:textColor="#4487c6"
+            android:background="#ffff" />
 
         <Space
             android:layout_width="20px"

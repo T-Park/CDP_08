@@ -106,7 +106,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="기부하기"
-            android:id="@+id/button14" />
+            android:id="@+id/button14"
+            android:onClick="onClick_donate" />
 
         <Button
             android:layout_width="wrap_content"

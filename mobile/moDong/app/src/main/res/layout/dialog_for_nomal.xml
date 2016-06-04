@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ffdf21">
+
+    <Space
+        android:layout_width="20px"
+        android:layout_height="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="잠금을 해제 하시겠어요?"
+        android:id="@+id/textView_dialog_1"
+        android:textSize="20dp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#010000" />
+
+    <Space
+        android:layout_width="20px"
+        android:layout_height="25dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" >
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="20px" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="확인"
+            android:id="@+id/button_dialog_save"
+            android:layout_weight="1"
+            android:background="#ffffff" />
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="20px" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="취소"
+            android:id="@+id/button_dialog_cancel"
+            android:layout_weight="1"
+            android:background="#ffffff" />
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="20px" />
+    </LinearLayout>
+</LinearLayout>

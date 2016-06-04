@@ -7,95 +7,80 @@ import java.util.Date;
 import java.util.Locale;
 
 public class CoinCollectorAdmin {
-	private static CoinCollectorAdmin unicqueCoinCollectorAdmin;//singleton
+	private static CoinCollectorAdmin unicqueCoinCollectorAdmin;// singleton
 	private ArrayList<CoinCollector> mCoinCollectorList;
-	
-	private final static int default_CCPoint = 0; 
-	
-	private CoinCollectorAdmin()
-	{
+
+	private final static int default_CCPoint = 0;
+
+	private CoinCollectorAdmin() {
 		mCoinCollectorList = new ArrayList<CoinCollector>();
-		//db에서 불러오기 코드
+		// db에서 불러오기 코드
 	}
-	
-	public static synchronized CoinCollectorAdmin getInstance()
-	{
-		if(unicqueCoinCollectorAdmin == null)
-		{
+
+	public static synchronized CoinCollectorAdmin getInstance() {
+		if (unicqueCoinCollectorAdmin == null) {
 			unicqueCoinCollectorAdmin = new CoinCollectorAdmin();
 		}
 		return unicqueCoinCollectorAdmin;
 	}
-	
-	public void recordAddPoint(int uid, int cid, int point)
-	{
-		SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy.MM.dd", Locale.KOREA );
-		Date currentTime = new Date ();
-		//id, uid, cid, date(when), point db 처리 
+
+	public void recordAddPoint(int uid, int cid, int point) {
+		SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy.MM.dd", Locale.KOREA);
+		Date currentTime = new Date();
+		// id, uid, cid, date(when), point db 처리
 	}
-	
-	public boolean addCoinCollector(int cid, String city, String district, String detail)
-	{
+
+	public boolean addCoinCollector(int cid, String city, String district, String detail) {
 		CoinCollector tempCoinCollector;
-		
-		if(searchCoinCollector_asCid(cid) != -1) //unique 한 값
+
+		if (searchCoinCollector_asCid(cid) != -1) // unique 한 값
 			return false;
-		
-		SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat ( "yyyy.MM.dd", Locale.KOREA );
-		Date currentTime = new Date ();		
+
+		SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy.MM.dd", Locale.KOREA);
+		Date currentTime = new Date();
 		tempCoinCollector = new CoinCollector(cid, city, district, detail, default_CCPoint, currentTime);
-		
-		if(mCoinCollectorList.add(tempCoinCollector))
-		{
-			//db 
+
+		if (mCoinCollectorList.add(tempCoinCollector)) {
+			// db
 			System.out.println("동전 모음이 입력 완료");
-		}
-		else
-		{
+		} else {
 			System.out.println("동전 모음이 입력 실패");
 			return false;
 		}
-			
+
 		return true;
 	}
-	public boolean removeCoinCollector(int cid)
-	{
+
+	public boolean removeCoinCollector(int cid) {
 		int index = searchCoinCollector_asCid(cid);
-		if(index >= 0)
-		{
+		if (index >= 0) {
 			mCoinCollectorList.remove(index);
 			return true;
-		}
-		else//그런 id 존재 x
+		} else// 그런 id 존재 x
 			return false;
 	}
-	
-	
-	public int searchCoinCollector_asCid(int cid)
-	{		
-		for(int i=0; i < mCoinCollectorList.size(); i++)
-		{
-			if(cid == mCoinCollectorList.get(i).getCoin_id())
-			{
+
+	public int searchCoinCollector_asCid(int cid) {
+		for (int i = 0; i < mCoinCollectorList.size(); i++) {
+			if (cid == mCoinCollectorList.get(i).getCoin_id()) {
 				return i;
 			}
-		}		
-		return -1;
-		//return -1 or point
-	}
-	
-	public void print_currentCoinCollectorListInfo()
-	{
-		System.out.println("CoinCollectorList 출력*******************************************************************************");
-		
-		System.out.println("CC id city district detail point start date");
-		for(int i=0; i < mCoinCollectorList.size(); i++)
-		{
-			System.out.print(mCoinCollectorList.get(i) + "\n");		
 		}
-		System.out.println("*******************************************************************************************");
-	
-		
+		return -1;
+		// return -1 or point
 	}
-	
+
+	public void print_currentCoinCollectorListInfo() {
+		System.out.println(
+				"CoinCollectorList 출력*******************************************************************************");
+
+		System.out.println("CC id city district detail point start date");
+		for (int i = 0; i < mCoinCollectorList.size(); i++) {
+			System.out.print(mCoinCollectorList.get(i) + "\n");
+		}
+		System.out
+				.println("*******************************************************************************************");
+
+	}
+
 }

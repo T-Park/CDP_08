@@ -257,6 +257,6 @@
             android:layout_height="wrap_content"
             android:text="확인"
             android:id="@+id/button11"
-            android:onClick="onClick_save" />
+            android:onClick="sendToServer" />
     </LinearLayout>
 </RelativeLayout>

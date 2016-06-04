@@ -1,2 +1,4 @@
-/test/
 /server/
+/db/
+/ProblemDomain/
+/util/

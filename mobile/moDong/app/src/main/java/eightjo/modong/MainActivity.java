@@ -24,8 +24,10 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //db.execSQL("DROP TABLE mdUser;");
         loadDB();
-        Cursor c = db.rawQuery("SELECT * FROM appInfo;", null);//Toast.makeText(this, c.toString(), Toast.LENGTH_SHORT).show();
+
+        Cursor c = db.rawQuery("SELECT * FROM mdUser2;", null);//Toast.makeText(this, c.toString(), Toast.LENGTH_SHORT).show();
         if( c.getCount() == 0 )//로그인 되어있지 않다.
         {
             Intent intent = new Intent(this, LoginPage.class);
@@ -37,9 +39,6 @@ public class MainActivity extends Activity {
             if(c.getInt(c.getColumnIndex("lock_flag")) == 0)//잠겨있지 않다면
             {
                 Intent intent = new Intent(this, tab_main.class);
-                // intent.putExtra("userName", c.getString(2));
-                //  intent.putExtra("userPoint", c.getInt(5));
-                // intent.putExtra("userGroup_flag", c.getInt(9));
                 startActivity(intent);
 
             }
@@ -85,30 +84,29 @@ public class MainActivity extends Activity {
         super.onResume();
         loadDB();
     }
-
-    //forAppInfo : appInfo : 1. user_id 2. user_pw 3. name 4. job 5. age 6. phone 7. lock_flag 8. lock_pw 9. point 10. type 11. login_flag 12. group_flag 13. bacode
     public void loadDB()
     {
+        if(db != null)
+        {
+            db.close();
+        }
+
         db= openOrCreateDatabase(
-                "forAppInfo.db",
+                "userInfo.db",
                 SQLiteDatabase.CREATE_IF_NECESSARY,
                 null
         );
-        db.execSQL("CREATE TABLE IF NOT EXISTS appInfo " +
+        db.execSQL("CREATE TABLE IF NOT EXISTS mdUser2 " +
                 "(" +
-                " user_id TEXT," +
-                " user_pw TEXT," +
+                " id TEXT," +
+                " pw TEXT," +
                 " name TEXT," +
-                " job TEXT," +
-                " age INTEGER," +
-                " phone TEXT," +
-                " lock_flag INTEGER," +
-                " lock_pw TEXT,"+
-                " point INTEGER," +
-                " type TEXT,"+
-                " login_flag INTEGER," +
-                " group_flag INTEGER," +
-                " bacode TEXT"+
+                " barcode TEXT," +
+                " group_code INTEGER default -1," +
+                " group_name TEXT," +
+                " group_barcode TEXT," +
+                " lock_flag INTEGER default 0," +
+                " lock_pw TEXT" +
                 ");");
     }
 }
