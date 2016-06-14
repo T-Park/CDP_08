@@ -23,7 +23,7 @@ class Coin_thread(QtCore.QThread):
         print("power off")
         self.terminate()
         print("terminate")
-        self.thread.join() # wait for termination of thread
+        # self.thread.join() # wait for termination of thread
         print("join complete")
         self.thread_finished.emit()
         print("signal emit")

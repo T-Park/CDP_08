@@ -91,3 +91,4 @@ class Coin_acceptor():
 # except KeyboardInterrupt:
 #     print("exit")
 #     GPIO.cleanup()
+

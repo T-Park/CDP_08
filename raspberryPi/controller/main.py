@@ -28,7 +28,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.widget_type = widget_type.Widget_type # enum for widget type
         self.service_type = service_type.Service_Type # enum for service type
 
-        self.setWindowFlags(self.windowFlags() | QtCore.Qt.FramelessWindowHint) # remove frame
+        # self.setWindowFlags(self.windowFlags() | QtCore.Qt.FramelessWindowHint) # remove frame
         self.setGeometry(0,0,self.width(),self.height()) # 0,0으로 윈도우 위치 옮기기
         self.initClient()
         self.initSignal()
@@ -61,7 +61,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.intro_ui = intro_controller.Intro_controller(self.sig)  # index 0
         self.get_barcode_ui = get_barcode_controller.Get_barcode_controller(self.sig)  # index 1
         self.insert_coin_ui = insert_coin_controller.Insert_coin_controller(self.sig)  # index 2
-        self.orglist_ui = orglist_controller.Orglist_controller(self.orglist, self.sig)  # index 3
+        self.orglist_ui = orglist_controller.Orglist_controller(self.client, self.sig)  # index 3
         self.save_result_ui = save_result_controller.Save_result_controller(self.client, self.sig)  # index 4
         self.donate_result_ui = donate_result_controller.Donate_result_controller(self.client, self.sig)  # index 5
         self.error_message_ui = error_message_controller.Error_message_controller(self.sig)  # index 6
@@ -122,15 +122,18 @@ class MainWindow(QtWidgets.QMainWindow):
 
         if self.client.current_state == self.service_type.Save:
             # code for save point to user and communicate with server
+            self.client.connection.save_point(self.client.input_barcode, self.client.inserted_coin)
             self.change_widget(self.widget_type.save_result.value)
         elif self.client.current_state == self.service_type.Donate:
             # code for show organization list and save point to selected list
+            self.client.connection.donate_point(self.client.target_org_index, self.client.input_barcode, self.client.inserted_coin)
             self.change_widget(self.widget_type.donate_result.value)
 
 
     # process selected organization
     # param - index: index of organization
     def process_org_selected(self, index):
+        print("org set: ", index)
         self.client.target_org_index = index
         self.change_widget(self.widget_type.insert_coin.value)
 

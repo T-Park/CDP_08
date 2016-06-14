@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 import ProblemDomain.ModongUser;
+import db.CommonSQL.QueryParameter;
 
 public class CommonSQL {
 	public enum QueryParameter {
@@ -80,6 +81,7 @@ public class CommonSQL {
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, param);
+			System.out.println("barcode : " + param);
 			ResultSet rs = pstmt.executeQuery();
 			rs.next();
 			res = rs.getInt("count(*)");
@@ -449,5 +451,36 @@ public class CommonSQL {
 				return false;
 		}
 	}
-
+	// check group barcode by parm
+	public boolean checkGroupBarcodebyParam(Connection conn, String param, QueryParameter paramType) {
+		PreparedStatement pstmt;
+		int res = -1;
+		String query = "";
+		switch (paramType) {
+		case BARCODE:
+			query = "select count(g.gid) from usr u, groupusr g where u.gid = g.gid and g.barcode = ?";
+			break;
+		default:
+			System.out.println("파라미터 에러 >> checkGroupBarcodebyParam");
+			break;
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, param);
+			ResultSet rs = pstmt.executeQuery();
+			if ( rs.isBeforeFirst() )
+			{
+				rs.next();
+				res = rs.getInt("count(g.gid)");
+			}
+		} catch (SQLException e )
+		{
+			e.printStackTrace();
+		} finally {
+			if ( res > 0 )
+				return true;
+			return false;
+		}
+	}
 }

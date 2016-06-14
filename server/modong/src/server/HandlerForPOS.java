@@ -170,8 +170,8 @@ public class HandlerForPOS {
 		// }
 
 		// check is valid user
-		if (!sqlForPos.checkUserbyParam(client.getConn(), barcode, QueryParameter.BARCODE)
-				&& !sqlForPos.checkGroupBarcodebyParam(client.getConn(), barcode, QueryParameter.BARCODE)) {
+		if (!sqlForPos.checkUserbyParam(client.getConn(), barcode, QueryParameter.BARCODE) // check normal barcode
+				&& !sqlForPos.checkGroupBarcodebyParam(client.getConn(), barcode, QueryParameter.BARCODE)) { // check group barcode
 			System.out.println(">> 존재 하지 않는 barcode 입니다.");
 			server.sendToMyClient(client, "barcode error");
 		} else {

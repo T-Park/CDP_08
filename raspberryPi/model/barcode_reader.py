@@ -2,19 +2,18 @@
 # take picture and get barcode
 # it use zxing
 #        python-zxing opensource
-
 import zxing
 import picamera
 
 class BarcodeReader():
 
     def __init__(self):
-        self.camera = None 
+        self.camera = None
         # test path
         # self.reader = zxing.BarCodeReader("d:\zxing\zxing")
         self.reader = zxing.BarCodeReader("/home/pi/zxing/zxing")
         self.image_file = "../model/image.jpg"
-        
+
     def take_picture(self):
         self.camera.start_preview()
         self.camera.capture(self.image_file) # take picture
@@ -34,8 +33,4 @@ class BarcodeReader():
         self.take_picture()
         self.camera.close()
         return self.parse_barcode()
-        
-        
-        
-    
-    
+

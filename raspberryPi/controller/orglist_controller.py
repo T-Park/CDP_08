@@ -12,6 +12,7 @@ class Orglist_controller(QtWidgets.QWidget):
         super(Orglist_controller, self).__init__(parent)
         self.client = client  # set client
         self.sig = sig  # signal object
+        self.olist = None # orglist
 
         self.initUI()
         self.initSignal()
@@ -64,45 +65,67 @@ class Orglist_controller(QtWidgets.QWidget):
         if model.hasSelection():
             selected_index = model.selectedRows()[0].row()
             print(selected_index)
+            print("selected: ", self.olist[selected_index].did)
+            index = int(self.olist[selected_index].did)
+            self.sig.org_selected.emit(index) # emit signal to main controller
         else:
             print("No selection")
-        self.sig.org_selected.emit(selected_index) # emit signal to main controller
+
 
     def setItem(self):
-        olist = list()
-        olist.append(organization.Organization(name="abcde", point=10000000, tel="123-456-777"))
-        olist.append(organization.Organization(name="abcde2", point=1000, tel="123-456-777"))
-        olist.append(organization.Organization(name="abcde3", point=1000, tel="123-456-777"))
-        olist.append(organization.Organization(name="abcde4", point=100, tel="123-456-777"))
-        olist.append(organization.Organization(name="abcde5", point=100, tel="123-456-777"))
-        olist.append(organization.Organization(name="abcde6", point=100, tel="123-456-777"))
-        olist.append(organization.Organization(name="abcdaaaaaaaaaaaaaaae7", point=100, tel="123-456-777"))
-        olist.append(organization.Organization(name="abcde8", point=100, tel="123-456-777"))
-        olist.append(organization.Organization(name="abcde9", point=100, tel="123-456-777"))
-        olist.append(organization.Organization(name="abcde10", point=100, tel="123-456-777"))
-        olist.append(organization.Organization(name="abcde11", point=100, tel="123-456-777"))
-        olist.append(organization.Organization(name="abcde12", point=100, tel="123-456-777"))
-        olist.append(organization.Organization(name="abcde13", point=100, tel="123-456-777"))
+        print("set item")
+        self.olist = self.client.connection.get_orglist()
 
-        for i in range(len(olist)):
+        item_list = list()
+        for item in self.olist:
+            item_list.append(item.name)
+            item_list.append(item.type)
+            item_list.append(item.tel)
+            item_list.append(item.point)
+            # print( item.did, item.name, item.point, item.tel, item.type )
+        # olist = list()
+
+        #
+        # olist.append(organization.Organization(name="abcde", point=10000000, tel="123-456-777"))
+        # olist.append(organization.Organization(name="abcde2", point=1000, tel="123-456-777"))
+        # olist.append(organization.Organization(name="abcde3", point=1000, tel="123-456-777"))
+        # olist.append(organization.Organization(name="abcde4", point=100, tel="123-456-777"))
+        # olist.append(organization.Organization(name="abcde5", point=100, tel="123-456-777"))
+        # olist.append(organization.Organization(name="abcde6", point=100, tel="123-456-777"))
+        # olist.append(organization.Organization(name="abcdaaaaaaaaaaaaaaae7", point=100, tel="123-456-777"))
+        # olist.append(organization.Organization(name="abcde8", point=100, tel="123-456-777"))
+        # olist.append(organization.Organization(name="abcde9", point=100, tel="123-456-777"))
+        # olist.append(organization.Organization(name="abcde10", point=100, tel="123-456-777"))
+        # olist.append(organization.Organization(name="abcde11", point=100, tel="123-456-777"))
+        # olist.append(organization.Organization(name="abcde12", point=100, tel="123-456-777"))
+        # olist.append(organization.Organization(name="abcde13", point=100, tel="123-456-777"))
+
+        for i in range(len(self.olist)):
             self.ui_orglist.tableWidget.insertRow(i)
 
         # Add 3 cols
-        for i in range(len(olist[0].header)):
+        for i in range(len(self.olist[0].header)):
             self.ui_orglist.tableWidget.insertColumn(i)
-        self.ui_orglist.tableWidget.setHorizontalHeaderLabels(olist[0].header)  # 헤더이름 설정
+        self.ui_orglist.tableWidget.setHorizontalHeaderLabels(self.olist[0].header)  # 헤더이름 설정
         # item 생성은 임의로 해야할듯함
         # Add some cell data
+
         for i in range(self.ui_orglist.tableWidget.rowCount()):
             for j in range(self.ui_orglist.tableWidget.columnCount()):
-                item = QtWidgets.QTableWidgetItem(str(olist[i].var[j]))  # first class object
+                # item = QtWidgets.QTableWidgetItem(str(olist[i].var[j]))  # first class object
+                item = QtWidgets.QTableWidgetItem(str(item_list[i*4+j]))  # first class object
+                # item = QtWidgets.QTableWidgetItem(str(olist[i].headerlist[j]))  # first class object
+                # print(str(olist[i].headerlist[j]), end= ' ')
+                # item = QtWidgets.QTableWidgetItem(str(olist[i][j]))  # first class object
                 item.setTextAlignment(
                     QtCore.Qt.AlignCenter)  # 3: right, 4: center http://doc.qt.io/qt-5/qt.html#AlignmentFlag-enum
                 # self.ui_orglist.tableWidget.closePersistentEditor(item)
                 # item.setText(str(i + j))
                 self.ui_orglist.tableWidget.setItem(i, j, item)
+            print()
 
     def showEvent(self, QShowEvent):
+        print("show event")
         self.setItem()
         # to prevent null pointer error
         self.ui_orglist.tableWidget.horizontalHeader().setSectionResizeMode(0,

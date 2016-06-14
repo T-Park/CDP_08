@@ -256,7 +256,8 @@ public class HandlerForCC {
 		int amount = Integer.parseInt(tokens[2]);
 
 		// check validity of barcode
-		if (!sqlForCC.checkUserbyParam(client.getConn(), barcode, QueryParameter.BARCODE)) {
+		if (!sqlForCC.checkUserbyParam(client.getConn(), barcode, QueryParameter.BARCODE)
+				&& !sqlForCC.checkGroupBarcodebyParam(client.getConn(), barcode, QueryParameter.BARCODE)) { // check group barcode) {
 			System.out.println(">> 존재 하지 않는  user bacode 입니다.");
 			server.sendToMyClient(client, "#Error%Invalid barcode");
 		}
@@ -293,7 +294,7 @@ public class HandlerForCC {
 		
 		// check validity of barcode
 		if (!sqlForCC.checkUserbyParam(client.getConn(), barcode, QueryParameter.BARCODE)) {
-			System.out.println(">> 존재 하지 않는  user bacode 입니다.");
+			System.out.println(">> 존재 하지 않는  user bacode 입니다.: " + barcode);
 			server.sendToMyClient(client, "#Error%Invalid barcode");
 		} else {
 			if (sqlForCC.donatePointbyParam(client.getConn(), amount, barcode, QueryParameter.BARCODE) // update user

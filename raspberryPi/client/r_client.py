@@ -13,7 +13,8 @@ class Client:
         print(self.host, self.port)
 
         # set decode_type
-        self.decode_type = 'euc-kr' if decode_type == None else decode_type
+        # self.decode_type = 'euc-kr' if decode_type == None else decode_type
+        self.decode_type = 'utf-8' if decode_type == None else decode_type
 
         # create socket
         try:

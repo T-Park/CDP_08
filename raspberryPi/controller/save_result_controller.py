@@ -32,6 +32,8 @@ class Save_result_controller(QtWidgets.QWidget):
         self.ui_save_result.insertedCoin.display(amount)
 
     def showEvent(self, QShowEvent):
+        # connection to server
+        self.client.connection.save_point(self.client.inserted_barcode, self.client.inserted_coin)
         # display saved amount
         self.display_number(self.client.inserted_coin)
         # reset after 5 sec

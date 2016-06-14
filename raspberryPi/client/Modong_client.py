@@ -58,7 +58,7 @@ class Modong_client(r_client.Client):
         orglist_num = self.get_orglist_num()
         if orglist_num != None:
             orglist = list()
-            for index in range(orglist_num):
+            for index in range(1,orglist_num+1):
                 org = organization.Organization()
                 self.send(self.packet.assemble_packet(r_packet_type.Packet_type.get_org_list, index)) # send message to server
                 recv_msg = self.packet.deassemble_packet(self.recv()) # recv message from server
@@ -66,8 +66,13 @@ class Modong_client(r_client.Client):
                     print(recv_msg[1])
                 # order : did, name, point, tel, type
                 else:
-                    org.did, org.name, org.point, org.tel, org.type = recv_msg[1:] # set org info
+                    org.did, org.name, org.point, org.tel, org.type = recv_msg[1:6] # set org info
+                    for item in recv_msg:
+                        print( item, end=' ')
+                    print()
                     orglist.append(org)
+
+            # print("ex: ", orglist[0].did,orglist[0].name,orglist[0].point,orglist[0].tel, orglist[0].type)
             return orglist # return result
         return None
 
@@ -86,6 +91,11 @@ class Modong_client(r_client.Client):
 
     # save point
     def save_point(self, user_barcode, point):
+        print("save input: ", user_barcode, point)
+        # user_barcode = str(user_barcode)
+        # if user_barcode[-1] != '\n':
+        #     user_barcode += '\n'
+
         self.send(self.packet.assemble_packet(r_packet_type.Packet_type.save_point, user_barcode, point))
         recv_msg = self.packet.deassemble_packet(self.recv()) # recv message from server
         if recv_msg[0] == "Error":
@@ -95,6 +105,11 @@ class Modong_client(r_client.Client):
 
     # donate point
     def donate_point(self, did, user_barcode, point):
+        # user_barcode = str(user_barcode)
+        # if user_barcode[-1] != '\n':
+        #     user_barcode += '\n'
+
+        print("save input: ", did, user_barcode, point)
         self.send(self.packet.assemble_packet(r_packet_type.Packet_type.donate_point, did, user_barcode, point))
         recv_msg = self.packet.deassemble_packet(self.recv()) # recv message from server
         if recv_msg[0] == "Error":
