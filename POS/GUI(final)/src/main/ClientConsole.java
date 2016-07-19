@@ -6,7 +6,7 @@ package main;
 //
 
 
-//enter ÀÔ·Â½Ã ¸ØÃã Çö»ó ÀÖÀ½
+//enter ï¿½Ô·Â½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 import java.io.*;
 
 import GUI.demo;
@@ -39,14 +39,14 @@ public class ClientConsole implements ChatIF
 	  InitChatClient(host,port);
   }
   
-  // Chat Client »ý¼º
+  // Chat Client ï¿½ï¿½ï¿½ï¿½
   public void InitChatClient(String host, int port)
   {
 		try 
 	    {
 			System.out.println("ddd");
 	      client= new ChatClient(host, port, this);
-	      System.out.println("===== ¼­¹ö¿Í ¿¬°á ¼º°ø =====");
+	      System.out.println("===== ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ =====");
 	    } 
 	    catch(IOException exception) 
 	    {
@@ -77,11 +77,11 @@ public class ClientConsole implements ChatIF
         {
         	demo a = new demo(client);
             a.setVisible(true);
-            System.out.println("½ÇÇàµÆ¾î¿ë");
+            System.out.println("ï¿½ï¿½ï¿½ï¿½Æ¾ï¿½ï¿½");
         	//client.handleMessageFromClientUI(message);
         }      	
         else
-    		System.out.println("===== ¼­¹ö¿Í ¿¬°áµÇÁö ¾ÊÀº »óÅÂ ÀÔ´Ï´Ù. =====");	        	
+    		System.out.println("===== ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½. =====");	        	
     } 
     catch (Exception ex) 
     {
@@ -107,68 +107,68 @@ public class ClientConsole implements ChatIF
   	
   	if(subMsg == null)
   	{
-  		System.out.println("===== Àß¸øµÈ ¸í·É¾î ÀÔ´Ï´Ù. =====");	        		
+  		System.out.println("===== ï¿½ß¸ï¿½ï¿½ï¿½ ï¿½ï¿½É¾ï¿½ ï¿½Ô´Ï´ï¿½. =====");	        		
   	}	        	
   	else if(subMsg.equals("quit"))
   	{
-  		System.out.println("===== ÇÁ·Î±×·¥À» Á¾·á =====");
+  		System.out.println("===== ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ =====");
   		client.quit();
   	}
   	else if(subMsg.equals("logoff"))
   	{
   		if(client.isConnected())
   		{
-      		System.out.println("===== ·Î±×¿ÀÇÁ =====");
+      		System.out.println("===== ï¿½Î±×¿ï¿½ï¿½ï¿½ =====");
       		client.logout();
   		}
   		else
-      		System.out.println("===== ÀÌ¹Ì ·Î±×¿ÀÇÁÇÑ »óÅÂÀÔ´Ï´Ù. =====");
+      		System.out.println("===== ï¿½Ì¹ï¿½ ï¿½Î±×¿ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. =====");
   	}
   	else if(subMsg.length() > 8 && subMsg.substring(0,7).equals("sethost"))
   	{
   		if(client.isConnected())
   		{
-      		System.out.println("===== ¿¬°áÀ» ÇØÁöÇØ¾ß °¡´ÉÇÕ´Ï´Ù. =====");
+      		System.out.println("===== ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½. =====");
   		}
   		else
   		{
   			client.setHost(subMsg.substring(8));
-      		System.out.println("===== ÇöÀç È£½ºÆ® ¸í : " + client.getHost() + "=====");
+      		System.out.println("===== ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½Æ® ï¿½ï¿½ : " + client.getHost() + "=====");
   		}
   	}
   	else if(subMsg.length() > 8 && subMsg.substring(0,7).equals("setport"))
   	{
   		if(client.isConnected())
   		{
-      		System.out.println("===== ¿¬°áÀ» ÇØÁöÇØ¾ß °¡´ÉÇÕ´Ï´Ù. =====");
+      		System.out.println("===== ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½. =====");
   		}
   		else
   		{
   			client.setPort(Integer.parseInt(subMsg.substring(8)));
-      		System.out.println("===== ÇöÀç Æ÷Æ® ¹øÈ£ : " + client.getPort() + "=====");	
+      		System.out.println("===== ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ® ï¿½ï¿½È£ : " + client.getPort() + "=====");	
   		}
   	}
   	else if(subMsg.equals("login"))
   	{
   		if(!client.isConnected())
   		{
-      		System.out.println("===== ·Î±×ÀÎ =====");
+      		System.out.println("===== ï¿½Î±ï¿½ï¿½ï¿½ =====");
       		InitChatClient(client.getHost(),client.getPort());
   		}
   		else
-      		System.out.println("===== ÀÌ¹Ì ·Î±×ÀÎÇÑ »óÅÂÀÔ´Ï´Ù. =====");      		
+      		System.out.println("===== ï¿½Ì¹ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. =====");      		
   	}
   	else if(subMsg.equals("gethost"))
   	{
-  		System.out.println("===== ÇöÀç È£½ºÆ® ¸í : " + client.getHost() + "=====");	        		
+  		System.out.println("===== ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½Æ® ï¿½ï¿½ : " + client.getHost() + "=====");	        		
   	}
   	else if(subMsg.equals("getport"))
   	{
-  		System.out.println("===== ÇöÀç Æ÷Æ® ¹øÈ£ : " + client.getPort() + "=====");	        		
+  		System.out.println("===== ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ® ï¿½ï¿½È£ : " + client.getPort() + "=====");	        		
   	}
   	else
   	{
-  		System.out.println("===== Àß¸øµÈ ¸í·É¾î ÀÔ´Ï´Ù. =====");	        		
+  		System.out.println("===== ï¿½ß¸ï¿½ï¿½ï¿½ ï¿½ï¿½É¾ï¿½ ï¿½Ô´Ï´ï¿½. =====");	        		
   	}	
   }
   
@@ -184,17 +184,19 @@ public class ClientConsole implements ChatIF
     String host = "";
     int port = 0;  //The port number
 
-    // IP ÀÔ·Â    
+    // IP ï¿½Ô·ï¿½    
     try
     {
       host = "20.20.3.188";
+      host = "127.0.0.1";
     }
     catch(ArrayIndexOutOfBoundsException e)
     {
       host = "20.20.3.188";	// 127.0.0.1
+     
     }
     
-    // Æ÷Æ®¹øÈ£ ÀÔ·Â
+    // ï¿½ï¿½Æ®ï¿½ï¿½È£ ï¿½Ô·ï¿½
     try
     {
       port = Integer.parseInt(args[1]);

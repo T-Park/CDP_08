@@ -74,17 +74,20 @@ public class LoginPage extends Activity {
 
     public void requestLogin()
     {
+        //Toast.makeText(this, "55555" , Toast.LENGTH_LONG).show();
         try
         {
             id = editText_id.getText().toString();
             pw = editText_pw.getText().toString();
+
+            Toast.makeText(this, id + "  " + pw , Toast.LENGTH_LONG).show();
 
             SocketClient client = new SocketClient(this, "#ModongLogin%" + id + "%" + pw, uiHandler);
             client.start();
         }
         catch (Exception e)
         {
-            Toast.makeText(this, "서버 연결 실패" , Toast.LENGTH_LONG);
+            Toast.makeText(this, "서버 연결 실패" , Toast.LENGTH_LONG).show();
         }
     }
 
@@ -94,7 +97,7 @@ public class LoginPage extends Activity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if(msg.what == ERROR){
-                Toast.makeText(context, "Error : \n" + msg.getData().getString(ERROR_KEY), Toast.LENGTH_SHORT);
+                Toast.makeText(context, "Error : \n" + msg.getData().getString(ERROR_KEY), Toast.LENGTH_SHORT).show();
             }else if(msg.what == DATA){
                 String result = msg.getData().getString(DATA_KEY).toString();
                 //서버에 메세지 보낸후 성공메세지 받으면 이동

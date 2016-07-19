@@ -30,13 +30,13 @@ public class CommonSQL {
 		String query = "";
 		switch (paramType) {
 		case BARCODE:
-			if ( param.charAt(0) == '0' )
-				query = "select usrid from usr where barcode=?"; // count·Î ¼À
+			if (param.charAt(0) == '0')
+				query = "select usrid from usr where barcode=?"; // countï¿½ï¿½ ï¿½ï¿½
 			else
 				query = "select u.usrid from usr u, groupusr g where u.gid = g.gid and g.barcode=?";
 			break;
 		case ID:
-			query = "select usrid from usr where id=?"; // count·Î ¼À
+			query = "select usrid from usr where id=?"; // countï¿½ï¿½ ï¿½ï¿½
 			break;
 		}
 
@@ -71,10 +71,10 @@ public class CommonSQL {
 		String query = "";
 		switch (paramType) {
 		case BARCODE:
-			query = "select count(*) from usr where barcode=?"; // count·Î ¼À
+			query = "select count(*) from usr where barcode=?"; // countï¿½ï¿½ ï¿½ï¿½
 			break;
 		case ID:
-			query = "select count(*) from usr where id=?"; // count·Î ¼À
+			query = "select count(*) from usr where id=?"; // countï¿½ï¿½ ï¿½ï¿½
 			break;
 		}
 
@@ -110,17 +110,17 @@ public class CommonSQL {
 		switch (paramType) {
 		case BARCODE:
 			if (param.charAt(0) == '0') {
-				query = "update usr set point = point + ? where barcode=?"; // count·Î
-																			// ¼À
-				System.out.println("ÀÏ¹İÀ¯Àú");
+				query = "update usr set point = point + ? where barcode=?"; // countï¿½ï¿½
+																			// ï¿½ï¿½
+				System.out.println("ï¿½Ï¹ï¿½ï¿½ï¿½ï¿½ï¿½");
 			} else {
-				query = "update groupusr set grouppoint = grouppoint + ? where barcode=?"; // count·Î
-																							// ¼À
-				System.out.println("ÀÏ¹İÀ¯Àú");
+				query = "update groupusr set grouppoint = grouppoint + ? where barcode=?"; // countï¿½ï¿½
+																							// ï¿½ï¿½
+				System.out.println("ï¿½Ï¹ï¿½ï¿½ï¿½ï¿½ï¿½");
 			}
 			break;
 		case ID:
-			query = "update usr set point = point + ? where id=?"; // count·Î ¼À
+			query = "update usr set point = point + ? where id=?"; // countï¿½ï¿½ ï¿½ï¿½
 			break;
 		}
 
@@ -155,18 +155,18 @@ public class CommonSQL {
 		switch (paramType) {
 		case BARCODE:
 			if (param.charAt(0) == '0') {
-				query = "update usr set point = point - ? where barcode=?"; // count·Î
-				// ¼À
-				System.out.println("ÀÏ¹İÀ¯Àú");
+				query = "update usr set point = point - ? where barcode=?"; // countï¿½ï¿½
+				// ï¿½ï¿½
+				System.out.println("ï¿½Ï¹ï¿½ï¿½ï¿½ï¿½ï¿½");
 			} else {
-				query = "update groupusr set grouppoint = grouppoint - ? where barcode=?"; // count·Î
-																							// ¼À
-				System.out.println("±×·ìÀ¯Àú");
+				query = "update groupusr set grouppoint = grouppoint - ? where barcode=?"; // countï¿½ï¿½
+																							// ï¿½ï¿½
+				System.out.println("ï¿½×·ï¿½ï¿½ï¿½ï¿½ï¿½");
 			}
 
 			break;
 		case ID:
-			query = "update usr set point = point - ? where id=?"; // count·Î ¼À
+			query = "update usr set point = point - ? where id=?"; // countï¿½ï¿½ ï¿½ï¿½
 			break;
 		}
 
@@ -199,12 +199,12 @@ public class CommonSQL {
 		String query = "";
 		switch (paramType) {
 		case BARCODE:
-			query = "update usr set donatepoint = donatepoint + ? where barcode=?"; // count·Î
-																					// ¼À
+			query = "update usr set donatepoint = donatepoint + ? where barcode=?"; // countï¿½ï¿½
+																					// ï¿½ï¿½
 			break;
 		case ID:
-			query = "update usr set donatepoint = donatepoint + ? where id=?"; // count·Î
-																				// ¼À
+			query = "update usr set donatepoint = donatepoint + ? where id=?"; // countï¿½ï¿½
+																				// ï¿½ï¿½
 			break;
 		}
 
@@ -242,20 +242,22 @@ public class CommonSQL {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, barcode);
 			ResultSet rs = pstmt.executeQuery();
-			rs.next();
-			uid = rs.getInt("usrid");
-			id = rs.getString("id");
-			name = rs.getString("name");
-			point = rs.getInt("point");
-			donatepoint = rs.getInt("donatepoint");
-			tel = rs.getString("tel");
-			user = new ModongUser();
-			user.setUid(uid);
-			user.setUser_id(id);
-			user.setUser_name(name);
-			user.setUser_point(point);
-			user.setUser_donatePoint(donatepoint);
-			user.setUser_tel(tel);
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				uid = rs.getInt("usrid");
+				id = rs.getString("id");
+				name = rs.getString("name");
+				point = rs.getInt("point");
+				donatepoint = rs.getInt("donatepoint");
+				tel = rs.getString("tel");
+				user = new ModongUser();
+				user.setUid(uid);
+				user.setUser_id(id);
+				user.setUser_name(name);
+				user.setUser_point(point);
+				user.setUser_donatePoint(donatepoint);
+				user.setUser_tel(tel);
+			}
 
 			pstmt.close();
 			conn.commit();
@@ -325,8 +327,8 @@ public class CommonSQL {
 
 		PreparedStatement pstmt = null;
 		int res = -1;
-		String query = "update organization set point = point + ? where did=?"; // count·Î
-																				// ¼À
+		String query = "update organization set point = point + ? where did=?"; // countï¿½ï¿½
+																				// ï¿½ï¿½
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, amount);
@@ -354,7 +356,7 @@ public class CommonSQL {
 		int res = -1;
 
 		PreparedStatement pstmt = null;
-		String query = "select count(*) from donatelist"; // count·Î ¼À
+		String query = "select count(*) from donatelist"; // countï¿½ï¿½ ï¿½ï¿½
 		try {
 			pstmt = conn.prepareStatement(query);
 			ResultSet rs = pstmt.executeQuery();
@@ -385,7 +387,7 @@ public class CommonSQL {
 
 		PreparedStatement pstmt = null;
 		// (usrid, did, donatedate, amount)
-		String query = "insert into donatelist " + "values (?, ?, ?, ?, ?)"; // count·Î¼À
+		String query = "insert into donatelist " + "values (?, ?, ?, ?, ?)"; // countï¿½Î¼ï¿½
 
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -451,6 +453,7 @@ public class CommonSQL {
 				return false;
 		}
 	}
+
 	// check group barcode by parm
 	public boolean checkGroupBarcodebyParam(Connection conn, String param, QueryParameter paramType) {
 		PreparedStatement pstmt;
@@ -461,24 +464,22 @@ public class CommonSQL {
 			query = "select count(g.gid) from usr u, groupusr g where u.gid = g.gid and g.barcode = ?";
 			break;
 		default:
-			System.out.println("ÆÄ¶ó¹ÌÅÍ ¿¡·¯ >> checkGroupBarcodebyParam");
+			System.out.println("ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ >> checkGroupBarcodebyParam");
 			break;
 		}
-		
+
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, param);
 			ResultSet rs = pstmt.executeQuery();
-			if ( rs.isBeforeFirst() )
-			{
+			if (rs.isBeforeFirst()) {
 				rs.next();
 				res = rs.getInt("count(g.gid)");
 			}
-		} catch (SQLException e )
-		{
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if ( res > 0 )
+			if (res > 0)
 				return true;
 			return false;
 		}

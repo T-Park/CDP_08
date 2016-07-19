@@ -1,7 +1,7 @@
 /*
  * HandleMessageFromModong.java
  * 
- * µ¿Àü¸ğÀ½ÀÌ·ÎºÎÅÍ ¿À´Â ¸Ş¼¼Áö Ã³¸®
+ * ë™ì „ëª¨ìŒì´ë¡œë¶€í„° ì˜¤ëŠ” ë©”ì„¸ì§€ ì²˜ë¦¬
 */
 
 package server;
@@ -57,28 +57,28 @@ public class HandlerForCC {
 	public void processMessage(ConnectionToClient client, String... tokens) {
 		// tokens[0] is header
 		switch (tokens[0]) {
-		case messageType.LOGIN: // ·Î±×ÀÎ
+		case messageType.LOGIN: // ë¡œê·¸ì¸
 			processLogin(client, tokens);
 			break;
-		case messageType.LOGOUT: // ·Î±×¾Æ¿ô
+		case messageType.LOGOUT: // ë¡œê·¸ì•„ì›ƒ
 			processLogout(client, tokens);
 			break;
-		case messageType.UPDATEINFO: // ¸ğÀ½ÀÌ Á¤º¸ °»½Å
+		case messageType.UPDATEINFO: // ëª¨ìŒì´ ì •ë³´ ê°±ì‹ 
 			processUpdateInfo(client, tokens);
 			break;
-		case messageType.GETORGNUM: // ±âºÎ´ÜÃ¼ ¸ñ·Ï ¼ö ¿äÃ»
+		case messageType.GETORGNUM: // ê¸°ë¶€ë‹¨ì²´ ëª©ë¡ ìˆ˜ ìš”ì²­
 			processGetOrgNum(client, tokens);
 			break;
-		case messageType.GETORG: // ±âºÎ´ÜÃ¼ ¿äÃ»
+		case messageType.GETORG: // ê¸°ë¶€ë‹¨ì²´ ìš”ì²­
 			processGetOrg(client, tokens);
 			break;
-		case messageType.GETUSERINFO: // À¯ÀúÁ¤º¸ ¿äÃ»
+		case messageType.GETUSERINFO: // ìœ ì €ì •ë³´ ìš”ì²­
 			processGetUserInfo(client, tokens);
 			break;
-		case messageType.SAVEPOINT: // Æ÷ÀÎÆ® ÀúÀå
+		case messageType.SAVEPOINT: // í¬ì¸íŠ¸ ì €ì¥
 			processSavePoint(client, tokens);
 			break;
-		case messageType.DONATEPOINT: // Æ÷ÀÎÆ® ±âºÎ
+		case messageType.DONATEPOINT: // í¬ì¸íŠ¸ ê¸°ë¶€
 			processDonatePoint(client, tokens);
 			break;
 		}
@@ -87,11 +87,11 @@ public class HandlerForCC {
 	// #CcLogin%cid
 	// login and return acculmulated amount
 	public void processLogin(ConnectionToClient client, String... tokens) {
-		System.out.println("µ¿Àü¸ğÀ½ÀÌ¿¡¼­ÀÇ ¿äÃ» : ·Î±×ÀÎ");
+		System.out.println("ë™ì „ëª¨ìŒì´ì—ì„œì˜ ìš”ì²­ : ë¡œê·¸ì¸");
 		// check parameter validity
 		if (tokens.length != 2) {
-			System.out.println(">> processLogin ÆÄ¶ó¹ÌÅÍ ¿¡·¯");
-			server.sendToMyClient(client, "ÆÄ¶ó¹ÌÅÍ ¿¡·¯ÀÔ´Ï´Ù.");
+			System.out.println(">> processLogin íŒŒë¼ë¯¸í„° ì—ëŸ¬");
+			server.sendToMyClient(client, "íŒŒë¼ë¯¸í„° ì—ëŸ¬ì…ë‹ˆë‹¤.");
 			return;
 		}
 
@@ -106,15 +106,15 @@ public class HandlerForCC {
 			for (int i = 0; i < clientThreadList.length; i++) {
 				if (((ConnectionToClient) clientThreadList[i]).getInfo("cid") != null
 						&& ((ConnectionToClient) clientThreadList[i]).getInfo("cid").equals(cid)) {
-					// ÇöÀç ÇØ´ç id·Î ·Î±×ÀÎÇÑ ÀÎ¿øÀÌ ÀÖÀ½
-					accesible = false; // Áßº¹·Î±×ÀÎ
+					// í˜„ì¬ í•´ë‹¹ idë¡œ ë¡œê·¸ì¸í•œ ì¸ì›ì´ ìˆìŒ
+					accesible = false; // ì¤‘ë³µë¡œê·¸ì¸
 					msg = "#Error%already logined cid";
 					break;
 				}
 			}
-			// ÇØ´ç id·Î ·Î±×ÀÎ µÈ ÀÎ¿øÀÌ ¾øÀ» °æ¿ì Á¢¼ÓÁ¤º¸¸¦ µî·Ï
+			// í•´ë‹¹ idë¡œ ë¡œê·¸ì¸ ëœ ì¸ì›ì´ ì—†ì„ ê²½ìš° ì ‘ì†ì •ë³´ë¥¼ ë“±ë¡
 			if (accesible) {
-				client.setInfo("cid", cid); // client ¾²·¹µå¿¡ µî·Ï
+				client.setInfo("cid", cid); // client ì“°ë ˆë“œì— ë“±ë¡
 				amount = sqlForCC.getCCAccumulatedAmount(client.getConn(), cid);
 				msg = "#Success%" + amount;
 			}
@@ -127,11 +127,11 @@ public class HandlerForCC {
 
 	// #CcLogout
 	public void processLogout(ConnectionToClient client, String... tokens) {
-		System.out.println("µ¿Àü¸ğÀ½ÀÌ¿¡¼­ÀÇ ¿äÃ» : ·Î±×¾Æ¿ô");
+		System.out.println("ë™ì „ëª¨ìŒì´ì—ì„œì˜ ìš”ì²­ : ë¡œê·¸ì•„ì›ƒ");
 		// check parameter validity
 		if (tokens.length != 1) {
-			System.out.println(">> processLogout ÆÄ¶ó¹ÌÅÍ ¿¡·¯");
-			server.sendToMyClient(client, "ÆÄ¶ó¹ÌÅÍ ¿¡·¯ÀÔ´Ï´Ù.");
+			System.out.println(">> processLogout íŒŒë¼ë¯¸í„° ì—ëŸ¬");
+			server.sendToMyClient(client, "íŒŒë¼ë¯¸í„° ì—ëŸ¬ì…ë‹ˆë‹¤.");
 			return;
 		}
 
@@ -140,16 +140,16 @@ public class HandlerForCC {
 	}
 
 	// #CcUpdateInfo%accumulatedAmount
-	// µ¿Àü¸ğÀ½ÀÌ°¡ Àû¸³ÇÑ ÃÑ¾× ¾÷µ¥ÀÌÆ®
-	// µ¿Àü¸ğÀ½ÀÌ¿¡¼­ ¸ğÀº ±İ¾×À» ÆÄ¶ó¹ÌÅÍ·Î ¹ŞÀ½
-	// ¼º°ø½Ã success
-	// ½ÇÆĞ½Ã Error ¸Ş¼¼Áö + »çÀ¯ Àü¼Û
+	// ë™ì „ëª¨ìŒì´ê°€ ì ë¦½í•œ ì´ì•¡ ì—…ë°ì´íŠ¸
+	// ë™ì „ëª¨ìŒì´ì—ì„œ ëª¨ì€ ê¸ˆì•¡ì„ íŒŒë¼ë¯¸í„°ë¡œ ë°›ìŒ
+	// ì„±ê³µì‹œ success
+	// ì‹¤íŒ¨ì‹œ Error ë©”ì„¸ì§€ + ì‚¬ìœ  ì „ì†¡
 	public void processUpdateInfo(ConnectionToClient client, String... tokens) {
-		System.out.println("µ¿Àü¸ğÀ½ÀÌ¿¡¼­ÀÇ ¿äÃ» : µ¿Àü¸ğÀ½ÀÌ ±İ¾× ¾÷µ¥ÀÌÅÍ");
+		System.out.println("ë™ì „ëª¨ìŒì´ì—ì„œì˜ ìš”ì²­ : ë™ì „ëª¨ìŒì´ ê¸ˆì•¡ ì—…ë°ì´í„°");
 		// check parameter validity
 		if (tokens.length != 2) {
-			System.out.println(">> processUpdateInfo ÆÄ¶ó¹ÌÅÍ ¿¡·¯");
-			server.sendToMyClient(client, "ÆÄ¶ó¹ÌÅÍ ¿¡·¯ÀÔ´Ï´Ù.");
+			System.out.println(">> processUpdateInfo íŒŒë¼ë¯¸í„° ì—ëŸ¬");
+			server.sendToMyClient(client, "íŒŒë¼ë¯¸í„° ì—ëŸ¬ì…ë‹ˆë‹¤.");
 			return;
 		}
 
@@ -172,11 +172,11 @@ public class HandlerForCC {
 
 	// #CcGetOrgNum
 	public void processGetOrgNum(ConnectionToClient client, String... tokens) {
-		System.out.println("µ¿Àü¸ğÀ½ÀÌ¿¡¼­ÀÇ ¿äÃ» : ±âºÎ´ÜÃ¼ ¼ö Á¶È¸");
+		System.out.println("ë™ì „ëª¨ìŒì´ì—ì„œì˜ ìš”ì²­ : ê¸°ë¶€ë‹¨ì²´ ìˆ˜ ì¡°íšŒ");
 		// check parameter validity
 		if (tokens.length != 1) {
-			System.out.println(">> processGetOrgNum ÆÄ¶ó¹ÌÅÍ ¿¡·¯");
-			server.sendToMyClient(client, "ÆÄ¶ó¹ÌÅÍ ¿¡·¯ÀÔ´Ï´Ù.");
+			System.out.println(">> processGetOrgNum íŒŒë¼ë¯¸í„° ì—ëŸ¬");
+			server.sendToMyClient(client, "íŒŒë¼ë¯¸í„° ì—ëŸ¬ì…ë‹ˆë‹¤.");
 			return;
 		}
 		int res = sqlForCC.getOrgNum(client.getConn());
@@ -193,11 +193,11 @@ public class HandlerForCC {
 
 	// #CcGetOrg%index
 	public void processGetOrg(ConnectionToClient client, String... tokens) {
-		System.out.println("µ¿Àü¸ğÀ½ÀÌ¿¡¼­ÀÇ ¿äÃ» : ±âºÎ´ÜÃ¼ ¸ñ·Ï ¿äÃ»");
+		System.out.println("ë™ì „ëª¨ìŒì´ì—ì„œì˜ ìš”ì²­ : ê¸°ë¶€ë‹¨ì²´ ëª©ë¡ ìš”ì²­");
 		// check parameter validity
 		if (tokens.length != 2) {
-			System.out.println(">> processGetOrg ÆÄ¶ó¹ÌÅÍ ¿¡·¯");
-			server.sendToMyClient(client, "ÆÄ¶ó¹ÌÅÍ ¿¡·¯ÀÔ´Ï´Ù.");
+			System.out.println(">> processGetOrg íŒŒë¼ë¯¸í„° ì—ëŸ¬");
+			server.sendToMyClient(client, "íŒŒë¼ë¯¸í„° ì—ëŸ¬ì…ë‹ˆë‹¤.");
 			return;
 		}
 
@@ -219,11 +219,11 @@ public class HandlerForCC {
 
 	// #CcGetUserInfo%userBarcode
 	public void processGetUserInfo(ConnectionToClient client, String... tokens) {
-		System.out.println("µ¿Àü¸ğÀ½ÀÌ¿¡¼­ÀÇ ¿äÃ» : À¯ÀúÁ¤º¸ ¿äÃ»");
+		System.out.println("ë™ì „ëª¨ìŒì´ì—ì„œì˜ ìš”ì²­ : ìœ ì €ì •ë³´ ìš”ì²­");
 		// check parameter validity
 		if (tokens.length != 2) {
-			System.out.println(">> processGetUserInfo ÆÄ¶ó¹ÌÅÍ ¿¡·¯");
-			server.sendToMyClient(client, "ÆÄ¶ó¹ÌÅÍ ¿¡·¯ÀÔ´Ï´Ù.");
+			System.out.println(">> processGetUserInfo íŒŒë¼ë¯¸í„° ì—ëŸ¬");
+			server.sendToMyClient(client, "íŒŒë¼ë¯¸í„° ì—ëŸ¬ì…ë‹ˆë‹¤.");
 			return;
 		}
 		
@@ -245,11 +245,11 @@ public class HandlerForCC {
 
 	// #CcSavePoint%userBarcode%point
 	public void processSavePoint(ConnectionToClient client, String... tokens) {
-		System.out.println("µ¿Àü¸ğÀ½ÀÌ¿¡¼­ÀÇ ¿äÃ» : Àû¸³ÇÏ±â");
+		System.out.println("ë™ì „ëª¨ìŒì´ì—ì„œì˜ ìš”ì²­ : ì ë¦½í•˜ê¸°");
 		// check parameter validity
 		if (tokens.length != 3) {
-			System.out.println(">> processSavePoint ÆÄ¶ó¹ÌÅÍ ¿¡·¯");
-			server.sendToMyClient(client, "ÆÄ¶ó¹ÌÅÍ ¿¡·¯ÀÔ´Ï´Ù.");
+			System.out.println(">> processSavePoint íŒŒë¼ë¯¸í„° ì—ëŸ¬");
+			server.sendToMyClient(client, "íŒŒë¼ë¯¸í„° ì—ëŸ¬ì…ë‹ˆë‹¤.");
 			return;
 		}
 		String barcode = tokens[1];
@@ -258,33 +258,33 @@ public class HandlerForCC {
 		// check validity of barcode
 		if (!sqlForCC.checkUserbyParam(client.getConn(), barcode, QueryParameter.BARCODE)
 				&& !sqlForCC.checkGroupBarcodebyParam(client.getConn(), barcode, QueryParameter.BARCODE)) { // check group barcode) {
-			System.out.println(">> Á¸Àç ÇÏÁö ¾Ê´Â  user bacode ÀÔ´Ï´Ù.");
+			System.out.println(">> ì¡´ì¬ í•˜ì§€ ì•ŠëŠ”  user bacode ì…ë‹ˆë‹¤.");
 			server.sendToMyClient(client, "#Error%Invalid barcode");
 		}
 		// check CC was login
 		else if (client.getInfo("cid") == null) {
-			System.out.println("ÀÎÁõµÇÁö ¾ÊÀº µ¿Àü¸ğÀ½ÀÌÀÔ´Ï´Ù.");
+			System.out.println("ì¸ì¦ë˜ì§€ ì•Šì€ ë™ì „ëª¨ìŒì´ì…ë‹ˆë‹¤.");
 			server.sendToMyClient(client, "#Error%Not logined Cc login first");
 		} else {
 			if (sqlForCC.addPointbyParam(client.getConn(), amount, barcode, QueryParameter.BARCODE)) {
-				System.out.println(">> Àû¸³ÇÏ¿´½À´Ï´Ù.");
+				System.out.println(">> ì ë¦½í•˜ì˜€ìŠµë‹ˆë‹¤.");
 				server.sendToMyClient(client, "#Success");
 				// log save result
 				if (!sqlForCC.logSaveResult(client.getConn(), (int) client.getInfo("cid"), barcode, amount))
-					System.out.println("log ½ÇÆĞ");
+					System.out.println("log ì‹¤íŒ¨");
 				else
-					System.out.println("log ¼º°ø");
+					System.out.println("log ì„±ê³µ");
 			}
 		}
 	}
 
 	// #CcDonatePoint%did%userbarcode%point
 	public void processDonatePoint(ConnectionToClient client, String... tokens) {
-		System.out.println("µ¿Àü¸ğÀ½ÀÌ¿¡¼­ÀÇ ¿äÃ» : ±âºÎÇÏ±â");
+		System.out.println("ë™ì „ëª¨ìŒì´ì—ì„œì˜ ìš”ì²­ : ê¸°ë¶€í•˜ê¸°");
 		// check parameter validity
 		if (tokens.length != 4) {
-			System.out.println(">> processDonatePoint ÆÄ¶ó¹ÌÅÍ ¿¡·¯");
-			server.sendToMyClient(client, "ÆÄ¶ó¹ÌÅÍ ¿¡·¯ÀÔ´Ï´Ù.");
+			System.out.println(">> processDonatePoint íŒŒë¼ë¯¸í„° ì—ëŸ¬");
+			server.sendToMyClient(client, "íŒŒë¼ë¯¸í„° ì—ëŸ¬ì…ë‹ˆë‹¤.");
 			return;
 		}
 		
@@ -294,18 +294,18 @@ public class HandlerForCC {
 		
 		// check validity of barcode
 		if (!sqlForCC.checkUserbyParam(client.getConn(), barcode, QueryParameter.BARCODE)) {
-			System.out.println(">> Á¸Àç ÇÏÁö ¾Ê´Â  user bacode ÀÔ´Ï´Ù.: " + barcode);
+			System.out.println(">> ì¡´ì¬ í•˜ì§€ ì•ŠëŠ”  user bacode ì…ë‹ˆë‹¤.: " + barcode);
 			server.sendToMyClient(client, "#Error%Invalid barcode");
 		} else {
 			if (sqlForCC.donatePointbyParam(client.getConn(), amount, barcode, QueryParameter.BARCODE) // update user
 					&& sqlForCC.addPointToOrg(client.getConn(), did, amount)) { // update organization
-				System.out.println(">> ±âºÎÇÏ¿´½À´Ï´Ù.");
+				System.out.println(">> ê¸°ë¶€í•˜ì˜€ìŠµë‹ˆë‹¤.");
 				server.sendToMyClient(client, "#Success");
 				// log donate result
 				if (!sqlForCC.logDonateResult(client.getConn(), did, barcode, amount, QueryParameter.BARCODE))
-					System.out.println("log ½ÇÆĞ");
+					System.out.println("log ì‹¤íŒ¨");
 				else
-					System.out.println("log ¼º°ø");
+					System.out.println("log ì„±ê³µ");
 			}
 		}		
 	}

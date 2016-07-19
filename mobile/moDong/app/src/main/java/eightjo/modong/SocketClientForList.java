@@ -35,7 +35,8 @@ public class SocketClientForList extends Thread {
 
     public SocketClientForList(Context context, String msg, Handler handler){
         threadAlive = true;
-        this.ip = "20.20.3.188";
+//        this.ip = "20.20.3.188";
+        this.ip = "192.168.0.3";
         this.port = 5555;
         this.context = context;
         this.msg = msg;

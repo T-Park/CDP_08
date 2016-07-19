@@ -1,7 +1,7 @@
 /*
  * HandleMessageFromPOS.java
  * 
- * Æ÷½º±â·ÎºÎÅÍ ¿À´Â ¸Ş¼¼Áö Ã³¸®
+ * í¬ìŠ¤ê¸°ë¡œë¶€í„° ì˜¤ëŠ” ë©”ì„¸ì§€ ì²˜ë¦¬
 */
 
 package server;
@@ -46,53 +46,73 @@ public class HandlerForPOS {
 
 	public void processMessage(ConnectionToClient client, String... tokens) {
 		// tokens[0] is header
-		System.out.println("hfp ±îÁö¿È");
+		System.out.println("hfp ê¹Œì§€ì˜´");
 		switch (tokens[0]) {
-		case messageType.IDENTIFY: // Pos±â ÀÎÁõ
+		case messageType.IDENTIFY: // Posê¸° ì¸ì¦
 			processIdentify(client, tokens);
 			break;
-		case messageType.POINTADD: // point Àû¸³
+		case messageType.POINTADD: // point ì ë¦½
 			processPointAdd(client, tokens);
 			break;
-		case messageType.POINTREMOVE: // point »ç¿ë
+		case messageType.POINTREMOVE: // point ì‚¬ìš©
 			processPointRemove(client, tokens);
 			break;
 		}
 	}
 
-	// #PosIdentify%32, ¼º°ø½Ã #true
-	// ½ÇÆĞ½Ã ¸Ş¼¼Áö
-	// identify°¡ ¾Æ´Ï°í loginÀÌ°í logoutµµ ÇÊ¿äÇÒ°Å °°À½
+	// #PosIdentify%32, ì„±ê³µì‹œ #true
+	// ì‹¤íŒ¨ì‹œ ë©”ì„¸ì§€
+	// identifyê°€ ì•„ë‹ˆê³  loginì´ê³  logoutë„ í•„ìš”í• ê±° ê°™ìŒ
+	/*
+	 * modify functionality to inquiry point
+	 * 
+	 * #PosIdentify%barcode, ì„±ê³µì‹œ #true
+	*/
 	public void processIdentify(ConnectionToClient client, String... tokens) {
-		System.out.println("Pos±â¿¡¼­ÀÇ ¿äÃ» : pos±â »ç¿ëÀÚ ÀÎÁõ");
+		
+		System.out.println("Posê¸°ì—ì„œì˜ ìš”ì²­ : posê¸° ì‚¬ìš©ì ì¸ì¦");
 		if (tokens.length != 2) {
-			System.out.println(">> processIdentify ÆÄ¶ó¹ÌÅÍ ¿¡·¯");
-			server.sendToMyClient(client, "ÆÄ¶ó¹ÌÅÍ ¿¡·¯ÀÔ´Ï´Ù.");
+			System.out.println(">> processIdentify íŒŒë¼ë¯¸í„° ì—ëŸ¬");
+			server.sendToMyClient(client, "íŒŒë¼ë¯¸í„° ì—ëŸ¬ì…ë‹ˆë‹¤.");
 			return;
 		}
 
-		// if (!sa.findStore(Integer.parseInt(tokens[1]))) {
-		// System.out.println(">> Á¸Àç ÇÏÁö ¾Ê´Â pid ÀÔ´Ï´Ù. pid : " + tokens[1]);
-		// server.sendToMyClient(client, "Á¸Àç ÇÏÁö ¾Ê´Â pid ÀÔ´Ï´Ù.");
-		// } else// ÀÎÁõ o
-		// server.sendToMyClient(client, "#true");
-		System.out.println(Integer.parseInt(tokens[1]));
+		ModongUser user;
+		String barcode = tokens[1];
 
-		// check parameter validity
-		if (!sqlForPos.login(client.getConn(), Integer.parseInt(tokens[1]))) {
-			System.out.println(">> Á¸Àç ÇÏÁö ¾Ê´Â pid ÀÔ´Ï´Ù. pid : " + tokens[1]);
-			server.sendToMyClient(client, "Á¸Àç ÇÏÁö ¾Ê´Â pid ÀÔ´Ï´Ù.");
-		} else
-			server.sendToMyClient(client, "#true");
+		user = sqlForPos.getUserInfo(client.getConn(), barcode);
+		
+		if ( user != null )
+		{
+			server.sendToMyClient(client, "#Success%" + user.getUser_point());
+		}
+		else
+			server.sendToMyClient(client, "#Invaild barcode%-1" );
+		
+		// if (!sa.findStore(Integer.parseInt(tokens[1]))) {
+		// System.out.println(">> ì¡´ì¬ í•˜ì§€ ì•ŠëŠ” pid ì…ë‹ˆë‹¤. pid : " + tokens[1]);
+		// server.sendToMyClient(client, "ì¡´ì¬ í•˜ì§€ ì•ŠëŠ” pid ì…ë‹ˆë‹¤.");
+		// } else// ì¸ì¦ o
+		// server.sendToMyClient(client, "#true");
+		//System.out.println(Integer.parseInt(tokens[1]));
+//
+//		
+//		
+//		// check parameter validity
+//		if (!sqlForPos.login(client.getConn(), Integer.parseInt(tokens[1]))) {
+//			System.out.println(">> ì¡´ì¬ í•˜ì§€ ì•ŠëŠ” pid ì…ë‹ˆë‹¤. pid : " + tokens[1]);
+//			server.sendToMyClient(client, "ì¡´ì¬ í•˜ì§€ ì•ŠëŠ” pid ì…ë‹ˆë‹¤.");
+//		} else
+//			server.sendToMyClient(client, "#true");
 	}
 
-	// #PosPointAdd%pid%barcode%point ¼º°ø½Ã
-	// addÈÄ point rt
+	// #PosPointAdd%pid%barcode%point ì„±ê³µì‹œ
+	// addí›„ point rt
 	public void processPointAdd(ConnectionToClient client, String... tokens) {
-		System.out.println("Pos±â¿¡¼­ÀÇ ¿äÃ» : Æ÷ÀÎÆ® Àû¸³");
+		System.out.println("Posê¸°ì—ì„œì˜ ìš”ì²­ : í¬ì¸íŠ¸ ì ë¦½");
 		if (tokens.length != 4) {
-			System.out.println(">> processPointAdd ÆÄ¶ó¹ÌÅÍ ¿¡·¯");
-			server.sendToMyClient(client, "ÆÄ¶ó¹ÌÅÍ ¿¡·¯ÀÔ´Ï´Ù.");
+			System.out.println(">> processPointAdd íŒŒë¼ë¯¸í„° ì—ëŸ¬");
+			server.sendToMyClient(client, "íŒŒë¼ë¯¸í„° ì—ëŸ¬ì…ë‹ˆë‹¤.");
 			return;
 		}
 		// String[] token = line.split("%");
@@ -101,51 +121,51 @@ public class HandlerForPOS {
 		int amount = Integer.parseInt(tokens[3]);
 		System.out.printf("pid: %d, barcode:%s, point:%d\n", pid, barcode, amount);
 
-		// ±×·ì ¹ÙÄÚµå Ã³¸®
+		// ê·¸ë£¹ ë°”ì½”ë“œ ì²˜ë¦¬
 
 		// if (!ua.isThereUser_asBacode(bacode)) {
-		// System.out.println(">> Á¸Àç ÇÏÁö ¾Ê´Â user bacode ÀÔ´Ï´Ù.");
-		// // sendToMyClient(client, "Á¸Àç ÇÏÁö ¾Ê´Â user bacode ÀÔ´Ï´Ù.");
+		// System.out.println(">> ì¡´ì¬ í•˜ì§€ ì•ŠëŠ” user bacode ì…ë‹ˆë‹¤.");
+		// // sendToMyClient(client, "ì¡´ì¬ í•˜ì§€ ì•ŠëŠ” user bacode ì…ë‹ˆë‹¤.");
 		// } else {
 		// ModongUser tempUser = ua.findUser_asBacode(bacode);
 		// tempUser.addPoint(point);
 		// sa.recordAddPoint_asBacode(bacode, pid, point);
 		//
-		// System.out.println(">>" + pid + "¹ø Æ÷½º±â : " + point + "Àû¸³ µÇ¾ú½À´Ï´Ù.");
+		// System.out.println(">>" + pid + "ë²ˆ í¬ìŠ¤ê¸° : " + point + "ì ë¦½ ë˜ì—ˆìŠµë‹ˆë‹¤.");
 		// server.sendToMyClient(client, "#" +
 		// ua.getModongUser_asBacode(bacode).getUser_point());
 		// }
 		// check parameter validity
 		if (!sqlForPos.checkUserbyParam(client.getConn(), barcode, QueryParameter.BARCODE)
 				&& !sqlForPos.checkGroupBarcodebyParam(client.getConn(), barcode, QueryParameter.BARCODE)) {
-			System.out.println(">> Á¸Àç ÇÏÁö ¾Ê´Â  barcode ÀÔ´Ï´Ù.");
+			System.out.println(">> ì¡´ì¬ í•˜ì§€ ì•ŠëŠ”  barcode ì…ë‹ˆë‹¤.");
 			server.sendToMyClient(client, "barcode error");
 		} else {
 			if (!sqlForPos.addPointbyParam(client.getConn(), amount, barcode, QueryParameter.BARCODE)) {
-				System.out.println(">> Àû¸³¿¡ ½ÇÆĞÇß½À´Ï´Ù.");
+				System.out.println(">> ì ë¦½ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
 				server.sendToMyClient(client, "failed to save");
 			} else {
-				System.out.println(">> Àû¸³ÇÏ¿´½À´Ï´Ù.");
+				System.out.println(">> ì ë¦½í•˜ì˜€ìŠµë‹ˆë‹¤.");
 				server.sendToMyClient(client, "success to save");
 				if ( barcode.charAt(0) == '1' )
 				{
-					System.out.println("±×·ì¹ÙÄÚµå´Â log x");
+					System.out.println("ê·¸ë£¹ë°”ì½”ë“œëŠ” log x");
 				}
 				else if (!sqlForPos.logResult(client.getConn(), pid, barcode, amount, 's'))
-					System.out.println("log ½ÇÆĞ");
+					System.out.println("log ì‹¤íŒ¨");
 				else
-					System.out.println("log ¼º°ø");
+					System.out.println("log ì„±ê³µ");
 			}
 		}
 	}
 
 	// #PosPointRemove%pid%bacode%point
 	public void processPointRemove(ConnectionToClient client, String... tokens) {
-		System.out.println("Pos±â¿¡¼­ÀÇ ¿äÃ» : Æ÷ÀÎÆ® »ç¿ë");
+		System.out.println("Posê¸°ì—ì„œì˜ ìš”ì²­ : í¬ì¸íŠ¸ ì‚¬ìš©");
 		// check parameter validity
 		if (tokens.length != 4) {
-			System.out.println(">> processPointRemove ÆÄ¶ó¹ÌÅÍ ¿¡·¯");
-			server.sendToMyClient(client, "ÆÄ¶ó¹ÌÅÍ ¿¡·¯ÀÔ´Ï´Ù.");
+			System.out.println(">> processPointRemove íŒŒë¼ë¯¸í„° ì—ëŸ¬");
+			server.sendToMyClient(client, "íŒŒë¼ë¯¸í„° ì—ëŸ¬ì…ë‹ˆë‹¤.");
 			return;
 		}
 		// String[] token = line.split("%");
@@ -153,42 +173,42 @@ public class HandlerForPOS {
 		String barcode = tokens[2];
 		int amount = Integer.parseInt(tokens[3]);
 		System.out.printf("pid: %d, barcode:%s, point:%d\n", pid, barcode, amount);
-		// // ±×·ì ¹ÙÄÚµå Ã³¸®
+		// // ê·¸ë£¹ ë°”ì½”ë“œ ì²˜ë¦¬
 		//
 		// if (!ua.isThereUser_asBacode(barcode)) {
-		// System.out.println(">> Á¸Àç ÇÏÁö ¾Ê´Â user bacode ÀÔ´Ï´Ù.");
-		// server.sendToMyClient(client, "Á¸Àç ÇÏÁö ¾Ê´Â user bacode ÀÔ´Ï´Ù.");
+		// System.out.println(">> ì¡´ì¬ í•˜ì§€ ì•ŠëŠ” user bacode ì…ë‹ˆë‹¤.");
+		// server.sendToMyClient(client, "ì¡´ì¬ í•˜ì§€ ì•ŠëŠ” user bacode ì…ë‹ˆë‹¤.");
 		// } else {
 		// ModongUser tempUser = ua.findUser_asBacode(barcode);
 		// if (tempUser.removePoint(amount)) {
 		// sa.recordAddPoint_asBacode(barcode, pid, amount);
-		// System.out.println(">>" + pid + "¹ø Æ÷½º±â : " + amount + "»ç¿ë µÇ¾ú½À´Ï´Ù.");
+		// System.out.println(">>" + pid + "ë²ˆ í¬ìŠ¤ê¸° : " + amount + "ì‚¬ìš© ë˜ì—ˆìŠµë‹ˆë‹¤.");
 		// server.sendToMyClient(client, "#" +
 		// ua.getModongUser_asBacode(barcode).getUser_point());
 		// } else
-		// server.sendToMyClient(client, "point°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+		// server.sendToMyClient(client, "pointê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.");
 		// }
 
 		// check is valid user
 		if (!sqlForPos.checkUserbyParam(client.getConn(), barcode, QueryParameter.BARCODE) // check normal barcode
 				&& !sqlForPos.checkGroupBarcodebyParam(client.getConn(), barcode, QueryParameter.BARCODE)) { // check group barcode
-			System.out.println(">> Á¸Àç ÇÏÁö ¾Ê´Â barcode ÀÔ´Ï´Ù.");
+			System.out.println(">> ì¡´ì¬ í•˜ì§€ ì•ŠëŠ” barcode ì…ë‹ˆë‹¤.");
 			server.sendToMyClient(client, "barcode error");
 		} else {
 			if (!sqlForPos.withdrawPointbyParam(client.getConn(), amount, barcode, QueryParameter.BARCODE)) {
-				System.out.println(">> ÀÜ¾×ÀÌ ºÎÁ·ÇÕ´Ï´Ù.");
+				System.out.println(">> ì”ì•¡ì´ ë¶€ì¡±í•©ë‹ˆë‹¤.");
 				server.sendToMyClient(client, "failed to use");
 			} else {
-				System.out.println(">> »ç¿ëÇÏ¿´½À´Ï´Ù.");
+				System.out.println(">> ì‚¬ìš©í•˜ì˜€ìŠµë‹ˆë‹¤.");
 				server.sendToMyClient(client, "success to use");
 				if ( barcode.charAt(0) == '1')
 				{
-					System.out.println("±×·ì¹ÙÄÚµå´Â log ÇÏÁö ¾ÊÀ½");
+					System.out.println("ê·¸ë£¹ë°”ì½”ë“œëŠ” log í•˜ì§€ ì•ŠìŒ");
 				}
 				else if (!sqlForPos.logResult(client.getConn(), pid, barcode, amount, 'u'))
-					System.out.println("log ½ÇÆĞ");
+					System.out.println("log ì‹¤íŒ¨");
 				else
-					System.out.println("log ¼º°ø");
+					System.out.println("log ì„±ê³µ");
 			}
 		}
 	}

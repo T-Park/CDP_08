@@ -810,20 +810,29 @@ public class Pos extends JFrame implements Serializable {
 		if (client != null)
 			if (client.isConnected()) {
 				System.out.println("222");
-				this.sendToServer(new String("포인트 조회"));
+				//this.sendToServer(new String("포인트 조회"));
 				this.sendToServer(new String("#PosIdentify%"+user_barcode));
 			} else
 				System.out.println("연결 x");
 		
 		//sendToServer("#MdUserIdentify%" + "tempCode");
-		
+		System.out.println("??");
 		while ( !client.isMsgFlag() )
 		{
-		System.out.print(" ");	
+		//System.out.print(" ");
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		client.setMsgFlag(false);
 		System.out.println("22");
-		jLabel3.setText(client.getCurrentPoint() + "남았습니다.");
+		if ( client.getCurrentPoint() < 0 )
+			jLabel3.setText("Invaild barcode!!");
+		else
+			jLabel3.setText(client.getCurrentPoint() + "남았습니다.");
 		
 	}
 

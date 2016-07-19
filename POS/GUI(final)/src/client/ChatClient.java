@@ -101,7 +101,7 @@ public class ChatClient extends AbstractClient {
 		}
 		clientUI.display(msg.toString());
 		
-
+		System.out.println("msg: " + msg.toString());
 		String line = msg.toString();
 		String[] token = line.split("%");
 
@@ -116,7 +116,7 @@ public class ChatClient extends AbstractClient {
 			setMsgFlag(true);
 		}
 
-		System.out.println("exit");
+		System.out.println("exit" + msgFlag);
 		
 	/*	  if(line.startsWith("#"))//성공 메세지 { String point = token[1]; //조회
 		  if(line.startsWith("#MdUserIdentify")){//사용자 인증 답이 왓을때 {

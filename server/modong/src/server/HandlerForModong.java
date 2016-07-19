@@ -1,7 +1,7 @@
 /*
  * HandleMessageFromMoblie.java
  * 
- * ¸ğ¹ÙÀÏ·ÎºÎÅÍ ¿À´Â ¸Ş¼¼Áö Ã³¸®
+ * ëª¨ë°”ì¼ë¡œë¶€í„° ì˜¤ëŠ” ë©”ì„¸ì§€ ì²˜ë¦¬
 */
 package server;
 
@@ -68,47 +68,47 @@ public class HandlerForModong {
 		// tokens[0] is header
 
 		switch (tokens[0]) {
-		case messageType.LOGIN: // ·Î±×ÀÎ
+		case messageType.LOGIN: // ë¡œê·¸ì¸
 			processLogin(client, tokens);
 			break;
-		case messageType.LOGOUT: // ·Î±×¾Æ¿ô
+		case messageType.LOGOUT: // ë¡œê·¸ì•„ì›ƒ
 			// processLogin(client, tokens);
 			break;
-		case messageType.JOIN: // È¸¿ø°¡ÀÔ
+		case messageType.JOIN: // íšŒì›ê°€ì…
 			processJoin(client, tokens);
 			break;
-		case messageType.EXSISTID: // IDÁßº¹°Ë»ç
+		case messageType.EXSISTID: // IDì¤‘ë³µê²€ì‚¬
 			processExistedID(client, tokens);
 			break;
-		case messageType.MODIFIY: // È¸¿øÁ¤º¸¼öÁ¤
+		case messageType.MODIFIY: // íšŒì›ì •ë³´ìˆ˜ì •
 			processModify(client, tokens);
 			break;
-		case messageType.DONATIONLIST: // ±âºÎ¸ñ·Ïº¸±â
+		case messageType.DONATIONLIST: // ê¸°ë¶€ëª©ë¡ë³´ê¸°
 			processDonationList(client, tokens);
 			break;
-		case messageType.DONATION: // ±âºÎÇÏ±â
+		case messageType.DONATION: // ê¸°ë¶€í•˜ê¸°
 			processDonation(client, tokens);
 			break;
-		case messageType.GIVEPOINT: // ¼±¹°ÇÏ±â
+		case messageType.GIVEPOINT: // ì„ ë¬¼í•˜ê¸°
 			processGivePoint(client, tokens);
 			break;
-		case messageType.USELIST: // »ç¿ë¸ñ·Ïº¸±â
+		case messageType.USELIST: // ì‚¬ìš©ëª©ë¡ë³´ê¸°
 			processUseList(client, tokens);
 			break;
-		case messageType.GROUPIN: // ±×·ì °¡ÀÔ
+		case messageType.GROUPIN: // ê·¸ë£¹ ê°€ì…
 			processGroupIn(client, tokens);
 			break;
-		case messageType.GROUPOUT: // ±×·ì Å»Åğ
+		case messageType.GROUPOUT: // ê·¸ë£¹ íƒˆí‡´
 			processGroupOut(client, tokens);
 			break;
-		case messageType.SYN: // µ¿±âÈ­¿äÃ»
-			// server.sendToMyClient(client, "login ½ÇÆĞ");
+		case messageType.SYN: // ë™ê¸°í™”ìš”ì²­
+			// server.sendToMyClient(client, "login ì‹¤íŒ¨");
 			processSYN(client, tokens);
 			break;
-		case messageType.MYBARCODE: // ³» ¹ÙÄÚµå ¿äÃ»
+		case messageType.MYBARCODE: // ë‚´ ë°”ì½”ë“œ ìš”ì²­
 			processMyBarcode(client, tokens);
 			break;
-		case messageType.GROUPBARCODE: // ±×·ì¹ÙÄÚµå ¿äÃ»
+		case messageType.GROUPBARCODE: // ê·¸ë£¹ë°”ì½”ë“œ ìš”ì²­
 			processGroupIn(client, tokens);
 			break;
 
@@ -119,7 +119,7 @@ public class HandlerForModong {
 			processModongLoadDonationList(client, tokens);
 			break;
 		default:
-			System.out.println("modong ÆÄ¶ó¹ÌÅÍ ¿¡·¯");
+			System.out.println("modong íŒŒë¼ë¯¸í„° ì—ëŸ¬");
 			break;
 
 		}
@@ -127,11 +127,11 @@ public class HandlerForModong {
 
 	// #ModongLogin%id%pw
 	public void processLogin(ConnectionToClient client, String... tokens) {
-		System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : login");
+		System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : login");
 		// check parameter validity
 		if (tokens.length != 3) {
-			System.out.println(">> processLogin ÆÄ¶ó¹ÌÅÍ ¿¡·¯");
-			server.sendToMyClient(client, "ÆÄ¶ó¹ÌÅÍ ¿¡·¯ÀÔ´Ï´Ù.");
+			System.out.println(">> processLogin íŒŒë¼ë¯¸í„° ì—ëŸ¬");
+			server.sendToMyClient(client, "íŒŒë¼ë¯¸í„° ì—ëŸ¬ì…ë‹ˆë‹¤.");
 			return;
 		}
 
@@ -151,13 +151,13 @@ public class HandlerForModong {
 		 * server.sendToMyClient(client, "#" + md.getUser_id() + "%" +
 		 * md.getUser_pw() + "%" + md.getUser_name()+ "%" + md.getUser_bacode()
 		 * + "%" + groupCode + "%" + groupName + "%" + groupBarcode); } else {
-		 * server.sendToMyClient(client, "login ½ÇÆĞ"); }
+		 * server.sendToMyClient(client, "login ì‹¤íŒ¨"); }
 		 */
 
 		// prevent sevral login in one client
 		if (client.getInfo("uid") != null) {
-			System.out.println("ÇÑ Å¬¶óÀÌ¾ğÆ®¿¡¼­ ¿©·¯ ·Î±×ÀÎ ½Ãµµ");
-			server.sendToMyClient(client, "ÇÑ Å¬¶óÀÌ¾ğÆ®¿¡¼­´Â ÇÏ³ªÀÇ °èÁ¤À¸·Î¸¸ Á¢¼ÓÇÒ ¼ö ÀÖ½À´Ï´Ù.");
+			System.out.println("í•œ í´ë¼ì´ì–¸íŠ¸ì—ì„œ ì—¬ëŸ¬ ë¡œê·¸ì¸ ì‹œë„");
+			server.sendToMyClient(client, "í•œ í´ë¼ì´ì–¸íŠ¸ì—ì„œëŠ” í•˜ë‚˜ì˜ ê³„ì •ìœ¼ë¡œë§Œ ì ‘ì†í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.");
 			return;
 		}
 		res = sqlForModong.processLogin(client.getConn(), id, pw);
@@ -167,20 +167,20 @@ public class HandlerForModong {
 			for (int i = 0; i < clientThreadList.length; i++) {
 				if (((ConnectionToClient) clientThreadList[i]).getInfo("uid") != null
 						&& ((ConnectionToClient) clientThreadList[i]).getInfo("uid").equals(res)) {
-					// ÇöÀç ÇØ´ç id·Î ·Î±×ÀÎÇÑ ÀÎ¿øÀÌ ÀÖÀ½
-					accesible = false; // Áßº¹·Î±×ÀÎ
-					msg = "ÀÌ¹Ì ·Î±×ÀÎ µÇ¾îÀÖ´Â ¾ÆÀÌµğÀÔ´Ï´Ù";
+					// í˜„ì¬ í•´ë‹¹ idë¡œ ë¡œê·¸ì¸í•œ ì¸ì›ì´ ìˆìŒ
+					accesible = false; // ì¤‘ë³µë¡œê·¸ì¸
+					msg = "ì´ë¯¸ ë¡œê·¸ì¸ ë˜ì–´ìˆëŠ” ì•„ì´ë””ì…ë‹ˆë‹¤";
 					break;
 				}
 			}
-			// ÇØ´ç id·Î ·Î±×ÀÎ µÈ ÀÎ¿øÀÌ ¾øÀ» °æ¿ì Á¢¼ÓÁ¤º¸¸¦ µî·Ï
+			// í•´ë‹¹ idë¡œ ë¡œê·¸ì¸ ëœ ì¸ì›ì´ ì—†ì„ ê²½ìš° ì ‘ì†ì •ë³´ë¥¼ ë“±ë¡
 			if (accesible) {
 				user = sqlForModong.getUserInfo(client.getConn(), res); // get
 																		// userinfo
-				System.out.println("»ç¿ëÀÚÁ¤º¸ Á¶È¸¼º°ø");
+				System.out.println("ì‚¬ìš©ìì •ë³´ ì¡°íšŒì„±ê³µ");
 				GroupUser gUser = sqlForModong.getGroupInfobyUid(client.getConn(), res);
-				System.out.println("±×·ìÁ¤º¸ Á¶È¸¼º°ø");
-				client.setInfo("uid", res); // client ¾²·¹µå¿¡ µî·Ï
+				System.out.println("ê·¸ë£¹ì •ë³´ ì¡°íšŒì„±ê³µ");
+				client.setInfo("uid", res); // client ì“°ë ˆë“œì— ë“±ë¡
 				if (gUser != null)
 					msg = "#" + user.getUser_id() + "%" + user.getUser_pw() + "%" + user.getUser_name() + "%"
 							+ user.getUser_bacode() + "%" + user.getGroupCode() + "%" + gUser.getGroup_name() + "%"
@@ -193,17 +193,17 @@ public class HandlerForModong {
 			server.sendToMyClient(client, msg); // send result
 		} else {
 			System.out.println("id/pw Error");
-			server.sendToMyClient(client, "id/pw°¡ ¿Ã¹Ù¸£Áö ¾Ê½À´Ï´Ù."); // send result
+			server.sendToMyClient(client, "id/pwê°€ ì˜¬ë°”ë¥´ì§€ ì•ŠìŠµë‹ˆë‹¤."); // send result
 		}
 	}
 
 	// #ModongJoin%id%pw%name%job%age%tel
 	public void processJoin(ConnectionToClient client, String... tokens) {
-		System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : È¸¿ø°¡ÀÔ");
+		System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : íšŒì›ê°€ì…");
 		// check parameter validity
 		if (tokens.length != 7) {
-			System.out.println(">> processJoin ÆÄ¶ó¹ÌÅÍ ¿¡·¯");
-			server.sendToMyClient(client, "ÆÄ¶ó¹ÌÅÍ ¿¡·¯ÀÔ´Ï´Ù.");
+			System.out.println(">> processJoin íŒŒë¼ë¯¸í„° ì—ëŸ¬");
+			server.sendToMyClient(client, "íŒŒë¼ë¯¸í„° ì—ëŸ¬ì…ë‹ˆë‹¤.");
 			return;
 		}
 
@@ -211,14 +211,14 @@ public class HandlerForModong {
 		 * if (ua.joinModong(tokens[1], tokens[2], tokens[3], tokens[4],
 		 * Integer.parseInt(tokens[5]), tokens[6])) {
 		 * server.sendToMyClient(client, "#signIn"); } else {
-		 * server.sendToMyClient(client, "È¸¿ø°¡ÀÔ ½ÇÆĞ"); }
+		 * server.sendToMyClient(client, "íšŒì›ê°€ì… ì‹¤íŒ¨"); }
 		 */
 
 		String id = tokens[1];
 		// check id
 		if (sqlForModong.checkUserByID(client.getConn(), id)) {
-			System.out.println("ÀÌ¹Ì Á¸ÀçÇÏ´Â idÀÔ´Ï´Ù.");
-			server.sendToMyClient(client, "ÀÌ¹Ì Á¸ÀçÇÏ´Â idÀÔ´Ï´Ù.");
+			System.out.println("ì´ë¯¸ ì¡´ì¬í•˜ëŠ” idì…ë‹ˆë‹¤.");
+			server.sendToMyClient(client, "ì´ë¯¸ ì¡´ì¬í•˜ëŠ” idì…ë‹ˆë‹¤.");
 			return;
 		}
 		String pw = tokens[2];
@@ -238,22 +238,22 @@ public class HandlerForModong {
 		// user.setUser_groupCode(ua.default_groupCode);
 
 		if (sqlForModong.processJoin(client.getConn(), user)) {
-			System.out.println("°¡ÀÔ¼º°ø");
+			System.out.println("ê°€ì…ì„±ê³µ");
 			server.sendToMyClient(client, "#signIn");
 		} else {
-			System.out.println("°¡ÀÔ½ÇÆĞ");
-			server.sendToMyClient(client, "È¸¿ø°¡ÀÔ ½ÇÆĞ");
+			System.out.println("ê°€ì…ì‹¤íŒ¨");
+			server.sendToMyClient(client, "íšŒì›ê°€ì… ì‹¤íŒ¨");
 		}
 
 	}
 
 	// #ModongExistId%id
 	public void processExistedID(ConnectionToClient client, String... tokens) {
-		System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : Áßº¹ idÈ®ÀÎ");
+		System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : ì¤‘ë³µ idí™•ì¸");
 		// check parameter validity
 		if (tokens.length != 2) {
-			System.out.println(">> processExistedID ÆÄ¶ó¹ÌÅÍ ¿¡·¯");
-			server.sendToMyClient(client, "ÆÄ¶ó¹ÌÅÍ ¿¡·¯ÀÔ´Ï´Ù.");
+			System.out.println(">> processExistedID íŒŒë¼ë¯¸í„° ì—ëŸ¬");
+			server.sendToMyClient(client, "íŒŒë¼ë¯¸í„° ì—ëŸ¬ì…ë‹ˆë‹¤.");
 			return;
 		}
 
@@ -264,22 +264,22 @@ public class HandlerForModong {
 		 */
 
 		if (sqlForModong.checkUserByID(client.getConn(), id)) {
-			System.out.println("ÀÌ¹Ì »ç¿ëÁßÀÎ id");
+			System.out.println("ì´ë¯¸ ì‚¬ìš©ì¤‘ì¸ id");
 			server.sendToMyClient(client, "false");
 		} else {
-			System.out.println("»ç¿ë°¡´É id");
+			System.out.println("ì‚¬ìš©ê°€ëŠ¥ id");
 			server.sendToMyClient(client, "#id");
 		}
 	}
 
 	// #ModongGetUserInfo%id%pw
 	public void processGetUserInfo(ConnectionToClient client, String... tokens) {
-		System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : È¸¿ø°¡Á®¿À±â");
+		System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : íšŒì›ê°€ì ¸ì˜¤ê¸°");
 
 		// check parameter validity
 		if (tokens.length != 3) {
-			System.out.println(">> processGetUserInfo ÆÄ¶ó¹ÌÅÍ ¿¡·¯");
-			server.sendToMyClient(client, "ÆÄ¶ó¹ÌÅÍ ¿¡·¯ÀÔ´Ï´Ù.");
+			System.out.println(">> processGetUserInfo íŒŒë¼ë¯¸í„° ì—ëŸ¬");
+			server.sendToMyClient(client, "íŒŒë¼ë¯¸í„° ì—ëŸ¬ì…ë‹ˆë‹¤.");
 			return;
 		}
 
@@ -297,11 +297,11 @@ public class HandlerForModong {
 
 		user = sqlForModong.getUserInfoByIdPw(client.getConn(), id, pw);
 		if (user != null) {
-			System.out.println("À¯ÀúÁ¤º¸ Á¶È¸¼º°ø");
+			System.out.println("ìœ ì €ì •ë³´ ì¡°íšŒì„±ê³µ");
 			server.sendToMyClient(client, "#info%" + id + "%" + pw + "%" + user.getUser_name() + "%"
 					+ user.getUser_job() + "%" + user.getUser_age() + "%" + user.getUser_tel());
 		} else {
-			System.out.println("À¯ÀúÁ¤º¸ Á¶È¸½ÇÆĞ");
+			System.out.println("ìœ ì €ì •ë³´ ì¡°íšŒì‹¤íŒ¨");
 			server.sendToMyClient(client, "false_password");
 		}
 
@@ -309,11 +309,11 @@ public class HandlerForModong {
 
 	// #ModongModify%id%pw%name%job%age%tel
 	public void processModify(ConnectionToClient client, String... tokens) {
-		System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : È¸¿øÁ¤º¸¼öÁ¤");
+		System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : íšŒì›ì •ë³´ìˆ˜ì •");
 		// check parameter validity
 		if (tokens.length != 7) {
-			System.out.println(">> processModify ÆÄ¶ó¹ÌÅÍ ¿¡·¯");
-			server.sendToMyClient(client, "ÆÄ¶ó¹ÌÅÍ ¿¡·¯ÀÔ´Ï´Ù.");
+			System.out.println(">> processModify íŒŒë¼ë¯¸í„° ì—ëŸ¬");
+			server.sendToMyClient(client, "íŒŒë¼ë¯¸í„° ì—ëŸ¬ì…ë‹ˆë‹¤.");
 			return;
 		}
 
@@ -340,38 +340,38 @@ public class HandlerForModong {
 		// check validity of id
 		if (sqlForModong.checkUserByID(client.getConn(), id)) {
 			if (sqlForModong.processModify(client.getConn(), user)) {
-				System.out.println("¼öÁ¤¼º°ø");
+				System.out.println("ìˆ˜ì •ì„±ê³µ");
 				server.sendToMyClient(client, "#modify");
 			} else {
-				System.out.println("¼öÁ¤½ÇÆĞ");
+				System.out.println("ìˆ˜ì •ì‹¤íŒ¨");
 				server.sendToMyClient(client, "fail");
 			}
 		} else {
-			System.out.println("Àß¸øµÈ idÀÔ´Ï´Ù.");
+			System.out.println("ì˜ëª»ëœ idì…ë‹ˆë‹¤.");
 			server.sendToMyClient(client, "invalid id");
 		}
 	}
 
 	// #ModongDonation%id%gname%point
-	// #ModongDonation%id%gid%point -- gidÀÏµí gid°¡ ¾Æ´Ï°í ±âºÎ´ÜÃ¼ÀÌ¸§
+	// #ModongDonation%id%gid%point -- gidì¼ë“¯ gidê°€ ì•„ë‹ˆê³  ê¸°ë¶€ë‹¨ì²´ì´ë¦„
 	public void processDonation(ConnectionToClient client, String... tokens) {
-		System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : ±âºÎÇÏ±â");
+		System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : ê¸°ë¶€í•˜ê¸°");
 		// check parameter validity
 		if (tokens.length != 4) {
-			System.out.println(">> processModify ÆÄ¶ó¹ÌÅÍ ¿¡·¯");
-			server.sendToMyClient(client, "ÆÄ¶ó¹ÌÅÍ ¿¡·¯ÀÔ´Ï´Ù.");
+			System.out.println(">> processModify íŒŒë¼ë¯¸í„° ì—ëŸ¬");
+			server.sendToMyClient(client, "íŒŒë¼ë¯¸í„° ì—ëŸ¬ì…ë‹ˆë‹¤.");
 			return;
 		}
 
 		String id = tokens[1];
 		String gName = tokens[2];
 		int did;
-		// gid·Î
+		// gidë¡œ
 		// did = Integer.parseInt(tokens[2]);
 		did = sqlForModong.getdidbyDname(client.getConn(), gName);
 		if (did < 0) {
-			System.out.println("ÇØ´ç ÀÌ¸§ÀÇ ´ÜÃ¼°¡ ¾ø½À´Ï´Ù.");
-			server.sendToMyClient(client, "ÇØ´ç ÀÌ¸§ÀÇ ´ÜÃ¼°¡ ¾ø½À´Ï´Ù.");
+			System.out.println("í•´ë‹¹ ì´ë¦„ì˜ ë‹¨ì²´ê°€ ì—†ìŠµë‹ˆë‹¤.");
+			server.sendToMyClient(client, "í•´ë‹¹ ì´ë¦„ì˜ ë‹¨ì²´ê°€ ì—†ìŠµë‹ˆë‹¤.");
 			return;
 		}
 		int amount = Integer.parseInt(tokens[3]);
@@ -384,7 +384,7 @@ public class HandlerForModong {
 		 * (user.removePoint(point)) { doa.recordDonationPoint(uid, did, point);
 		 * // doa.findDonationOrgnz(did).addPoint(point);
 		 * server.sendToMyClient(client, "#true"); } else
-		 * server.sendToMyClient(client, "Æ÷ÀÎÆ®°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+		 * server.sendToMyClient(client, "í¬ì¸íŠ¸ê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.");
 		 */
 
 		// check availability of amount
@@ -394,30 +394,30 @@ public class HandlerForModong {
 																									// user
 					&& sqlForModong.addPointToOrg(client.getConn(), did, amount)) { // update
 																					// organization
-				System.out.println(">> ±âºÎÇÏ¿´½À´Ï´Ù.");
+				System.out.println(">> ê¸°ë¶€í•˜ì˜€ìŠµë‹ˆë‹¤.");
 				server.sendToMyClient(client, "#true");
 				// log donate result
 				if (!sqlForModong.logDonateResult(client.getConn(), did, id, amount, QueryParameter.ID))
-					System.out.println("log ½ÇÆĞ");
+					System.out.println("log ì‹¤íŒ¨");
 				else
-					System.out.println("log ¼º°ø");
+					System.out.println("log ì„±ê³µ");
 			} else {
-				System.out.println("¿À·ù¹ß»ı");
-				server.sendToMyClient(client, "¿À·ù°¡ ¹ß»ıÇß½À´Ï´Ù.");
+				System.out.println("ì˜¤ë¥˜ë°œìƒ");
+				server.sendToMyClient(client, "ì˜¤ë¥˜ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.");
 			}
 		} else {
-			System.out.println("Æ÷ÀÎÆ® ºÎÁ·");
-			server.sendToMyClient(client, "Æ÷ÀÎÆ®°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+			System.out.println("í¬ì¸íŠ¸ ë¶€ì¡±");
+			server.sendToMyClient(client, "í¬ì¸íŠ¸ê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.");
 		}
 	}
 
 	// #ModongGivePoint%fromId%toId%point
 	public void processGivePoint(ConnectionToClient client, String... tokens) {
-		System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : Æ÷ÀÎÆ® ¼±¹°");
+		System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : í¬ì¸íŠ¸ ì„ ë¬¼");
 		// check parameter validity
 		if (tokens.length != 4) {
-			System.out.println(">> processGivePoint ÆÄ¶ó¹ÌÅÍ ¿¡·¯");
-			server.sendToMyClient(client, "ÆÄ¶ó¹ÌÅÍ ¿¡·¯ÀÔ´Ï´Ù.");
+			System.out.println(">> processGivePoint íŒŒë¼ë¯¸í„° ì—ëŸ¬");
+			server.sendToMyClient(client, "íŒŒë¼ë¯¸í„° ì—ëŸ¬ì…ë‹ˆë‹¤.");
 			return;
 		}
 
@@ -430,31 +430,31 @@ public class HandlerForModong {
 		 * 
 		 * if (fromUser.removePoint(point)) { toUser.addPoint(point);
 		 * server.sendToMyClient(client, "#give"); } else
-		 * server.sendToMyClient(client, "Æ÷ÀÎÆ®°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+		 * server.sendToMyClient(client, "í¬ì¸íŠ¸ê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.");
 		 */
 		if (sqlForModong.checkEnoughBalance(client.getConn(), point, fromId, QueryParameter.ID)) {
 			if (sqlForModong.withdrawPointbyParam(client.getConn(), point, fromId, QueryParameter.ID)
 					&& sqlForModong.addPointbyParam(client.getConn(), point, toId, QueryParameter.ID)) {
-				System.out.println("¼±¹° ¼º°ø");
+				System.out.println("ì„ ë¬¼ ì„±ê³µ");
 				server.sendToMyClient(client, "#give");
 			} else {
-				System.out.println("³»ºÎ ¿¡·¯");
-				server.sendToMyClient(client, "¿¡·¯°¡ ¹ß»ıÇß½À´Ï´Ù.");
+				System.out.println("ë‚´ë¶€ ì—ëŸ¬");
+				server.sendToMyClient(client, "ì—ëŸ¬ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.");
 			}
 		} else {
-			System.out.println("Æ÷ÀÎÆ®°¡ ºÎÁ·ÇÕ´Ï´Ù.");
-			server.sendToMyClient(client, "Æ÷ÀÎÆ®°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+			System.out.println("í¬ì¸íŠ¸ê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.");
+			server.sendToMyClient(client, "í¬ì¸íŠ¸ê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.");
 		}
 
 	}
 
 	// #ModongUseList%id
 	public void processUseList(ConnectionToClient client, String... tokens) {
-		System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : »ç¿ë³»¿ª list");
+		System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : ì‚¬ìš©ë‚´ì—­ list");
 		// check parameter validity
 		if (tokens.length != 2) {
-			System.out.println(">> processGivePoint ÆÄ¶ó¹ÌÅÍ ¿¡·¯");
-			server.sendToMyClient(client, "ÆÄ¶ó¹ÌÅÍ ¿¡·¯ÀÔ´Ï´Ù.");
+			System.out.println(">> processGivePoint íŒŒë¼ë¯¸í„° ì—ëŸ¬");
+			server.sendToMyClient(client, "íŒŒë¼ë¯¸í„° ì—ëŸ¬ì…ë‹ˆë‹¤.");
 			return;
 		}
 
@@ -482,11 +482,11 @@ public class HandlerForModong {
 	// #ModongDonationList%id
 	public void processDonationList(ConnectionToClient client, String... tokens) {
 
-		System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : ±âºÎ³»¿ª list");
+		System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : ê¸°ë¶€ë‚´ì—­ list");
 		// check parameter validity
 		if (tokens.length != 2) {
-			System.out.println(">> processDonationList ÆÄ¶ó¹ÌÅÍ ¿¡·¯");
-			server.sendToMyClient(client, "ÆÄ¶ó¹ÌÅÍ ¿¡·¯ÀÔ´Ï´Ù.");
+			System.out.println(">> processDonationList íŒŒë¼ë¯¸í„° ì—ëŸ¬");
+			server.sendToMyClient(client, "íŒŒë¼ë¯¸í„° ì—ëŸ¬ì…ë‹ˆë‹¤.");
 			return;
 		}
 
@@ -517,11 +517,11 @@ public class HandlerForModong {
 
 	// #ModongGroupIn%3%id%id%id%group
 	public void processGroupIn(ConnectionToClient client, String... tokens) {
-		System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : ±×·ì¿¡ µé¾î°¡±â");
+		System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : ê·¸ë£¹ì— ë“¤ì–´ê°€ê¸°");
 		// check parameter validity
 		if (tokens.length < 2) {
-			System.out.println(">> processGroupIn ÆÄ¶ó¹ÌÅÍ ¿¡·¯");
-			server.sendToMyClient(client, "ÆÄ¶ó¹ÌÅÍ ¿¡·¯ÀÔ´Ï´Ù.");
+			System.out.println(">> processGroupIn íŒŒë¼ë¯¸í„° ì—ëŸ¬");
+			server.sendToMyClient(client, "íŒŒë¼ë¯¸í„° ì—ëŸ¬ì…ë‹ˆë‹¤.");
 			return;
 		}
 
@@ -529,8 +529,8 @@ public class HandlerForModong {
 
 		// check parameter validity
 		if (tokens.length != partyNum + 3) {
-			System.out.println(">> processDonationList ÆÄ¶ó¹ÌÅÍ ¿¡·¯");
-			server.sendToMyClient(client, "ÆÄ¶ó¹ÌÅÍ ¿¡·¯ÀÔ´Ï´Ù.");
+			System.out.println(">> processDonationList íŒŒë¼ë¯¸í„° ì—ëŸ¬");
+			server.sendToMyClient(client, "íŒŒë¼ë¯¸í„° ì—ëŸ¬ì…ë‹ˆë‹¤.");
 			return;
 		}
 
@@ -540,7 +540,7 @@ public class HandlerForModong {
 		boolean flag = true; // indicate validity of id's
 		for (int i = 0; i < ids.length; i++) {
 			if (sqlForModong.checkExistGroup(client.getConn(), tokens[i + 2], QueryParameter.ID)) {
-				msg = tokens[i + 2] + "´Â ÀÌ¹Ì ±×·ìÀÌ ÀÖ½À´Ï´Ù.";
+				msg = tokens[i + 2] + "ëŠ” ì´ë¯¸ ê·¸ë£¹ì´ ìˆìŠµë‹ˆë‹¤.";
 				server.sendToMyClient(client, msg);
 				flag = false;
 				break;
@@ -551,21 +551,21 @@ public class HandlerForModong {
 		if (flag) {
 			int gid = sqlForModong.createNewGroup(client.getConn(), tokens[partyNum + 2]);
 			if (gid <= 0) {
-				msg = "±×·ì»ı¼º ½ÇÆĞ";
+				msg = "ê·¸ë£¹ìƒì„± ì‹¤íŒ¨";
 				System.out.println(msg);
 				server.sendToMyClient(client, msg);
 			} else {
 				for (String id : ids) {
 					if (!sqlForModong.joinUserToGroup(client.getConn(), gid, id, QueryParameter.ID)) {
-						msg = id + " µî·Ï¿¡ ½ÇÆĞÇß½À´Ï´Ù.";
+						msg = id + " ë“±ë¡ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.";
 						System.out.println(msg);
 						server.sendToMyClient(client, msg);
 						return;
 					} else
-						System.out.println(id + "¸¦ ±×·ì¿¡ µî·ÏÇß½À´Ï´Ù.");
+						System.out.println(id + "ë¥¼ ê·¸ë£¹ì— ë“±ë¡í–ˆìŠµë‹ˆë‹¤.");
 				}
 				// Success to group
-				System.out.println("±×·ì¿¡ Ãß°¡ÇÏ¿´½À´Ï´Ù.");
+				System.out.println("ê·¸ë£¹ì— ì¶”ê°€í•˜ì˜€ìŠµë‹ˆë‹¤.");
 				server.sendToMyClient(client, "#group");
 			}
 		}
@@ -573,18 +573,18 @@ public class HandlerForModong {
 		/*
 		 * if (ua.groupingUser(ids, tokens[partyNum+2]))
 		 * server.sendToMyClient(client, "#group"); else
-		 * server.sendToMyClient(client, "½ÇÆĞÇß½À´Ï´Ù.");
+		 * server.sendToMyClient(client, "ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
 		 */
 
 	}
 
 	// #ModongGroupOut%id
 	public void processGroupOut(ConnectionToClient client, String... tokens) {
-		System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : ±×·ì¿¡¼­ ³ª¿À±â");
+		System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : ê·¸ë£¹ì—ì„œ ë‚˜ì˜¤ê¸°");
 		// check parameter validity
 		if (tokens.length != 2) {
-			System.out.println(">> processGroupOut ÆÄ¶ó¹ÌÅÍ ¿¡·¯");
-			server.sendToMyClient(client, "ÆÄ¶ó¹ÌÅÍ ¿¡·¯ÀÔ´Ï´Ù.");
+			System.out.println(">> processGroupOut íŒŒë¼ë¯¸í„° ì—ëŸ¬");
+			server.sendToMyClient(client, "íŒŒë¼ë¯¸í„° ì—ëŸ¬ì…ë‹ˆë‹¤.");
 			return;
 		}
 
@@ -595,24 +595,24 @@ public class HandlerForModong {
 		 * server.sendToMyClient(client, "#group");
 		 */
 		if (!sqlForModong.checkExistGroup(client.getConn(), id, QueryParameter.ID)) {
-			System.out.println("±×·ìÀÌ ¾ø½À´Ï´Ù.");
-			server.sendToMyClient(client, "±×·ìÀÌ ¾ø½À´Ï´Ù.");
+			System.out.println("ê·¸ë£¹ì´ ì—†ìŠµë‹ˆë‹¤.");
+			server.sendToMyClient(client, "ê·¸ë£¹ì´ ì—†ìŠµë‹ˆë‹¤.");
 		} else if (sqlForModong.processGroupOut(client.getConn(), id, QueryParameter.ID)) {
-			System.out.println("±×·ìÅ»Åğ ¼º°ø");
+			System.out.println("ê·¸ë£¹íƒˆí‡´ ì„±ê³µ");
 			server.sendToMyClient(client, "#groupout");
 		} else {
-			System.out.println("±×·ìÅ»Åğ ½ÇÆĞ");
-			server.sendToMyClient(client, "±×·ìÅ»Åğ ½ÇÆĞ");
+			System.out.println("ê·¸ë£¹íƒˆí‡´ ì‹¤íŒ¨");
+			server.sendToMyClient(client, "ê·¸ë£¹íƒˆí‡´ ì‹¤íŒ¨");
 		}
 	}
 
 	// #ModongSyn%id rt
 	public void processSYN(ConnectionToClient client, String... tokens) {
-		System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : µ¿±âÈ­");
+		System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : ë™ê¸°í™”");
 		// check parameter validity
 		if (tokens.length != 2) {
-			System.out.println(">> processGroupOut ÆÄ¶ó¹ÌÅÍ ¿¡·¯");
-			server.sendToMyClient(client, "ÆÄ¶ó¹ÌÅÍ ¿¡·¯ÀÔ´Ï´Ù.");
+			System.out.println(">> processGroupOut íŒŒë¼ë¯¸í„° ì—ëŸ¬");
+			server.sendToMyClient(client, "íŒŒë¼ë¯¸í„° ì—ëŸ¬ì…ë‹ˆë‹¤.");
 			return;
 		}
 		// ua.updateGroupList();
@@ -639,8 +639,8 @@ public class HandlerForModong {
 				server.sendToMyClient(client, msg);
 			}
 		} else {
-			System.out.println("µ¿±âÈ­ µ¥ÀÌÅÍ¸¦ °¡Á®¿À´Âµ¥ ½ÇÆĞÇß½À´Ï´Ù.");
-			server.sendToMyClient(client, "µ¿±âÈ­ µ¥ÀÌÅÍ¸¦ °¡Á®¿À´Âµ¥ ½ÇÆĞÇß½À´Ï´Ù.");
+			System.out.println("ë™ê¸°í™” ë°ì´í„°ë¥¼ ê°€ì ¸ì˜¤ëŠ”ë° ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
+			server.sendToMyClient(client, "ë™ê¸°í™” ë°ì´í„°ë¥¼ ê°€ì ¸ì˜¤ëŠ”ë° ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
 		}
 		/*
 		 * if (!ua.isThereUser_asId(id)) { server.sendToMyClient(client,
@@ -655,27 +655,27 @@ public class HandlerForModong {
 		 * String a = new String("#" + point + "%" + groupCode + "%" +
 		 * groupName); server.sendToMyClient(client, a); } else {
 		 * server.sendToMyClient(client, "#" + point + "%" + "false" + "%" +
-		 * "null"); } System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : µ¿±âÈ­ ¿äÃ»");
+		 * "null"); } System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : ë™ê¸°í™” ìš”ì²­");
 		 */
 	}
 
 	// #ModongMyBacode%id
 	public void processMyBarcode(ConnectionToClient client, String... tokens) {
-		// System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : ¹ÙÄÚµå ¿äÃ»");
+		// System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : ë°”ì½”ë“œ ìš”ì²­");
 	}
 
 	// #ModongGroupBacode%id
 	public void processGroupBarcode(ConnectionToClient client, String... tokens) {
-		// System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : ±×·ë ¹ÙÄÚµå ¿äÃ»");
+		// System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : ê·¸ë£¸ ë°”ì½”ë“œ ìš”ì²­");
 	}
 
 	// #modongloaddonationlist
 	public void processModongLoadDonationList(ConnectionToClient client, String... tokens) {
-		System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : ±âºÎ´ÜÃ¼ ¸ñ·Ï ¿äÃ»");
+		System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : ê¸°ë¶€ë‹¨ì²´ ëª©ë¡ ìš”ì²­");
 		// check parameter validity
 		if (tokens.length != 1) {
-			System.out.println(">> processGroupOut ÆÄ¶ó¹ÌÅÍ ¿¡·¯");
-			server.sendToMyClient(client, "ÆÄ¶ó¹ÌÅÍ ¿¡·¯ÀÔ´Ï´Ù.");
+			System.out.println(">> processGroupOut íŒŒë¼ë¯¸í„° ì—ëŸ¬");
+			server.sendToMyClient(client, "íŒŒë¼ë¯¸í„° ì—ëŸ¬ì…ë‹ˆë‹¤.");
 			return;
 		}
 		

@@ -67,11 +67,11 @@ public class ModongServer extends AbstractServer {
 
 	// Instance methods ************************************************
 
-	public void handleMessageFromClient // ¼º°ø½Ã #msg, ½ÇÆĞ½Ã ½ÇÆĞ»çÀ¯
+	public void handleMessageFromClient // ì„±ê³µì‹œ #msg, ì‹¤íŒ¨ì‹œ ì‹¤íŒ¨ì‚¬ìœ 
 	(Object msg, ConnectionToClient client) {
 		String line = (String) msg;
 		String[] tokens = line.split("%");
-		System.out.println("hmc ±îÁö¿È");
+		System.out.println("hmc ê¹Œì§€ì˜´");
 		if (tokens[0].startsWith("#Pos")) {
 			posHandler.processMessage(client, tokens);
 		} else if (tokens[0].startsWith("#Modong")) {
@@ -79,22 +79,19 @@ public class ModongServer extends AbstractServer {
 		} else if (tokens[0].startsWith("#Cc")) {
 			modongHandler.processMessage(client, tokens);
 		} 
-		/* ÀÌ ºÎºĞÀ» ³ª¸ÓÁö¿¡ Áßº¹À¸·ÎÇÒÁö ºÎ¸ğ·Î »©¼­ ÇÒÁö ÇØ¾ßÇÔ*/
+		/* ì´ ë¶€ë¶„ì„ ë‚˜ë¨¸ì§€ì— ì¤‘ë³µìœ¼ë¡œí• ì§€ ë¶€ëª¨ë¡œ ë¹¼ì„œ í• ì§€ í•´ì•¼í•¨*/
 		/*else if (line.startsWith("#MdUserIdentify"))// #MdUserIdentify%bacode
-		// ¼º°ø½Ãuser point ¸®ÅÏ
-		{// pos/cc¿ë
-			System.out.println("»ç¿ëÀÚ ½Äº° ¿äÃ»");
+		// ì„±ê³µì‹œuser point ë¦¬í„´
+		{// pos/ccìš©
+			System.out.println("ì‚¬ìš©ì ì‹ë³„ ìš”ì²­");
 			// String[] token = line.split("%");
 			String bacode = tokens[1];
-
-			// ±×·ì ¹ÙÄÚµå Ã³¸®
-
+			// ê·¸ë£¹ ë°”ì½”ë“œ ì²˜ë¦¬
 			if (!ua.isThereUser_asBacode(bacode)) {
-				System.out.println(">> Á¸Àç ÇÏÁö ¾Ê´Â  user bacode ÀÔ´Ï´Ù.");
-				sendToMyClient(client, "Á¸Àç ÇÏÁö ¾Ê´Âuser bacode ÀÔ´Ï´Ù.");
+				System.out.println(">> ì¡´ì¬ í•˜ì§€ ì•ŠëŠ”  user bacode ì…ë‹ˆë‹¤.");
+				sendToMyClient(client, "ì¡´ì¬ í•˜ì§€ ì•ŠëŠ”user bacode ì…ë‹ˆë‹¤.");
 			} else {
 				sendToMyClient(client, "#" + ua.getModongUser_asBacode(bacode).getUser_point());
-
 			}
 		}
 */		/* teset */
@@ -126,73 +123,73 @@ public class ModongServer extends AbstractServer {
 			System.out.println("Message received: " + msg + " from " + client);
 			this.sendToAllClients(msg);
 		}
-		// if (line.startsWith("#PosIdentify"))// ex) #PosIdentify%32, ¼º°ø½Ã #true
-		// // ½ÇÆĞ½Ã ¸Ş¼¼Áö
+		// if (line.startsWith("#PosIdentify"))// ex) #PosIdentify%32, ì„±ê³µì‹œ #true
+		// // ì‹¤íŒ¨ì‹œ ë©”ì„¸ì§€
 		// {
-		// System.out.println("Pos±â¿¡¼­ÀÇ ¿äÃ» : pos±â »ç¿ëÀÚ ÀÎÁõ");
+		// System.out.println("Posê¸°ì—ì„œì˜ ìš”ì²­ : posê¸° ì‚¬ìš©ì ì¸ì¦");
 		//
 		// if (!sa.findStore(Integer.parseInt(token[1]))) {
-		// System.out.println(">> Á¸Àç ÇÏÁö ¾Ê´Â pid ÀÔ´Ï´Ù. pid : " + token[1]);
-		// sendToMyClient(client, "Á¸Àç ÇÏÁö ¾Ê´Â pid ÀÔ´Ï´Ù.");
-		// } else// ÀÎÁõ o
+		// System.out.println(">> ì¡´ì¬ í•˜ì§€ ì•ŠëŠ” pid ì…ë‹ˆë‹¤. pid : " + token[1]);
+		// sendToMyClient(client, "ì¡´ì¬ í•˜ì§€ ì•ŠëŠ” pid ì…ë‹ˆë‹¤.");
+		// } else// ì¸ì¦ o
 		// sendToMyClient(client, "#true");
 		// }
 		// if (line.startsWith("#PosPointAdd"))// #PosPointAdd%pid%bacode%point
-		// ¼º°ø½Ã
-		// // addÈÄ point rt
+		// ì„±ê³µì‹œ
+		// // addí›„ point rt
 		// {
-		// System.out.println("Pos±â¿¡¼­ÀÇ ¿äÃ» : Æ÷ÀÎÆ® Àû¸³");
+		// System.out.println("Posê¸°ì—ì„œì˜ ìš”ì²­ : í¬ì¸íŠ¸ ì ë¦½");
 		//// String[] token = line.split("%");
 		// int pid = Integer.parseInt(token[1]);
 		// String bacode = token[2];
 		// int point = Integer.parseInt(token[3]);
 		//
-		//// ±×·ì ¹ÙÄÚµå Ã³¸®
+		//// ê·¸ë£¹ ë°”ì½”ë“œ ì²˜ë¦¬
 		//
 		// if (!ua.isThereUser_asBacode(bacode)) {
-		// System.out.println(">> Á¸Àç ÇÏÁö ¾Ê´Â user bacode ÀÔ´Ï´Ù.");
-		//// sendToMyClient(client, "Á¸Àç ÇÏÁö ¾Ê´Â user bacode ÀÔ´Ï´Ù.");
+		// System.out.println(">> ì¡´ì¬ í•˜ì§€ ì•ŠëŠ” user bacode ì…ë‹ˆë‹¤.");
+		//// sendToMyClient(client, "ì¡´ì¬ í•˜ì§€ ì•ŠëŠ” user bacode ì…ë‹ˆë‹¤.");
 		// } else {
 		// ModongUser tempUser = ua.findUser_asBacode(bacode);
 		// tempUser.addPoint(point);
 		// sa.recordAddPoint_asBacode(bacode, pid, point);
 		//
-		// System.out.println(">>" + pid + "¹ø Æ÷½º±â : " + point + "Àû¸³ µÇ¾ú½À´Ï´Ù.");
+		// System.out.println(">>" + pid + "ë²ˆ í¬ìŠ¤ê¸° : " + point + "ì ë¦½ ë˜ì—ˆìŠµë‹ˆë‹¤.");
 		// sendToMyClient(client, "#" +
 		// ua.getModongUser_asBacode(bacode).getUser_point());
 		// }
 		//
 		// } else if (line.startsWith("#PosPointRemove"))//
 		// #PosPointRemove%pid%bacode%point
-		// // ¼º°ø½Ã removeÈÄ point rt
+		// // ì„±ê³µì‹œ removeí›„ point rt
 		// {
-		// System.out.println("Pos±â¿¡¼­ÀÇ ¿äÃ» : Æ÷ÀÎÆ® »ç¿ë");
+		// System.out.println("Posê¸°ì—ì„œì˜ ìš”ì²­ : í¬ì¸íŠ¸ ì‚¬ìš©");
 		//// String[] token = line.split("%");
 		// int pid = Integer.parseInt(token[1]);
 		// String bacode = token[2];
 		// int point = Integer.parseInt(token[3]);
 		//
-		//// ±×·ì ¹ÙÄÚµå Ã³¸®
+		//// ê·¸ë£¹ ë°”ì½”ë“œ ì²˜ë¦¬
 		//
 		// if (!ua.isThereUser_asBacode(bacode)) {
-		// System.out.println(">> Á¸Àç ÇÏÁö ¾Ê´Â user bacode ÀÔ´Ï´Ù.");
-		// sendToMyClient(client, "Á¸Àç ÇÏÁö ¾Ê´Â user bacode ÀÔ´Ï´Ù.");
+		// System.out.println(">> ì¡´ì¬ í•˜ì§€ ì•ŠëŠ” user bacode ì…ë‹ˆë‹¤.");
+		// sendToMyClient(client, "ì¡´ì¬ í•˜ì§€ ì•ŠëŠ” user bacode ì…ë‹ˆë‹¤.");
 		// } else {
 		// ModongUser tempUser = ua.findUser_asBacode(bacode);
 		// if (tempUser.removePoint(point)) {
 		// sa.recordAddPoint_asBacode(bacode, pid, point);
-		// System.out.println(">>" + pid + "¹ø Æ÷½º±â : " + point + "»ç¿ë µÇ¾ú½À´Ï´Ù.");
+		// System.out.println(">>" + pid + "ë²ˆ í¬ìŠ¤ê¸° : " + point + "ì‚¬ìš© ë˜ì—ˆìŠµë‹ˆë‹¤.");
 		// sendToMyClient(client, "#" +
 		// ua.getModongUser_asBacode(bacode).getUser_point());
 		// } else
-		// sendToMyClient(client, "point°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+		// sendToMyClient(client, "pointê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.");
 		// }
 
-		//// ****************************¸ğ¹ÙÀÏ
-		//// ¾Û**************************************//
+		//// ****************************ëª¨ë°”ì¼
+		//// ì•±**************************************//
 		// else if (line.startsWith("#ModongLogin"))// #ModongLogin%id%pw
 		// {
-		// System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : login");
+		// System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : login");
 		// String id = token[1], pw = token[2];
 		// if (ua.loginUser(id, pw)) {
 		// ModongUser md = ua.getModongUser_asId(id);
@@ -213,22 +210,22 @@ public class ModongServer extends AbstractServer {
 		//// "%"
 		//// + groupName);
 		// } else {
-		// sendToMyClient(client, "login ½ÇÆĞ");
+		// sendToMyClient(client, "login ì‹¤íŒ¨");
 		// }
 		// } else if (line.startsWith("#ModongJoin"))//
 		//// #ModongJoin%id%pw%name%job%age%tel
 		// {
-		// System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : È¸¿ø°¡ÀÔ");
+		// System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : íšŒì›ê°€ì…");
 		// if (ua.joinModong(token[1], token[2], token[3], token[4],
 		//// Integer.parseInt(token[5]), token[6])) {
 		// sendToMyClient(client, "#true");
 		// } else {
-		// sendToMyClient(client, "È¸¿ø°¡ÀÔ ½ÇÆĞ");
+		// sendToMyClient(client, "íšŒì›ê°€ì… ì‹¤íŒ¨");
 		// }
 		//
 		// } else if (line.startsWith("#ModongExistId"))// #ModongExistId%id
 		// {
-		// System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : Áßº¹ idÈ®ÀÎ");
+		// System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : ì¤‘ë³µ idí™•ì¸");
 		// if (ua.isThereUser_asId(token[1])) {
 		// sendToMyClient(client, "#true");
 		// } else
@@ -237,7 +234,7 @@ public class ModongServer extends AbstractServer {
 		// } else if (line.startsWith("#ModongModify"))//
 		//// #ModongModify%id%pw%name%job%age%tel
 		// {
-		// System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : È¸¿øÁ¤º¸¼öÁ¤");
+		// System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : íšŒì›ì •ë³´ìˆ˜ì •");
 		// String id = token[1];
 		// String job = token[4];
 		// String pw = token[2];
@@ -251,7 +248,7 @@ public class ModongServer extends AbstractServer {
 		// } else if (line.startsWith("#ModongDonation")) //
 		//// #ModongDonation%id%gname%point
 		// {
-		// System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : ±âºÎÇÏ±â");
+		// System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : ê¸°ë¶€í•˜ê¸°");
 		// String id = token[1];
 		// int did = doa.dNameToDid(token[2]);
 		// int point = Integer.parseInt(token[3]);
@@ -266,12 +263,12 @@ public class ModongServer extends AbstractServer {
 		// doa.findDonationOrgnz(did).addPoint(point);
 		// sendToMyClient(client, "#true");
 		// } else
-		// sendToMyClient(client, "Æ÷ÀÎÆ®°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+		// sendToMyClient(client, "í¬ì¸íŠ¸ê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.");
 		//
 		// */} else if (line.startsWith("#ModongGivePoint"))//
 		//// #ModongGivePoint%fromId%toId%point
 		// {
-		// System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : Æ÷ÀÎÆ® ¼±¹°");
+		// System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : í¬ì¸íŠ¸ ì„ ë¬¼");
 		// String fromId = token[1], toId = token[2];
 		// int point = Integer.parseInt(token[3]);
 		//
@@ -282,11 +279,11 @@ public class ModongServer extends AbstractServer {
 		// toUser.addPoint(point);
 		// sendToMyClient(client, "#true");
 		// } else
-		// sendToMyClient(client, "Æ÷ÀÎÆ®°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+		// sendToMyClient(client, "í¬ì¸íŠ¸ê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.");
 		//
 		// } else if (line.startsWith("#ModongUseList"))// #ModongUseList%id
 		// {
-		// System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : »ç¿ë³»¿­ list");
+		// System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : ì‚¬ìš©ë‚´ì—´ list");
 		// String id = token[1];
 		// ArrayList<ModongUserAdmin.Item> myList =
 		//// ua.getMyUseList(ua.idToUid(id));
@@ -295,7 +292,7 @@ public class ModongServer extends AbstractServer {
 		// } else if (line.startsWith("#ModongDonationList"))//
 		//// #ModongDonationList%id
 		// {
-		// System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : ±âºÎ³»¿ª list");
+		// System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : ê¸°ë¶€ë‚´ì—­ list");
 		// String id = token[1];
 		// ArrayList<DonationOrgnzAdmin.dItem> myList =
 		//// doa.getMyDonationList(ua.idToUid(id));
@@ -306,7 +303,7 @@ public class ModongServer extends AbstractServer {
 		//// #ModongGroupIn%3%id%id%id%group
 		// // name
 		// {
-		// System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : ±×·ì¿¡ µé¾î°¡±â");
+		// System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : ê·¸ë£¹ì— ë“¤ì–´ê°€ê¸°");
 		// String[] ids = new String[Integer.parseInt(token[1])];
 		// int i = 0;
 		// for (; i < ids.length; i++) {
@@ -315,11 +312,11 @@ public class ModongServer extends AbstractServer {
 		// if (ua.groupingUser(ids, token[i]))
 		// sendToMyClient(client, "#true");
 		// else
-		// sendToMyClient(client, "½ÇÆĞÇß½À´Ï´Ù.");
+		// sendToMyClient(client, "ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
 		//
 		// } else if (line.startsWith("#ModongGroupOut"))// #ModongGroupOut%id
 		// {
-		// System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : ±×·ì¿¡¼­ ³ª¿À±â");
+		// System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : ê·¸ë£¹ì—ì„œ ë‚˜ì˜¤ê¸°");
 		//
 		// ModongUser user = ua.findUser_asId(token[1]);
 		// user.leaveGroup();
@@ -328,7 +325,7 @@ public class ModongServer extends AbstractServer {
 		// } else if (line.startsWith("#ModongSyn"))// #ModongSyn%id rt
 		// // point%groupflag%groupName
 		// {
-		// System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : µ¿±âÈ­ ¿äÃ»");
+		// System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : ë™ê¸°í™” ìš”ì²­");
 		// ua.updateGroupList();
 		// ua.updateUserList();
 		//
@@ -343,12 +340,12 @@ public class ModongServer extends AbstractServer {
 		// }
 		// } else if (line.startsWith("#ModongMyBacode"))// #ModongMyBacode%id
 		// {
-		// System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : ¹ÙÄÚµå ¿äÃ»");
+		// System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : ë°”ì½”ë“œ ìš”ì²­");
 		//
 		// } else if (line.startsWith("#ModongGroupBacode"))//
 		//// #ModongGroupBacode%id
 		// {
-		// System.out.println("¸ğ¹ÙÀÏ¿¡¼­ÀÇ ¿äÃ» : ±×·ë ¹ÙÄÚµå ¿äÃ»");
+		// System.out.println("ëª¨ë°”ì¼ì—ì„œì˜ ìš”ì²­ : ê·¸ë£¸ ë°”ì½”ë“œ ìš”ì²­");
 		//
 		// }
 		// else if(line.startsWith("####"))// #ModongGroupBacode%id
@@ -356,8 +353,8 @@ public class ModongServer extends AbstractServer {
 		// sendToMyClient(client, "asdfldslsdsdfk232");
 		//
 		// }
-		//// ****************************µ¿Àü
-		//// ¸ğÀ½ÀÌ**************************************//
+		//// ****************************ë™ì „
+		//// ëª¨ìŒì´**************************************//
 		/// *
 		// * 2016.5.23 modified by kth
 		// *
@@ -367,62 +364,62 @@ public class ModongServer extends AbstractServer {
 		// */
 		// else if (line.startsWith("#CcLogin"))// #CcLogin%cid
 		// {
-		// System.out.println("µ¿Àü¸ğÀ½ÀÌ¿¡¼­ÀÇ ¿äÃ» : ·Î±×ÀÎ");
+		// System.out.println("ë™ì „ëª¨ìŒì´ì—ì„œì˜ ìš”ì²­ : ë¡œê·¸ì¸");
 		// sendToMyClient(client, "#Error%test error");
 		// } else if (line.startsWith("#CcLogout"))// #CcPointAdd%cid%point
 		// {
-		// System.out.println("µ¿Àü¸ğÀ½ÀÌ¿¡¼­ÀÇ ¿äÃ» : ·Î±×¾Æ¿ô");
+		// System.out.println("ë™ì „ëª¨ìŒì´ì—ì„œì˜ ìš”ì²­ : ë¡œê·¸ì•„ì›ƒ");
 		//
 		// }
-		//// µ¿Àü¸ğÀ½ÀÌ°¡ Àû¸³ÇÑ ÃÑ¾× ¾÷µ¥ÀÌÆ®
-		//// µ¿Àü¸ğÀ½ÀÌ¿¡¼­ ¸ğÀº ±İ¾×À» ÆÄ¶ó¹ÌÅÍ·Î ¹ŞÀ½
-		//// ¼º°ø½Ã success
-		//// ½ÇÆĞ½Ã Error ¸Ş¼¼Áö + »çÀ¯ Àü¼Û
+		//// ë™ì „ëª¨ìŒì´ê°€ ì ë¦½í•œ ì´ì•¡ ì—…ë°ì´íŠ¸
+		//// ë™ì „ëª¨ìŒì´ì—ì„œ ëª¨ì€ ê¸ˆì•¡ì„ íŒŒë¼ë¯¸í„°ë¡œ ë°›ìŒ
+		//// ì„±ê³µì‹œ success
+		//// ì‹¤íŒ¨ì‹œ Error ë©”ì„¸ì§€ + ì‚¬ìœ  ì „ì†¡
 		// else if (line.startsWith("#CcUpdateInfo"))//
 		//// #CcUpdateInfo%accumulatedAmount
 		// {
-		// System.out.println("µ¿Àü¸ğÀ½ÀÌ¿¡¼­ÀÇ ¿äÃ» : µ¿Àü¸ğÀ½ÀÌ ±İ¾× ¾÷µ¥ÀÌÅÍ");
+		// System.out.println("ë™ì „ëª¨ìŒì´ì—ì„œì˜ ìš”ì²­ : ë™ì „ëª¨ìŒì´ ê¸ˆì•¡ ì—…ë°ì´í„°");
 		//
 		// }
-		//// ±âºÎ´ÜÃ¼ÀÇ ¼ö¸¦ ¿ä±¸ÇÏ°í ¸®ÅÏÇÔ
+		//// ê¸°ë¶€ë‹¨ì²´ì˜ ìˆ˜ë¥¼ ìš”êµ¬í•˜ê³  ë¦¬í„´í•¨
 		// else if (line.startsWith("#CcGetOrgNum"))// #CcGetOrgNum
 		// {
-		// System.out.println("µ¿Àü¸ğÀ½ÀÌ¿¡¼­ÀÇ ¿äÃ» : ±âºÎ´ÜÃ¼ ¼ö Á¶È¸");
+		// System.out.println("ë™ì „ëª¨ìŒì´ì—ì„œì˜ ìš”ì²­ : ê¸°ë¶€ë‹¨ì²´ ìˆ˜ ì¡°íšŒ");
 		//
 		// }
-		//// ±âºÎ´ÜÃ¼ ¸ñ·Ï ¿äÃ» index·Î ¿äÃ»ÇÔ
-		//// ÇØ´ç ÀÎµ¦½ºÀÇ ±âºÎ´ÜÃ¼¸¦ ¹İÈ¯ÇÔ
-		//// ¹İÈ¯¼ø¼­ : did, name, point, tel, type
+		//// ê¸°ë¶€ë‹¨ì²´ ëª©ë¡ ìš”ì²­ indexë¡œ ìš”ì²­í•¨
+		//// í•´ë‹¹ ì¸ë±ìŠ¤ì˜ ê¸°ë¶€ë‹¨ì²´ë¥¼ ë°˜í™˜í•¨
+		//// ë°˜í™˜ìˆœì„œ : did, name, point, tel, type
 		// else if (line.startsWith("#CcGetOrg"))// #CcGetOrg%index
 		// {
-		// System.out.println("µ¿Àü¸ğÀ½ÀÌ¿¡¼­ÀÇ ¿äÃ» : ±âºÎ´ÜÃ¼ ¸ñ·Ï ¿äÃ»");
+		// System.out.println("ë™ì „ëª¨ìŒì´ì—ì„œì˜ ìš”ì²­ : ê¸°ë¶€ë‹¨ì²´ ëª©ë¡ ìš”ì²­");
 		//
 		// }
-		//// À¯ÀúÀÇ Á¤º¸¸¦ ¿äÃ», ¹ÙÄÚµå¸¦ ÆÄ¶ó¹ÌÅÍ·Î ¹ŞÀ½
+		//// ìœ ì €ì˜ ì •ë³´ë¥¼ ìš”ì²­, ë°”ì½”ë“œë¥¼ íŒŒë¼ë¯¸í„°ë¡œ ë°›ìŒ
 		//
 		// else if (line.startsWith("#CcGetUserInfo"))//
 		//// #CcGetUserInfo%userBarcode
 		// {
-		// System.out.println("µ¿Àü¸ğÀ½ÀÌ¿¡¼­ÀÇ ¿äÃ» : À¯ÀúÁ¤º¸ ¿äÃ»");
+		// System.out.println("ë™ì „ëª¨ìŒì´ì—ì„œì˜ ìš”ì²­ : ìœ ì €ì •ë³´ ìš”ì²­");
 		// }
-		//// À¯Àú¿¡°Ô Æ÷ÀÎÆ® Àû¸³
-		//// ÆÄ¶ó¹ÌÅÍ·Î ¹ÙÄÚµå, Àû¸³ÇÒ Æ÷ÀÎÆ® ¾ç¸¦ ¹ŞÀ½
-		//// ¼º°ø½Ã success
-		//// ½ÇÆĞ½Ã Error ¸Ş¼¼Áö + »çÀ¯ Àü¼Û
+		//// ìœ ì €ì—ê²Œ í¬ì¸íŠ¸ ì ë¦½
+		//// íŒŒë¼ë¯¸í„°ë¡œ ë°”ì½”ë“œ, ì ë¦½í•  í¬ì¸íŠ¸ ì–‘ë¥¼ ë°›ìŒ
+		//// ì„±ê³µì‹œ success
+		//// ì‹¤íŒ¨ì‹œ Error ë©”ì„¸ì§€ + ì‚¬ìœ  ì „ì†¡
 		// else if (line.startsWith("#CcSavePoint"))//
 		//// #CcSavePoint%userBarcode%point
 		// {
-		// System.out.println("µ¿Àü¸ğÀ½ÀÌ¿¡¼­ÀÇ ¿äÃ» : Àû¸³ÇÏ±â");
+		// System.out.println("ë™ì „ëª¨ìŒì´ì—ì„œì˜ ìš”ì²­ : ì ë¦½í•˜ê¸°");
 		//
 		// }
-		//// ±âºÎ´ÜÃ¼¿¡ Æ÷ÀÎÆ® Àû¸³
-		//// ÆÄ¶ó¹ÌÅÍ·Î ±âºÎ´ÜÃ¼ did, Àû¸³ÇÒ Æ÷ÀÎÆ® ¾çÀ» ¹ŞÀ½
-		//// ¼º°ø½Ã success
-		//// ½ÇÆĞ½Ã Error ¸Ş¼¼Áö + »çÀ¯ Àü¼Û
+		//// ê¸°ë¶€ë‹¨ì²´ì— í¬ì¸íŠ¸ ì ë¦½
+		//// íŒŒë¼ë¯¸í„°ë¡œ ê¸°ë¶€ë‹¨ì²´ did, ì ë¦½í•  í¬ì¸íŠ¸ ì–‘ì„ ë°›ìŒ
+		//// ì„±ê³µì‹œ success
+		//// ì‹¤íŒ¨ì‹œ Error ë©”ì„¸ì§€ + ì‚¬ìœ  ì „ì†¡
 		// else if (line.startsWith("#CcDonatePoint"))//
 		//// #CcDonatePoint%did%point
 		// {
-		// System.out.println("µ¿Àü¸ğÀ½ÀÌ¿¡¼­ÀÇ ¿äÃ» : ±âºÎÇÏ±â");
+		// System.out.println("ë™ì „ëª¨ìŒì´ì—ì„œì˜ ìš”ì²­ : ê¸°ë¶€í•˜ê¸°");
 		// }
 
 	}
